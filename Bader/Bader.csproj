@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Assets\.DS_Store" />
+    <None Include="wwwroot\Assets\css\.DS_Store" />
+    <None Include="wwwroot\Assets\fonts\.DS_Store" />
+    <None Include="wwwroot\Assets\fonts\DINNext\.DS_Store" />
+    <None Include="wwwroot\Assets\fonts\Poppins\.DS_Store" />
+    <None Include="wwwroot\Assets\fonts\tabler-icons\.DS_Store" />
+    <None Include="wwwroot\Assets\imgs\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\bootstrap-multiselect\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\bootstrap-multiselect\css\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\bootstrap-multiselect\js\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\DataTable\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\DataTable\css\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\DataTable\js\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\datepicker\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\datepicker\css\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\datepicker\js\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\easepick\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\multiSelect\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\multiSelect\css\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\select2\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\selectize\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\codeql\codeql-config.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\dependabot.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\FUNDING.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\workflows\codeql-analysis.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\workflows\node.js.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\workflows\stale.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\workflows\UpdateContributors.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\css\.DS_Store" />
+  </ItemGroup>
+
+</Project>

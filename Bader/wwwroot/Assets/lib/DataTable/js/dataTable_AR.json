@@ -1,0 +1,24 @@
+{
+  "decimal": "",
+  "emptyTable": "لا يوجد بيانات",
+  "info": "يعرض من <span> _START_ </span> إلى <span> _END_ </span> من مجموع <span> _TOTAL_ </span>",
+  "infoEmpty": "",
+  "infoFiltered": "تصفية من مجموع _MAX_",
+  "infoPostFix": "",
+  "thousands": ",",
+  "lengthMenu": "_MENU_",
+  "loadingRecords": "جاري التحميل ...",
+  "processing": "",
+  "search": "البحث",
+  "zeroRecords": "لا توجد بيانات متطابقة مع مدخلات البحث",
+  "paginate": {
+    "first": "First",
+    "last": "Last",
+    "next": "التالى",
+    "previous": "السابق"
+  },
+  "aria": {
+    "sortAscending": ": activate to sort column ascending",
+    "sortDescending": ": activate to sort column descending"
+  }
+}

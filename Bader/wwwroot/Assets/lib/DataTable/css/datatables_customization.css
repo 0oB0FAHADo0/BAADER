@@ -1,0 +1,304 @@
+.dataTables_wrapper .table.dataTable {
+    margin: 0;
+    width: 100% !important;
+    overflow: auto;
+}
+
+.dataTables_wrapper .top_bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    /* display: none; */
+}
+
+.dataTables_wrapper .top_bar label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+}
+
+.dataTables_wrapper .top_bar select,
+.dataTables_wrapper .top_bar input {
+    border: 1px solid #e9e9e9;
+    box-shadow: none;
+    outline: none;
+    padding: .5rem 1rem;
+    border-radius: 4px;
+    min-width: 65px;
+}
+
+.dataTables_scrollHead thead {
+    border-bottom: 1px solid var(--kt-gray-500);
+}
+
+.table>:not(:first-child) {
+    border: none;
+}
+
+.table> :not(caption)>*>* {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.bottom_bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0 0;
+    /* border-top: 1px solid var(--kt-gray-300); */
+    border-top: 1px solid rgb(var(--kt-dark-rgb), 20%);
+}
+
+.table>thead {
+    vertical-align: middle;
+    /* border-bottom: 1px solid var(--kt-gray-300); */
+    border-bottom: 1px solid rgb(var(--kt-dark-rgb), 20%);
+}
+
+.bottom_bar .dataTables_info span {
+    display: inline-block;
+    /* color: var(--kt-primary); */
+    /* color: #333; */
+    /* font-weight: bold; */
+    margin: 0 .2rem;
+}
+
+.bottom_bar .dataTables_paginate,
+.bottom_bar .dataTables_paginate span {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    overflow: hidden;
+}
+
+.bottom_bar .paginate_button {
+    color: var(--kt-primary);
+    /* font-weight: 500; */
+    cursor: pointer;
+    height: 25px;
+    min-width: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    outline: none;
+    text-decoration: none;
+}
+
+
+.bottom_bar .paginate_button.current {
+    background-color: rgb(var(--kt-primary-rgb), 15%);
+    color: var(--kt-primary);
+    border-color: var(--kt-primary);
+    border-radius: 5px;
+}
+
+.bottom_bar .paginate_button.disabled {
+    color: #b0becd;
+    cursor: no-drop;
+}
+
+.dataTables_empty {
+    text-align: center;
+    padding: 4rem 2rem !important;
+}
+
+.table th,
+.table th>*,
+.table td,
+.table td>* {
+    white-space: nowrap;
+}
+
+.dataTables_wrapper th,
+.dataTables_wrapper td {
+    padding: 1rem 0.9rem;
+}
+
+.dataTables_wrapper {
+    margin: 0 auto;
+    width: 100%;
+    /* overflow: auto; */
+}
+
+.dataTables_scroll,
+.table_wrapper {
+    width: 100%;
+    overflow: auto;
+}
+
+table.dataTable>tbody>tr>td.select-checkbox,
+table.dataTable>thead>tr>th.select-checkbox {
+    position: relative;
+}
+
+table.dataTable>tbody>tr>td.select-checkbox:before,
+table.dataTable>thead>tr>th.select-checkbox:before {
+    content: " ";
+    margin-top: 0;
+    margin-left: 0;
+    /* right: 10px; */
+    border: 1px solid var(--kt-gray-400);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+table.dataTable>tbody>tr.selected>td.select-checkbox:before,
+table.dataTable>thead>tr.selected>th.select-checkbox:before {
+    border: 1px solid var(--kt-primary);
+    background-color: var(--kt-primary);
+    cursor: pointer;
+}
+
+table.dataTable>tbody>tr>td.select-checkbox:before,
+table.dataTable>tbody>tr>td.select-checkbox:after,
+table.dataTable>thead>tr>th.select-checkbox:before,
+table.dataTable>thead>tr>th.select-checkbox:after {
+    display: block;
+    position: absolute;
+    top: calc(50% - 9px);
+    left: auto;
+    right: 10px;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+table.dataTable>tbody>tr.selected>td.select-checkbox:after,
+table.dataTable>thead>tr.selected>th.select-checkbox:after {
+    font-size: 12px;
+    margin-top: 0;
+    margin-left: 0;
+    text-align: center;
+    text-shadow: none;
+    color: #fff;
+    content: "✓";
+    cursor: pointer;
+}
+
+.table tbody tr.selected {
+    /* background-color: rgb(var(--kt-primary-rgb), 10%); */
+    background-color: var(--kt-gray-200);
+}
+
+/* The container */
+.checkbox {
+    display: block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border: 1px solid var(--kt-gray-400);
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox:hover input~.checkmark {
+    background-color: var(--kt-gray-100);
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox input:checked~.checkmark {
+    background-color: var(--kt-primary);
+    border-color: var(--kt-primary);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.table-container {
+    position: relative;
+}
+
+.table_selection_option {
+    position: absolute;
+    background-color: #fff;
+    width: calc(100% - 40px);
+    right: 30px;
+    top: 17px;
+    z-index: 999;
+    display: none;
+}
+
+.table_selection_option .selected_count {
+    display: inline-flex;
+    height: 25px;
+    padding: 0 .5rem;
+    background-color: rgb(var(--kt-primary-rgb), 10%);
+    color: var(--kt-primary);
+    border-radius: 5px;
+    justify-content: center;
+    margin-left: .4rem;
+}
+
+table.dataTable>thead>tr>th {
+    position: relative;
+    cursor: pointer;
+}
+
+table.dataTable>thead>tr>th::before {
+    position: absolute;
+    font-family: "bootstrap-icons";
+    right: 0;
+    top: 21px;
+    font-size: 12px;
+}
+
+table.dataTable>thead>tr>th.sorting_asc::before {
+    content: "\F235";
+}
+
+table.dataTable>thead>tr>th.sorting_desc::before {
+    content: "\F229";
+}

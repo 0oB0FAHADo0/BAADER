@@ -1,0 +1,250 @@
+.multiselect,
+.multiselect_checkbox {
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+  left: auto !important;
+}
+
+.ms-container {
+  position: relative;
+}
+
+
+/***** Selected Items **************/
+.ms-container .ms-selection {
+  /* cursor: pointer; */
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid var(--kt-gray-300);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  position: relative;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ms-selection .ms-list {
+  flex: 0 0 auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: calc(100% - 20px);
+}
+
+.ms-selection .drop_menu {
+  flex: 1 0 0%;
+  font-size: .6rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.ms-selection .ms-list .ms-elem-selection {
+  border: 1px solid var(--kt-primary);
+  border-radius: 5px;
+  padding: .5rem;
+  margin: .2rem 0;
+  transition: all .2s ease;
+  cursor: pointer;
+
+  display: inline-flex;
+  margin-left: .5rem;
+}
+
+.ms-selection .ms-list .ms-elem-selection:hover {
+  border-color: var(--kt-danger);
+}
+
+
+
+/***** Dropdown Select  **************/
+.ms-selectable {
+  display: none;
+  width: 100%;
+  min-height: 40px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+
+
+  position: absolute;
+  z-index: 99;
+
+  box-shadow: var(--kt-box-shadow-sm);
+  background-color: var(--kt-gray-100);
+
+}
+
+
+.ms-selectable.open {
+  display: block;
+}
+
+.ms-selectable .search_input__wrap {
+  padding: .375rem .75rem;
+}
+
+.ms-selectable .search_input {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: .375rem .75rem;
+}
+
+.ms-selectable .ms-list {
+  margin: 0;
+  list-style: none;
+  padding: .375rem 0;
+  max-height: 250px;
+  overflow: auto;
+}
+
+.ms-selectable .ms-elem-selectable {
+  font-weight: 500;
+  padding: 5px 1rem;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.ms-selectable .ms-elem-selectable:hover {
+  background-color: rgb(var(--kt-primary-rgb), 10%);
+  color: var(--kt-primary);
+}
+
+
+
+.multiselect_chechbox_container .ms-selection {
+  min-width: 350px;
+  max-width: 100% !important;
+  /* height: 45px; */
+  overflow: hidden;
+}
+
+.multiselect_chechbox_container .ms-selection .ms-list {
+  flex: 0 0 auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: calc(100% - 20px);
+  white-space: nowrap;
+  overflow: hidden;
+  display: none;
+}
+
+.multiselect_chechbox_container .ms-selection .selected_results {
+  flex: 0 0 auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: calc(100% - 0px);
+  padding: 0 .5rem 0 20px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* .frst_selected .selected_i {
+  border: 1px solid var(--kt-primary);
+  padding: 0.5px .5rem;
+  border-radius: 5px;
+  margin-left: 5px; 
+} */
+.selected_count {
+  color: var(--kt-primary);
+  font-weight: 500;
+  min-width: 30px;
+  display: inline-block;
+}
+
+.multiselect_chechbox_container .ms-selection .drop_menu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding-left: 10px;
+}
+
+/* 
+.multiselect_chechbox_container .ms-selection .ms-list .ms-elem-selection {
+  border: 1px solid var(--kt-primary);
+  border-radius: 5px;
+  padding: .2rem .5rem;
+  margin: 0;
+  margin-left: .5rem;
+  transition: all .2s ease;
+  cursor: pointer;
+  display: inline-block;
+}
+.multiselect_chechbox_container .ms-selection .ms-list .ms-elem-selection:hover {
+  border-color: var(--kt-danger);
+} */
+.multiselect_chechbox_container .ms-elem-selectable {
+  position: relative;
+  padding-right: 2.5rem;
+  white-space: nowrap;
+}
+
+.multiselect_chechbox_container .ms-elem-selectable::after {
+  position: absolute;
+  content: "";
+  top: 10px;
+  right: 15px;
+  height: 15px;
+  width: 15px;
+  border: 1px solid rgb(var(--kt-primary-rgb), 50%);
+  border-radius: 3px;
+}
+
+.multiselect_chechbox_container .ms-elem-selectable.ms-selected {
+  display: block !important;
+
+}
+
+.multiselect_chechbox_container .ms-elem-selectable.ms-selected::before {
+  position: absolute;
+  content: "✓";
+  top: 10px;
+  right: 15px;
+  height: 15px;
+  width: 15px;
+  border: 1px solid var(--kt-primary);
+  background-color: var(--kt-primary);
+  color: #fff;
+  border-radius: 3px;
+  font-size: .7rem;
+  text-align: center;
+}
