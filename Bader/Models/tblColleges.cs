@@ -10,6 +10,6 @@
         public ICollection<tblPermissions> Permissions { get; set; }    
         public ICollection<tblCourses> Courses { get; set; }
         public Guid GUID { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }// test
     }
 }
