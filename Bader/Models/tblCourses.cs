@@ -14,5 +14,7 @@
         public Guid GUID { get; set; }
         public bool IsDeleted { get; set; }
 
+
+
     }
 }
