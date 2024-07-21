@@ -7,8 +7,8 @@
         public string CollegeNameEn { get; set; }
         public int CollegeCode { get; set; }
         public int BuildingNum { get; set; }
-        //public ICollection<tblPermissions> Permissions { get; set; }    
-        //public ICollection<tblCourses> Courses { get; set; }
+        public ICollection<tblPermissions> Permissions { get; set; }    
+        public ICollection<tblCourses> Courses { get; set; }
         public Guid GUID { get; set; }
         public bool IsDeleted { get; set; }// test
     }
