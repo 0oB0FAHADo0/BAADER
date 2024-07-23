@@ -7,7 +7,7 @@ namespace Bader.Models
     {
         public BaaderContext()
         {
-
+            
         }
         public BaaderContext(DbContextOptions<BaaderContext> options) : base(options)
         {
