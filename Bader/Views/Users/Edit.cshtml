@@ -1,64 +1,113 @@
-﻿@model Bader.Models.tblUsers
+﻿@model UserViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<section class="page_wrap">
+    <div class="page_content">
 
-<h4>tblUsers</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">إضافة مستخدم </h5>
             </div>
-            <div class="form-group">
-                <label asp-for="FullNameAr" class="control-label"></label>
-                <input asp-for="FullNameAr" class="form-control" />
-                <span asp-validation-for="FullNameAr" class="text-danger"></span>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="Edit">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <input asp-for="Id" type="text" class="form-control" hidden>
+                                        <label asp-for="Username" class="mb-1">اسم المستخدم</label>
+                                        <input asp-for="Username" type="text" placeholder="mhmd555" class="form-control">
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="FullNameAr" class="mb-1">الاسم عربي</label>
+                                        <input asp-for="FullNameAr" type="text" placeholder="محمد"
+                                               class="form-control text-start">
+                                        <span asp-validation-for="FullNameAr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="FullNameEn" class="mb-1">الاسم English</label>
+                                        <input asp-for="FullNameEn" type="text" placeholder="Mohammed"
+                                               class="form-control text-start">
+                                        <span asp-validation-for="FullNameEn" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Password" class="mb-1">كلمة السر</label>
+                                        <input asp-for="Password" type="password" placeholder="********"
+                                               class="form-control text-start">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Email" class="mb-1">Email</label>
+                                        <input asp-for="Email" type="email" placeholder="example@student.kfu.edu"
+                                               class="form-control text-start">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Phone" class="mb-1">رقم الهاتف</label>
+                                        <input asp-for="Phone" type="number" placeholder="0543082004"
+                                               class="form-control text-start">
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Usertype" class="mb-1">Select User Type</label>
+                                        <select asp-for="Usertype" id="userType" class="form-control text-start">
+                                            <option value="student">Student</option>
+                                            <option value="faculaty member">Faculaty</option>
+                                            <option value="stuff">Stuff</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
+                                    <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
+                                    <div>   </div>
+                                    <div><<a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="FullNameEn" class="control-label"></label>
-                <input asp-for="FullNameEn" class="form-control" />
-                <span asp-validation-for="FullNameEn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Usertype" class="control-label"></label>
-                <input asp-for="Usertype" class="form-control" />
-                <span asp-validation-for="Usertype" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
+
+
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
