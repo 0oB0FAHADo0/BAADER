@@ -1,6 +1,6 @@
 ﻿namespace Bader.Models
 {
-    public class tblPermissions
+    public class tblPermissions// mohammed almulhim( viewModel,controler,view, domain) (add , update, delete)
     {
         public int Id { get; set; }
         public string Username { get; set; }

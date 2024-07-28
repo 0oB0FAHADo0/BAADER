@@ -1,6 +1,6 @@
 ﻿namespace Bader.Models
 {
-    public class tblCourses
+    public class tblCourses //ali ( viewModel,controler,view, domain) (add , update, delete)
     {
         public int Id { get; set; }
         public tblColleges College { get; set; }
