@@ -12,6 +12,6 @@
         public string FullNameEn { get; set; }
         public DateTime RegDate { get; set; }
         public string Phone { get; set; }
-        public Guid GUID { get; set; }
+        public Guid GUID { get; set; } = Guid.NewGuid();
     }
 }

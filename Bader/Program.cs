@@ -40,6 +40,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.HttpOnly = HttpOnlyPolicy.Always;
     options.Secure = CookieSecurePolicy.None;
 });
+builder.Services.AddScoped<ContentDomain>();
 builder.Services.AddScoped<permissionDomain>();
 builder.Services.AddScoped<UserDomain>();// While running don`t forget to type In URL: Users/Create 
 var app = builder.Build();

@@ -8,7 +8,7 @@
         public int RoleId { get; set; }
         public tblColleges College { get; set; }
         public int? CollegeId { get; set; }
-        public Guid GUID { get; set; }
+        public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsDeleted { get; set; }
     }
 }

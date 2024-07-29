@@ -4,13 +4,13 @@
     {
         public int Id { get; set; }
         public tblCourses Course { get; set; }
-        public int CoursesId { get; set; }
+        public int CourseId { get; set; }
         public string TitleAr { get; set; }
         public string TitleEn { get; set; }
         public string ContentsAr { get; set; }
         public string ContentsEn { get; set; }
         public string Links { get; set; }
-        public Guid GUID { get; set; }
+        public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsDeleted { get; set; }
 
 
