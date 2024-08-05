@@ -42,7 +42,11 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 builder.Services.AddScoped<permissionDomain>();
 builder.Services.AddScoped<UserDomain>();// While running don`t forget to type In URL: Users/Create 
+
+
+
 builder.Services.AddScoped<CourseDomain>();
+
 builder.Services.AddScoped<CollegeDomain>();
 var app = builder.Build();
 // Configure the HTTP request pipeline.  
