@@ -76,7 +76,7 @@ namespace Bader.Domain
             CollegeViewModel collegex = new CollegeViewModel();
          
             collegex.CollegeNameAr = college.CollegeNameAr;
-            collegex.CollegeNameEn = college.CollegeNameEn;
+            collegex.CollegeNameEn = college.CollegeNameEn;//
             collegex.CollegeCode = college.CollegeCode;
             collegex.BuildingNum = college.BuildingNum;
             collegex.GUID= college.GUID;
