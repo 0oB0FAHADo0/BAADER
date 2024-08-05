@@ -25,7 +25,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                 options.LoginPath = "/account/login";
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);
                 //options.LoginPath = "/accounts/ErrorNotLoggedIn";
-                //options.LogoutPath = "account/logout";
+              /////  //options.LogoutPath = "account/logout";
             });
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAuthorization(options =>
