@@ -1,6 +1,6 @@
 ﻿namespace Bader.Models
 {
-    public class tblContents
+    public class tblContents// mohammmed alsubai ( viewModel,controler,view, domain) (add , update, delete)
     {
         public int Id { get; set; }
         public tblCourses Course { get; set; }

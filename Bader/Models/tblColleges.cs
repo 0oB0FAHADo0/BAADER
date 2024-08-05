@@ -1,6 +1,6 @@
 ﻿namespace Bader.Models
 {
-    public class tblColleges
+    public class tblColleges// hassan( viewModel,controler,view, domain) (add , update, delete)
     {
         public int Id { get; set; }
         public string CollegeNameAr { get; set; }

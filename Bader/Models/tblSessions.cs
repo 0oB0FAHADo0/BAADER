@@ -1,6 +1,6 @@
 ﻿namespace Bader.Models
 {
-    public class tblSessions
+    public class tblSessions// abdulmohsin ( viewModel,controler,view, domain) (add , update, delete)
     {
         public int Id { get; set; }
         public tblSessionsState SessionState { get; set; }

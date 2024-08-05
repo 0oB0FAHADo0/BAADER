@@ -1,6 +1,6 @@
 ﻿namespace Bader.Models
 {
-    public class tblLevels
+    public class tblLevels // rakan ( viewModel,controler,view, domain) (add , update, delete) 
     {
         public int Id { get; set; }
         public string LevelNameAr { get; set; }
