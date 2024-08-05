@@ -9,12 +9,7 @@
         public int BuildingNum { get; set; }
         public ICollection<tblPermissions> Permissions { get; set; }    
         public ICollection<tblCourses> Courses { get; set; }
-<<<<<<< HEAD
         public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsDeleted { get; set; }// test
-=======
-        public Guid GUID { get; set; } =Guid.NewGuid();
-        public bool IsDeleted { get; set; } = false;
->>>>>>> 595baa6ce19721790143a9494bd5e955c74f6b0a
     }
 }

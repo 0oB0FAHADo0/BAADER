@@ -15,7 +15,9 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<ContentViewModel>> GetContents()
         {
-            return await _context.tblContents.Where(u => u.IsDeleted == false).Select(x => new ContentViewModel
+            try
+            {
+                return await _context.tblContents.Where(u => u.IsDeleted == false).Select(x => new ContentViewModel
             {
                 Id = x.Id,
                 CourseId = x.CourseId,
@@ -26,26 +28,54 @@ namespace Bader.Domain
                 TitleAr = x.TitleAr,
                 TitleEn = x.TitleEn,
             }).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Enumerable.Empty<ContentViewModel>();
+            }
         }
         public async Task<IEnumerable<tblCourses>> GetCourses()
         {
+            try
+            {
             return await _context.tblCourses.Where(u => u.IsDeleted == false).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Enumerable.Empty<tblCourses>();
+            }
+
+            
         }
-        public async Task AddContent(ContentViewModel content)
+        public async Task<int> AddContent(ContentViewModel content)
         {
+            try
+            {
             tblContents Contents = new tblContents();
             Contents.ContentsAr = content.ContentsAr;
             Contents.ContentsEn = content.ContentsEn;
             Contents.Links = content.Links;
-            Contents.TitleAr = content.TitleEn;
+            Contents.TitleAr = content.TitleAr;
             Contents.TitleEn = content.TitleEn;
             Contents.CourseId = content.CourseId;
             _context.tblContents.Add(Contents);
-            await _context.SaveChangesAsync();
+            int check=await _context.SaveChangesAsync();
+            return check;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+
         }
-        public async Task<ContentViewModel> GetContentByGUID(Guid GUID)
+        public async Task<ContentViewModel> GetContentByGUID(Guid id)
         {
-            var content = await _context.tblContents.FindAsync(GUID);
+            try
+            {
+            var content = await _context.tblContents.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == id);
             ContentViewModel Content = new ContentViewModel();
             Content.Id = content.Id;
             Content.TitleEn = content.TitleEn;
@@ -55,20 +85,68 @@ namespace Bader.Domain
             Content.ContentsEn = content.ContentsEn;
             Content.CourseId = content.CourseId;
             Content.GUID = content.GUID;
-            return Content;
+            return Content;   
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
+            
         }
-        public async Task UpdateContent(ContentViewModel content)
+        public async Task<int> UpdateContent(ContentViewModel content)
         {
+            try
+            {
+            var contentss = await _context.tblContents.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == content.GUID);
             tblContents Contents = new tblContents();
+            Contents.Id = contentss.Id;
             Contents.ContentsAr = content.ContentsAr;
             Contents.ContentsEn = content.ContentsEn;
             Contents.Links = content.Links;
-            Contents.TitleAr = content.TitleEn;
+            Contents.TitleAr = content.TitleAr;
             Contents.TitleEn = content.TitleEn;
             Contents.CourseId = content.CourseId;
             Contents.GUID = content.GUID;
+            Contents.IsDeleted = content.IsDeleted;
             _context.tblContents.Update(Contents);
-            await _context.SaveChangesAsync();
+            int check=await _context.SaveChangesAsync();
+                return check;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+
+           
+        }
+        public async Task<int> DeleteContent(ContentViewModel content)
+        {
+            try
+            {
+            var contentss = await _context.tblContents.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == content.GUID);
+            tblContents Contents = new tblContents();
+            Contents.Id = contentss.Id;
+            Contents.ContentsAr = contentss.ContentsAr;
+            Contents.ContentsEn = contentss.ContentsEn;
+            Contents.Links = contentss.Links;
+            Contents.TitleAr = contentss.TitleAr;
+            Contents.TitleEn = contentss.TitleEn;
+            Contents.CourseId = contentss.CourseId;
+            Contents.GUID = contentss.GUID;
+            Contents.IsDeleted = true;
+            _context.tblContents.Update(Contents);
+            int check=await _context.SaveChangesAsync();
+                return check;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+            
         }
     }
 

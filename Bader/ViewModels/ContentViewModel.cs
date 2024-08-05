@@ -6,8 +6,7 @@ namespace Bader.ViewModels
 {
     public class ContentViewModel
     {
-        [DisplayName("المعرف")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("معرف المادة")]
         public int CourseId { get; set; }

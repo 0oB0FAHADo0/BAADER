@@ -10,12 +10,12 @@
 
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">إضافة محتوى </h5>
+                <h5 class="m-0">تعديل محتوى </h5>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="Edit">
+                        <form asp-action="Edit" method="post">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -70,16 +70,16 @@
                                         <label asp-for="Links" class="mb-1">@Html.DisplayNameFor(x => x.Links)</label>
                                         <textarea asp-for="Links" id="Links" name="Links" rows="4" cols="50" class="form-control text-start" placeholder="الروابط"></textarea>
                                         <span asp-validation-for="Links" class="text-danger"></span>
-
+                                        <input hidden asp-for="GUID" />
+                                        <input hidden asp-for="Id" />
+                                        
                                     </div>
                                 </div>
                                 <!-- END ITEM -->
-                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
-                                    <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
-                                    <div></div>
-                                    <div><<a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                                    </div>
                                 </div>
-                            </div>
                         </form>
 
 
@@ -94,4 +94,32 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        @{
+            if (@ViewData["Successful"] != null)
+            {
+                <Text>
+                var result = '@Html.Raw(ViewData["Successful"])';
+                Swal.fire({
+                    title: "تمت العملية",
+                    text: result,
+                    icon: "success"
+                }).then(function () {
+                    window.location.href = '@Url.Action("Index", "Contents")';
+                });
+                </Text>
+            }
+            else if (@ViewData["Falied"] != null)
+            {
+                <Text>
+                var result = '@Html.Raw(ViewData["Falied"])';
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result
+                });
+                </Text>
+            }
+        }
+    </script>
 }

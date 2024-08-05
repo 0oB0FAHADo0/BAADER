@@ -19,6 +19,30 @@ namespace Bader.Controllers
         {
             return View(await _ContentDomain.GetContents());
         }
+        [HttpPost]
+        public async Task<IActionResult> Index(Guid id)
+        {
+            try
+            {
+                ContentViewModel Content = await _ContentDomain.GetContentByGUID(id);
+                Content.IsDeleted = true;
+                int check = await _ContentDomain.UpdateContent(Content);
+                if (check == 1)
+                {
+                    ViewData["Successful"] = "تم الحذف بنجاح";
+                }
+                else
+                {
+                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                }  
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+            }
+            return View(await _ContentDomain.GetContents());
+        }
         public async Task<IActionResult> Create()
         {
             var Courses = await _ContentDomain.GetCourses();
@@ -29,19 +53,39 @@ namespace Bader.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ContentViewModel content)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await _ContentDomain.AddContent(content);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    int check =await _ContentDomain.AddContent(content);
+                    //return RedirectToAction(nameof(Index));
+                    if (check == 1)
+                    {
+                        ViewData["Successful"] = "تمت الإضافة بنجاح";
+                    }
+                    else
+                    {
+                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                    }
+                }
+                else 
+                { 
+                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                var Courses = await _ContentDomain.GetCourses();
+                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                }
+        }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
-            var Courses = await _ContentDomain.GetCourses();
-            ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
             return View(content);
         }
         [HttpGet]
-        public async Task<IActionResult> Edit(Guid guid)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var content = await _ContentDomain.GetContentByGUID(guid);
+            var content = await _ContentDomain.GetContentByGUID(id);
             if (content == null)
             {
                 return NotFound();
@@ -55,14 +99,54 @@ namespace Bader.Controllers
 
         public async Task<IActionResult> Edit(ContentViewModel content)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await _ContentDomain.UpdateContent(content);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    int check=await _ContentDomain.UpdateContent(content);
+                    //return RedirectToAction(nameof(Index));
+                    if (check == 1)
+                    {
+                        ViewData["Successful"] = "تمت الإضافة بنجاح";
+                    }
+                    else
+                    {
+                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                    }
+                }
+                else
+                {
+                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                 var Courses = await _ContentDomain.GetCourses();
+                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                }
+               
             }
-            var Courses = await _ContentDomain.GetCourses();
-            ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+            }
             return View(content);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var content = await _ContentDomain.GetContentByGUID(id);
+            if (content == null)
+            {
+                return NotFound();
+            }
+            return View(content);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(ContentViewModel content)
+        {
+ 
+                await _ContentDomain.DeleteContent(content);
+                return RedirectToAction(nameof(Index));
+
         }
 
     }
