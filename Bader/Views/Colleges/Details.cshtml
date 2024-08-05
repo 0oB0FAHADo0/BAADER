@@ -1,0 +1,148 @@
+﻿@model IEnumerable<CollegeViewModel>
+
+
+
+    @section Scripts{
+
+        
+            <script>
+                @{
+            if (@ViewData["Successful"] != null)
+                {
+
+                    <Text>
+                    var result = '@Html.Raw(ViewData["Successful"])';
+                    
+                    Swal.fire({
+                        title: "تمت العملية",
+                        text: result,
+                        icon: "success"
+                    });
+
+                    </Text>
+                }
+                  else if (@ViewData["Falied"] != null)
+                {
+                            <Text>
+                            var result = '@Html.Raw(ViewData["Falied"])';
+                               
+                    Swal.fire({
+                        icon: "error",
+                        title: "فشلت العملية",
+                        text: result
+                      
+                    });
+                            </Text>
+                }
+            }
+        </script>
+
+
+        <script>
+            function DisplayAlert(event,element) {
+            event.preventDefault(); 
+
+         //   const url = element.getAttribute('href');
+            const form = element.closest('form')
+            Swal.fire({
+                title: "هل تريد حذف الكلية من السجل؟",
+                text: "هل انت متأكد!؟",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "نعم امسحها",
+                cancelButtonText: "الغاء"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                   // window.location.href = url;
+                    form.submit();
+                }
+            });
+           
+            }
+        </script>
+
+
+    }
+<div class="block mb-4">
+    <div class="block-header border-bottom px-4 py-3">
+        <h5 class="m-0">الكليات</h5>
+        <div class="d-flex gap-2">
+            <div class="form-group">
+                <input type="text" class="form-control table__quick_search"
+                       placeholder="البحث السريع ...">
+            </div>
+            
+            <a asp-controller="Colleges" asp-action="Add" class="btn btn-primary">
+                إضافة كلية جديدة
+            </a>
+        </div>
+    </div>
+    <div class="block-body">
+        <table class="table table-hover js-dataTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(n => n.CollegeNameAr )
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.CollegeNameEn)
+
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.CollegeCode)
+
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.BuildingNum)
+                    </th>
+             
+                    <th class=""></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model){
+                <tr class="cursor-pointer" >
+                    
+            
+                <td>
+                    @item.CollegeNameAr
+                </td>
+                <td>
+                    @item.CollegeNameEn
+                </td>
+                <td>
+                    @item.CollegeCode
+                </td>
+                <td>    
+                    @item.BuildingNum
+                </td>
+           
+                
+
+                    <td class="action_td text-end">
+                            <form method="post">
+
+                           
+                            <a href="" class="btn btn-sm btn-primary">عرض</a>
+                            
+                            <a class="btn btn-sm btn-success"  asp-controller="Colleges" asp-action="Edit" asp-route-id="@item.GUID">
+                                تعديل
+                            </a>
+
+                                <input type="hidden" name="id" value="@item.GUID" />
+                            <a class="btn btn-sm btn-danger"  onclick="DisplayAlert(event, this)">حذف</a>
+
+
+
+                            </form>
+                    </td>
+
+                </tr>
+                }
+                
+            </tbody>
+        </table>
+    </div>
+</div>

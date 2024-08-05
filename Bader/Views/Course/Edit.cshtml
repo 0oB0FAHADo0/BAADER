@@ -1,0 +1,110 @@
+﻿@model CourseViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0"> تعديل مقرر</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="Edit" onsubmit="return Update(event)">
+                            <input type="hidden" asp-for="GUID" />
+@*                             <input type="hidden" asp-for="Id" />
+ *@                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CourseNameAr" class="mb-1">أسم المقرر بالعربي</label>
+                                        <input asp-for="CourseNameAr" type="text" placeholder="رياضيات" class="form-control">
+                                        <span asp-validation-for="CourseNameAr" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CourseNameEn" class="mb-1">أسم المقرر بالإنجليزي</label>
+                                        <input asp-for="CourseNameEn" type="text" placeholder="Math" class="form-control text-start">
+                                        <span asp-validation-for="CourseNameEn" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CourseNum" class="mb-1">رمز المقرر</label>
+                                        <input asp-for="CourseNum" type="number" placeholder="1234" class="form-control text-start">
+                                        <span asp-validation-for="CourseNum" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="LevelId" class="mb-1">مستوى المقرر</label>
+                                        <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList"> </select>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CollegeId" class="mb-1">أسم الكلية</label>
+                                        <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
+
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
+                                    <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
+                                    <div></div>
+                                    <div><a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    async function Update(event) {
+        event.preventDefault();
+        const result = await Swal.fire({
+            title: "السلام عليكم",
+            text: "من صجك ؟",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "تحديث",
+            cancelButtonText: "إلغاء"
+        });
+        if (result.isConfirmed) {
+            const form = event.target;
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+
+            Swal.fire({
+                title: data.success ? "نجاح" : "خطأ",
+                text: data.message,
+                icon: data.success ? "success" : "error"
+            }).then(() => {
+                if (data.success) {
+                    window.location.href = '@Url.Action("Index", "Course")';
+                }
+            });
+        }
+    }
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

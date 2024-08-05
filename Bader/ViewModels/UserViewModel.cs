@@ -8,8 +8,7 @@ namespace Bader.ViewModels
     {
 
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DisplayName("المعرف")]
+        [DisplayName("رقم المعرف")]
         public int Id { get; set; }
 
         [Required(ErrorMessage ="هذا الحقل إجباري")]

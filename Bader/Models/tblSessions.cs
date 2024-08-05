@@ -1,6 +1,6 @@
 ﻿namespace Bader.Models
 {
-    public class tblSessions
+    public class tblSessions// abdulmohsin ( viewModel,controler,view, domain) (add , update, delete)
     {
         public int Id { get; set; }
         public tblSessionsState SessionState { get; set; }
@@ -17,7 +17,11 @@
         public DateTime RegEndDate { get; set; }
         public DateTime RegStartDate { get; set; }
         public Guid GUID { get; set; } = Guid.NewGuid();
+<<<<<<< HEAD
         public bool IsDeleted { get; set; }
+=======
+        public bool IsDeleted { get; set; } = false;
+>>>>>>> 595baa6ce19721790143a9494bd5e955c74f6b0a
 
     }
 }
