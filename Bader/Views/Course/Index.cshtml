@@ -50,7 +50,7 @@
                                     <td class="action_td text-end">
                                         <a  asp-controller=""  class="btn btn-sm btn-primary">عرض</a>
                                         <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
-                                        <form asp-action="Delete" method="post" class="d-inline" onsubmit="return Delete(event)">
+                                        <form  method="post" class="d-inline" onsubmit="return Delete(event)">
                                             <input type="hidden" name="id" value="@item.GUID" />
                                             <button type="submit" class="btn btn-sm btn-danger">حذف</button>
                                         </form>
@@ -69,8 +69,8 @@
         async function Delete(event) {
             event.preventDefault();
             const result = await Swal.fire({
-                title: "السلام عليكم",
-                text: "من صجك ؟",
+                title: "حذف مقرر",
+                text: "هل انت متأكد ؟",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "حذف",
