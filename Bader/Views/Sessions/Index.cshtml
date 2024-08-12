@@ -1,0 +1,144 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<SessionsViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+ @section Scripts{
+    <script>
+        @{
+            if (@ViewData["Successful"] != null)
+            {
+
+                <Text>
+                                    var result = '@Html.Raw(ViewData["Successful"])';
+
+                Swal.fire({
+                    title: "تمت العملية",
+                    text: result,
+                    icon: "success"
+                });
+
+                </Text>
+            }
+            else if (@ViewData["Falied"] != null)
+            {
+                <Text>
+                                            var result = '@Html.Raw(ViewData["Falied"])';
+
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result
+
+                });
+                </Text>
+            }
+        }
+    </script>
+    
+
+    <script>
+           function DisplayAlert(event,element) {
+           event.preventDefault();
+
+        //   const url = element.getAttribute('href');
+           const form = element.closest('form')
+           Swal.fire({
+               title: "هل تريد حذف الكلية من السجل؟",
+               text: "هل انت متأكد!؟",
+               icon: "warning",
+               showCancelButton: true,
+               confirmButtonColor: "#3085d6",
+               cancelButtonColor: "#d33",
+               confirmButtonText: "نعم امسحها",
+               cancelButtonText: "الغاء"
+           }).then((result) => {
+               if (result.isConfirmed) {
+                  // window.location.href = url;
+                   form.submit();
+               }
+           });
+
+           }
+    </script>
+
+ 
+ 
+ }
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl" data-theme="light">
+<body>
+    <section class="page_wrap">
+        <div class="page_content">
+            <div class="block mb-4">
+                <div class="block-header border-bottom px-4 py-3">
+                    <h5 class="m-0">الجلسات</h5>
+                    <div class="d-flex gap-2">
+                       @*  <div class="form-group">
+                            <input type="text" class="form-control table__quick_search"
+                                   placeholder="البحث السريع ...">
+                        </div> *@
+                        <a asp-action="Create" class="btn btn-primary"> إضافة جلسة </a>
+                    </div>
+                </div>
+                <div class="block-body">
+                    <table class="table table-hover js-dataTable">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(x => x.SessionNameAr)</th>
+                                <th>@Html.DisplayNameFor(x => x.StateAr)</th>
+                               <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th> 
+                                <th>@Html.DisplayNameFor(x => x.TitleAr)</th>
+                                <th>@Html.DisplayNameFor(x => x.Links)</th>
+                                <th>@Html.DisplayNameFor(x => x.NumOfStudents)</th>
+                                <th>@Html.DisplayNameFor(x => x.SessionDate)</th>
+                                <th>@Html.DisplayNameFor(x => x.RegEndDate)</th>
+                                <th>@Html.DisplayNameFor(x => x.RegStartDate)</th>
+                                <th hidden>@Html.DisplayNameFor(x => x.GUID)</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="cursor-pointer" goto="order_details.html">
+
+                                    <td>@Html.DisplayFor(modelItem => item.SessionNameAr)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.StateAr)</td>
+                                     <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td> 
+                                    <td>@Html.DisplayFor(modelItem => item.TitleAr)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Links)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.NumOfStudents)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.SessionDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.RegEndDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.RegStartDate)</td>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.GUID)</td>
+                                    <td class="action_td text-end">
+                                      
+
+                                       <form method="post">
+                                       
+                                        <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
+                                      
+
+                                        <input type="hidden" name="id" value="@item.GUID" />
+                                            <a asp-action="Index" class="btn btn-sm btn-danger" onclick="DisplayAlert(event, this)">حذف</a>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Page Wrap -->
+</body>
+</html>
