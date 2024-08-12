@@ -1,8 +1,8 @@
 ﻿@model ContentViewModel
 
 @{
-    ViewData["Title"] = "Create";
-   
+    ViewData["Title"] = "Edit";
+
 }
 
 <section class="page_wrap">
@@ -10,12 +10,12 @@
 
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">إضافة محتوى </h5>
+                <h5 class="m-0">تعديل محتوى </h5>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="Create" method="post">
+                        <form asp-action="Edit" method="post">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -70,15 +70,19 @@
                                         <label asp-for="Links" class="mb-1">@Html.DisplayNameFor(x => x.Links)</label>
                                         <textarea asp-for="Links" id="Links" name="Links" rows="4" cols="50" class="form-control text-start" placeholder="الروابط"></textarea>
                                         <span asp-validation-for="Links" class="text-danger"></span>
-                               
+                                        <input hidden asp-for="GUID" />
+                                        <input hidden asp-for="Id" />
+                                        
                                     </div>
                                 </div>
                                 <!-- END ITEM -->
                                 <div>
                                     <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                                    </div>
                                 </div>
-                            </div>
                         </form>
+
+
                     </div>
                 </div>
             </div>
@@ -101,7 +105,7 @@
                     text: result,
                     icon: "success"
                 }).then(function () {
-                    window.location.href = '@Url.Action("Index", "Contents")';
+                    window.location.href = '@Url.Action("Index", "Content")';
                 });
                 </Text>
             }
@@ -118,4 +122,4 @@
             }
         }
     </script>
-    }
+}

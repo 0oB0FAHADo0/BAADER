@@ -43,7 +43,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.GUID)</td>
                                     <td class="action_td text-end">
                                         <form method="post">
-                                        <a asp-controller="Contents" asp-action=" " class="btn btn-sm btn-primary">عرض</a>
+                                        <a asp-controller="Content" asp-action=" " class="btn btn-sm btn-primary">عرض</a>
                                         <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
                                         <input type="hidden" name="id" value="@item.GUID" />
                                         <a onclick="DisplayAlert(event, this)" class="btn btn-sm btn-danger">حذف</a>

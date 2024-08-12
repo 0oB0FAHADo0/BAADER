@@ -87,9 +87,9 @@
                                     <td>@Html.DisplayFor(modelItem => item.CollegeId)</td>
                                     <td class="action_td text-end">
                                         <form method="post">
-                                            <a asp-controller="permissions" asp-action="Update" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
+                                            <a asp-controller="permission" asp-action="Update" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
                                             <input type="hidden" name="id" value="@item.GUID" />
-                                            <a asp-controller="permissions" asp-action="Delete" class="btn btn-sm btn-danger" onclick="DisplayAlert(event, this)">حذف</a>
+                                            <a asp-controller="permission" asp-action="Delete" class="btn btn-sm btn-danger" onclick="DisplayAlert(event, this)">حذف</a>
                                         </form>
                                     </td>
                                 </tr>

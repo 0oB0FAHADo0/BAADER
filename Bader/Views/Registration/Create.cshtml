@@ -1,4 +1,4 @@
-﻿@model CollegeViewModel
+﻿@model RegistrationViewModel
 
 
 @section Scripts {
@@ -16,7 +16,7 @@
                     text: result,
                     icon: "success"
                 }).then(function () {
-                    window.location.href = '@Url.Action("Details", "Colleges")';
+                    window.location.href = '@Url.Action("Index", "Registration")';
                 });
                 </Text>
 
@@ -36,13 +36,10 @@
             }
         }
     </script>
-
-
 }
-    
 <div class="block mb-4">
     <div class="block-header border-bottom px-4 py-4">
-        <h5 class="m-0">تعديل الكلية</h5>
+        <h5 class="m-0">إضافة كلية</h5>
     </div>
     <div class="block-body py-5">
         <div class="row justify-content-center">
@@ -52,12 +49,11 @@
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <input type="hidden" asp-for="GUID" />
+
+                                <label asp-for="SessionId" class="mb-1"></label>
+                                <select asp-for="SessionId" asp-items="@ViewBag.SessuonsList"></select>
                                 
-                                
-                                <label asp-for="CollegeNameAr" class="mb-1"></label>
-                                <input type="text" asp-for="CollegeNameAr" class="form-control" />
-                                <span asp-validation-for="CollegeNameAr" class="text-danger"></span>
+                                <span asp-validation-for="SessionId" class="text-danger"></span>
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
@@ -65,9 +61,9 @@
                             <div class="mb-4">
 
 
-                                <label asp-for="CollegeNameEn" class="mb-1"></label>
-                                <input type="text" asp-for="CollegeNameEn" class="form-control" class="form-control text-start" />
-                                <span asp-validation-for="CollegeNameEn" class="text-danger"></span>
+                                <label asp-for="Username" class="mb-1"></label>
+                                <input type="text" asp-for="Username" class="form-control" class="form-control text-start" value="@ViewBag.username"  readonly/>
+                                <span asp-validation-for="Username" class="text-danger"></span>
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
@@ -75,26 +71,39 @@
                         <div class="col-md-6">
                             <div class="mb-4">
 
-                                <label asp-for="CollegeCode" class="mb-1"></label>
-                                <input type="text" asp-for="CollegeCode" class="form-control" />
-                                <span asp-validation-for="CollegeCode" class="text-danger"></span>
+                                <label asp-for="FullNameAr" class="mb-1"></label>
+                                <input type="text" asp-for="FullNameAr" class="form-control" value="@ViewBag.fullnameAr" readonly />
+                                <span asp-validation-for="FullNameAr" class="text-danger"></span>
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
 
-                                <label asp-for="BuildingNum" class="mb-1"></label>
-                                <input type="text" asp-for="BuildingNum" class="form-control" />
-                                <span asp-validation-for="BuildingNum" class="text-danger"></span>
+                                <label asp-for="FullNameEn" class="mb-1"></label>
+                                <input type="text" asp-for="FullNameEn" class="form-control" value="@ViewBag.NameEn" readonly />
+                                <span asp-validation-for="FullNameEn" class="text-danger"></span>
 
 
 
                             </div>
                         </div><!-- END ITEM -->
-                        <div  >
-                            <div><button type="submit" class="btn btn-primary px-5" title="save" >حفظ</button></div>
-                            
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+                                <label asp-for="Phone " class="mb-1"></label>
+                                <input type="text" asp-for="Phone " class="form-control" value="@ViewBag.PhoneNumber" readonly />
+                                <span asp-validation-for="Phone " class="text-danger"></span>
+
+
+
+                            </div>
+                        </div><!-- END ITEM -->
+       
+                        <div>
+                            <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
+
                         </div>
                     </div>
                 </form>
