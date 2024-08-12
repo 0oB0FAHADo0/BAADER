@@ -6,11 +6,11 @@ using Bader.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.CodeAnalysis.Scripting.Hosting;
 
-public class CollegesController : Controller
+public class CollegeController : Controller
 {
     private readonly CollegeDomain _CollegeDomain;
 
-    public CollegesController(CollegeDomain collegeDomain)
+    public CollegeController(CollegeDomain collegeDomain)
     {
         _CollegeDomain = collegeDomain;
     }

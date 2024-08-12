@@ -5,11 +5,11 @@ using System;
 
 namespace Bader.Domain
 {
-    public class SessionsDomain
+    public class SessionDomain
     {
         private readonly BaaderContext _context;
 
-        public SessionsDomain(BaaderContext context)
+        public SessionDomain(BaaderContext context)
         {
             _context = context;
         }

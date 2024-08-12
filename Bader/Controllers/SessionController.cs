@@ -12,11 +12,11 @@ using Bader.ViewModels;
 
 namespace Bader.Controllers
 {
-    public class SessionsController : Controller
+    public class SessionController : Controller
     {
-        private readonly SessionsDomain _SessionsDomain;
+        private readonly SessionDomain _SessionsDomain;
 
-        public SessionsController(SessionsDomain context)
+        public SessionController(SessionDomain context)
         {
             _SessionsDomain = context;
         }

@@ -44,7 +44,7 @@ builder.Services.AddScoped<ContentDomain>();
 builder.Services.AddScoped<PermissionDomain>();
 builder.Services.AddScoped<UserDomain>();// While running don`t forget to type In URL: Users/Create 
 
-builder.Services.AddScoped<SessionsDomain>();
+builder.Services.AddScoped<SessionDomain>();
 
 builder.Services.AddScoped<CourseDomain>();
 builder.Services.AddScoped<RegistrationDomain>();

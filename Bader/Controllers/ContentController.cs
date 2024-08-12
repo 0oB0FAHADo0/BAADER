@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Bader.Controllers
 {
-    public class ContentsController : Controller
+    public class ContentController : Controller
     {
         private readonly ContentDomain _ContentDomain;
 
-        public ContentsController(ContentDomain context)
+        public ContentController(ContentDomain context)
         {
             _ContentDomain = context;
         }

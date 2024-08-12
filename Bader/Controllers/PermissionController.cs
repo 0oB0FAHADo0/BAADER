@@ -12,11 +12,11 @@ using System.Security;
 
 namespace Bader.Controllers
 {
-    public class PermissionsController : Controller
+    public class PermissionController : Controller
     {
         private readonly PermissionDomain _PermissionDomain;
 
-        public PermissionsController(PermissionDomain context)
+        public PermissionController(PermissionDomain context)
         {
             _PermissionDomain = context;
         }

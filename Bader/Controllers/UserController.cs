@@ -11,11 +11,11 @@ using Bader.ViewModels;
 
 namespace Bader.Controllers
 {
-    public class UsersController : Controller
+    public class UserController : Controller
     {
         private readonly UserDomain _UserDomain;
 
-        public UsersController(UserDomain context)
+        public UserController(UserDomain context)
         {
             _UserDomain = context;
         }

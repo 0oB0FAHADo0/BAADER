@@ -9,12 +9,12 @@ using System.Security.Claims;
 
 namespace Bader.Controllers
 {
-    public class RegistrationsController : Controller
+    public class RegistrationController : Controller
     {
 
         private readonly RegistrationDomain _RegistrationDomain;
 
-        public RegistrationsController(RegistrationDomain registrationDomain)
+        public RegistrationController(RegistrationDomain registrationDomain)
         {
             _RegistrationDomain = registrationDomain;
         }
