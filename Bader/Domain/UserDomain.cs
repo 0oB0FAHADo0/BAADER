@@ -72,5 +72,16 @@ namespace Bader.Domain
         {
             return await _context.tblUsers.Where(u => u.Id != id).AnyAsync(u => u.Email == email);
         }
+        public async Task<bool> DeleteUser(int id)
+        {
+            var user = await _context.tblUsers.FindAsync(id);
+            if (user != null)
+            {   //user.isdeleted == true do it to other tables with IsDeleted
+                _context.tblUsers.Update(user);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace Bader.Controllers
             {
                 if (await _UserDomain.EmailExists(user.Id, user.Email))
                 {
-                    ModelState.AddModelError("Email", "البريد الإلكتروني نستخدم بالفعل.");
+                    ModelState.AddModelError("Email", "البريد الإلكتروني أستخدم بالفعل.");
                     return View(user);
                 }
                 await _UserDomain.AddUser(user);

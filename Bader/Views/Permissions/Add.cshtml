@@ -1,0 +1,103 @@
+﻿@model PermissionViewModel
+
+@section Scripts {
+
+    <script>
+        @{
+            if (@ViewData["Successful"] != null)
+            {
+
+                <Text>
+                 var result = '@Html.Raw(ViewData["Successful"])';
+
+                Swal.fire({
+                    title: "تمت العملية",
+                    text: result,
+                    icon: "success"
+                }).then(function () {
+                    window.location.href = '@Url.Action("Index", "Permissions")';
+                });
+                </Text>
+
+            }
+            else if (@ViewData["Falied"] != null)
+            {
+                <Text>
+                 var result = '@Html.Raw(ViewData["Falied"])';
+
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result
+
+                });
+                </Text>
+            }
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<section class="page_wrap">
+    <div class="page_content">
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0"> صفحة الصلاحيات </h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="Add">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Username" class="mb-1">اسم المستخدم</label>
+                                        <input asp-for="Username" type="text" placeholder="Username" class="form-control">
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="RoleId" class="mb-1"></label>
+                                        <select asp-for="RoleId" id="RoleId" class="form-control text-start" asp-items="ViewBag.RolesList"></select>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CollegeId" class="mb-1">رمز الكلية </label>
+                                        <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollegesList"></select>
+                                        <span asp-validation-for="CollegeId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+
+                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
+                                    <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
+                                    <div><<a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+@* 
+@section valid {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+} *@
