@@ -1,0 +1,142 @@
+﻿@model IEnumerable<CourseViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl" data-theme="light">
+<head>
+    <style>
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #454343;
+            border-radius: 8px;
+            padding: 16px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            background-color: #e9f1f0;
+            cursor: pointer;
+        }
+
+            .card:hover {
+                transform: scale(1.05);
+            }
+
+        .card-header {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            background-color: #0F7179;
+            color: white
+        }
+
+        .card-body {
+            margin-bottom: 8px;
+            background-color: #c6e2dd;
+            font-size: 25px;
+            font-weight: 500 ;
+            text-align: center;
+        }
+
+        .card-footer {
+            color: white;
+            background-color: #0F7179;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <section class="page_wrap">
+        <div class="page_content">
+            <div class="block mb-4">
+                <div class="block-header border-bottom px-4 py-3">
+                    <h5 class="m-0">المقررات</h5>
+                    <div class="d-flex gap-2">
+                        <div class="form-group">
+                            <input type="text" id="searchInput" class="form-control table__quick_search" placeholder="البحث السريع ...">
+                        </div>
+                        <div class="form-group">
+                            <select id="levelFilter" class="form-control">
+                                <option value="">اختر المستوى</option>
+                                @foreach (var level in Model.Select(x => x.LevelNameAr))
+                                {
+                                    <option value="@level">@level</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-body">
+                    <div class="card-container" id="courseCards">
+                        @foreach (var item in Model)
+                        {
+                            <div class="card" >
+
+                                <div class="card-header">رقم المقرر : @item.CourseNum</div>
+                                <div class="card-body">
+
+                                    <div>@item.CourseNameAr</div>
+                                    <div>@item.CourseNameEn</div>
+
+                                </div>
+                                <div class="card-footer">@item.LevelNameAr</div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Page Wrap -->
+
+
+
+
+
+
+
+
+
+
+    <script>
+        document.getElementById('levelFilter').addEventListener('change', function () {
+            filterCards();
+        });
+
+        document.getElementById('searchInput').addEventListener('input', function () {
+            filterCards();
+        });
+
+        function filterCards() {
+            var searchInput = document.getElementById('searchInput').value.toLowerCase();
+            var selectedLevel = document.getElementById('levelFilter').value.toLowerCase();
+            var cards = document.querySelectorAll('.card');
+
+            cards.forEach(function (card) {
+                var courseNum = card.querySelector('.card-header').innerText.toLowerCase();
+                var courseNameAr = card.querySelector('.card-body').children[0].innerText.toLowerCase();
+                var courseNameEn = card.querySelector('.card-body').children[1].innerText.toLowerCase();
+                var level = card.getAttribute('data-level').toLowerCase();
+
+                var matchesSearch = courseNum.includes(searchInput) || courseNameAr.includes(searchInput) || courseNameEn.includes(searchInput);
+                var matchesLevel = selectedLevel === "" || level === selectedLevel;
+
+                if (matchesSearch && matchesLevel) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>

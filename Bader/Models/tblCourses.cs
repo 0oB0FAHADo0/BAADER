@@ -11,10 +11,8 @@
         public string CourseNameAr { get; set; }
         public string CourseNameEn { get; set; }
         public ICollection<tblSessions> Sessions { get; set; }
-        public Guid GUID { get; set; }
-        public bool IsDeleted { get; set; }
-
-
+        public Guid GUID { get; set; } = Guid.NewGuid();
+        public bool IsDeleted { get; set; } = false;
 
     }
 }

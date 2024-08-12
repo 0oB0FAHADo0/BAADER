@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bader.Migrations
 {
     [DbContext(typeof(BaaderContext))]
-    [Migration("20240721112521_Baader")]
-    partial class Baader
+    [Migration("20240729102743_BADDER")]
+    partial class BADDER
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,10 +69,7 @@ namespace Bader.Migrations
                     b.Property<string>("ContentsEn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CoursesId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("GUID")
@@ -551,7 +548,9 @@ namespace Bader.Migrations
                 {
                     b.HasOne("Bader.Models.tblCourses", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Course");
                 });

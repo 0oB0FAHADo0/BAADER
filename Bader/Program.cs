@@ -25,7 +25,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                 options.LoginPath = "/account/login";
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);
                 //options.LoginPath = "/accounts/ErrorNotLoggedIn";
-                //options.LogoutPath = "account/logout";
+              /////  //options.LogoutPath = "account/logout";
             });
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAuthorization(options =>
@@ -40,8 +40,15 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.HttpOnly = HttpOnlyPolicy.Always;
     options.Secure = CookieSecurePolicy.None;
 });
+builder.Services.AddScoped<ContentDomain>();
 builder.Services.AddScoped<PermissionDomain>();
 builder.Services.AddScoped<UserDomain>();// While running don`t forget to type In URL: Users/Create 
+
+
+
+builder.Services.AddScoped<CourseDomain>();
+
+builder.Services.AddScoped<CollegeDomain>();
 var app = builder.Build();
 // Configure the HTTP request pipeline.  
 if (!app.Environment.IsDevelopment())

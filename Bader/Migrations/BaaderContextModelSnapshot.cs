@@ -67,10 +67,7 @@ namespace Bader.Migrations
                     b.Property<string>("ContentsEn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CoursesId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("GUID")
@@ -549,7 +546,9 @@ namespace Bader.Migrations
                 {
                     b.HasOne("Bader.Models.tblCourses", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Course");
                 });

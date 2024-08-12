@@ -16,8 +16,8 @@
         public DateTime SessionDate { get; set; }
         public DateTime RegEndDate { get; set; }
         public DateTime RegStartDate { get; set; }
-        public Guid GUID { get; set; }
-        public bool IsDeleted { get; set; }
+        public Guid GUID { get; set; } = Guid.NewGuid();
+        public bool IsDeleted { get; set; } = false;
 
     }
 }

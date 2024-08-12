@@ -1,0 +1,102 @@
+﻿@model IEnumerable<CourseViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl" data-theme="light">
+
+
+<body>
+    <section class="page_wrap">
+        <div class="page_content">
+            <div class="block mb-4">
+                <div class="block-header border-bottom px-4 py-3">
+                    <h5 class="m-0">المقررات</h5>
+                    <div class="d-flex gap-2">
+                        <div class="form-group">
+                            <input type="text" class="form-control table__quick_search"
+                                   placeholder="البحث السريع ...">
+                        </div>
+                        <a asp-action="Create" class="btn btn-primary">إضافة مقرر</a>
+                    </div>
+                </div>
+                <div class="block-body">
+                    <table class="table table-hover js-dataTable">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(x => x.CourseNum)</th>
+                                <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th>
+                                <th>@Html.DisplayNameFor(x => x.CourseNameEn)</th>
+                                <th>@Html.DisplayNameFor(x => x.LevelNameAr)</th>
+                                <th>@Html.DisplayNameFor(x => x.CollageNameAr)</th>
+@*                                 <th>@Html.DisplayNameFor(x => x.GUID)</th>
+ *@                                
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="cursor-pointer" goto="order_details.html">
+                                    <td>@Html.DisplayFor(modelItem => item.CourseNum)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CourseNameEn)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LevelNameAr)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CollageNameAr)</td>
+@*                                     <td>@Html.DisplayFor(modelItem => item.GUID)</td>
+ *@                                 
+                                    <td class="action_td text-end">
+                                        <a  asp-controller=""  class="btn btn-sm btn-primary">عرض</a>
+                                        <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
+                                        <form  method="post" class="d-inline" onsubmit="return Delete(event)">
+                                            <input type="hidden" name="id" value="@item.GUID" />
+                                            <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                                        </form>
+                                    </td>
+                                   
+                                </tr> 
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Page Wrap -->
+
+    <script>
+        async function Delete(event) {
+            event.preventDefault();
+            const result = await Swal.fire({
+                title: "حذف مقرر",
+                text: "هل انت متأكد ؟",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "حذف",
+                cancelButtonText: "إلغاء"
+            });
+            if (result.isConfirmed) {
+                const form = event.target;
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                Swal.fire({
+                    title: data.success ? "نجاح" : "خطأ",
+                    text: data.message,
+                    icon: data.success ? "success" : "error"
+                }).then(() => {
+                    if (data.success) {
+                        window.location.href = '@Url.Action("Index", "Course")';
+                    }
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
