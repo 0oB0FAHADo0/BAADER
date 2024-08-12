@@ -1,0 +1,115 @@
+﻿@model RegistrationViewModel
+
+
+@section Scripts {
+
+    <script>
+        @{
+            if (@ViewData["Successful"] != null)
+            {
+
+                <Text>
+                                    var result = '@Html.Raw(ViewData["Successful"])';
+
+                Swal.fire({
+                    title: "تمت العملية",
+                    text: result,
+                    icon: "success"
+                }).then(function () {
+                    window.location.href = '@Url.Action("Index", "Registrations")';
+                });
+                </Text>
+
+            }
+            else if (@ViewData["Falied"] != null)
+            {
+                <Text>
+                                                            var result = '@Html.Raw(ViewData["Falied"])';
+
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result
+
+                });
+                </Text>
+            }
+        }
+    </script>
+}
+<div class="block mb-4">
+    <div class="block-header border-bottom px-4 py-4">
+        <h5 class="m-0">إضافة كلية</h5>
+    </div>
+    <div class="block-body py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="post">
+                    <div class="row">
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+                                <label asp-for="SessionId" class="mb-1"></label>
+                                <select asp-for="SessionId" asp-items="@ViewBag.SessuonsList"></select>
+                                
+                                <span asp-validation-for="SessionId" class="text-danger"></span>
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+
+                                <label asp-for="Username" class="mb-1"></label>
+                                <input type="text" asp-for="Username" class="form-control" class="form-control text-start" value="@ViewBag.username"  readonly/>
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+                                <label asp-for="FullNameAr" class="mb-1"></label>
+                                <input type="text" asp-for="FullNameAr" class="form-control" value="@ViewBag.fullnameAr" readonly />
+                                <span asp-validation-for="FullNameAr" class="text-danger"></span>
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+                                <label asp-for="FullNameEn" class="mb-1"></label>
+                                <input type="text" asp-for="FullNameEn" class="form-control" value="@ViewBag.NameEn" readonly />
+                                <span asp-validation-for="FullNameEn" class="text-danger"></span>
+
+
+
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+                                <label asp-for="Phone " class="mb-1"></label>
+                                <input type="text" asp-for="Phone " class="form-control" value="@ViewBag.PhoneNumber" readonly />
+                                <span asp-validation-for="Phone " class="text-danger"></span>
+
+
+
+                            </div>
+                        </div><!-- END ITEM -->
+       
+                        <div>
+                            <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
+
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>

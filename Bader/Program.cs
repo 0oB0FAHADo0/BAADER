@@ -46,6 +46,7 @@ builder.Services.AddScoped<UserDomain>();// While running don`t forget to type I
 
 
 builder.Services.AddScoped<CourseDomain>();
+builder.Services.AddScoped<RegistrationDomain>();
 
 builder.Services.AddScoped<CollegeDomain>();
 var app = builder.Build();
