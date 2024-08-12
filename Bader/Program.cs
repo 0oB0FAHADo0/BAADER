@@ -40,10 +40,11 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.HttpOnly = HttpOnlyPolicy.Always;
     options.Secure = CookieSecurePolicy.None;
 });
-builder.Services.AddScoped<permissionDomain>();
+builder.Services.AddScoped<ContentDomain>();
+builder.Services.AddScoped<PermissionDomain>();
 builder.Services.AddScoped<UserDomain>();// While running don`t forget to type In URL: Users/Create 
 
-
+builder.Services.AddScoped<SessionsDomain>();
 
 builder.Services.AddScoped<CourseDomain>();
 builder.Services.AddScoped<RegistrationDomain>();

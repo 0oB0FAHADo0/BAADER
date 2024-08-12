@@ -1,0 +1,28 @@
+﻿@model ContentViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+
+}
+
+<section class="page_wrap">
+    <div class="page_content">
+        <form asp-action="Delete">
+        <input hidden asp-for="GUID" />
+        <input hidden asp-for="Id" />
+
+                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
+                                    <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
+                                    <div></div>
+                                    <div><<a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div>
+                                </div>
+                           
+  </form>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

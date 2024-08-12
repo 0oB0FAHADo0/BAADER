@@ -28,7 +28,19 @@ namespace Bader.Controllers
             return View(await _CourseDomain.GetCourses());
         }
 
-       
+        [HttpGet]
+        public async Task<IActionResult> UserIndexold()
+        {
+            return View(await _CourseDomain.GetSomeCourses());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserIndex()
+        {
+            return View(await _CourseDomain.GetSomeCourses());
+        }
+
+
 
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -121,7 +133,7 @@ namespace Bader.Controllers
 
                     if(check == 1)
                     {
-                        return Json(new { success = true, message = "تمت الإضافة بنجاح" });
+                        return Json(new { success = true, message = "تم التحديث بنجاح" });
                     }
                     else
                     {
@@ -140,7 +152,7 @@ namespace Bader.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Index(Guid id)
         {
 
             try
@@ -149,7 +161,7 @@ namespace Bader.Controllers
 
                 if(check == 1)
                 {
-                    return Json(new { success = true, message = "تمت الحذف بنجاح" });
+                    return Json(new { success = true, message = "تم الحذف بنجاح" });
                 }
                 else
                 {

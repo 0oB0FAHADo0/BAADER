@@ -12,7 +12,5 @@
         public string Links { get; set; }
         public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsDeleted { get; set; } = false;
-
-
     }
 }

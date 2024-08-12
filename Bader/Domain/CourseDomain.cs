@@ -28,7 +28,24 @@ namespace Bader.Domain
                 
             }).ToListAsync();
         }
-       
+
+        public async Task<IEnumerable<CourseViewModel>> GetSomeCourses()
+        {
+            int UserId = 9;
+            return await _context.tblCourses.Include(x => x.Level).Include(x => x.College).Where(x => x.IsDeleted == false).Where(x => x.CollegeId == UserId).Select(x => new CourseViewModel
+            {
+                CourseNum = x.CourseNum,
+                CourseNameAr = x.CourseNameAr,
+                CourseNameEn = x.CourseNameEn,
+                CollegeId = x.CollegeId,
+                LevelId = x.LevelId,
+                CollageNameAr = x.College.CollegeNameAr,
+                LevelNameAr = x.Level.LevelNameAr,
+                GUID = x.GUID,
+
+            }).ToListAsync();
+        }
+
 
         public async Task<IEnumerable<tblColleges>> GetCollages()
         {
