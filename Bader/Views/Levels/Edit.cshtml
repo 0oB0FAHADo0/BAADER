@@ -1,0 +1,99 @@
+﻿@using Bader.ViewModels
+@model LevelViewModel
+
+
+
+@section Scripts {
+
+    <script>
+        @{
+            if (@ViewData["Successful"] != null)
+            {
+
+                <Text>
+                               var result = '@Html.Raw(ViewData["Successful"])';
+
+                Swal.fire({
+                    title: "تمت العملية",
+                    text: result,
+                    icon: "success"
+                }).then(function () {
+                    window.location.href = '@Url.Action("Index", "Levels")';
+                });
+                </Text>
+
+            }
+            else if (@ViewData["Falied"] != null)
+            {
+                <Text>
+                                var result = '@Html.Raw(ViewData["Falied"])';
+
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result
+
+                });
+                </Text>
+            }
+        }
+    </script>
+
+
+}
+
+<div class="block mb-4">
+    <div class="block-header border-bottom px-4 py-4">
+        <h5 class="m-0">تعديل المستوى</h5>
+    </div>
+    <div class="block-body py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="post">
+                    <div class="row">
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <input type="hidden" asp-for="GUID" />
+
+
+                                <label asp-for="LevelNameAr" class="mb-1"></label>
+                                <input type="text" asp-for="LevelNameAr" class="form-control" />
+                                <span asp-validation-for="LevelNameAr" class="text-danger"></span>
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+
+                                <label asp-for="LevelNameEn" class="mb-1"></label>
+                                <input type="text" asp-for="LevelNameEn" class="form-control" class="form-control text-start" />
+                                <span asp-validation-for="LevelNameEn" class="text-danger"></span>
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+                                <label asp-for="LevelNum" class="mb-1"></label>
+                                <input type="text" asp-for="LevelNum" class="form-control" />
+                                <span asp-validation-for="LevelNum" class="text-danger"></span>
+
+
+
+                            </div>
+                        </div><!-- END ITEM -->
+                        <div>
+                            <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
+
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
