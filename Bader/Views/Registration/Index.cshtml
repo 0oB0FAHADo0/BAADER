@@ -13,9 +13,10 @@
                                     var result = '@Html.Raw(ViewData["Successful"])';
 
                 Swal.fire({
-                    title: "تمت العملية",
+                    title: "تمت العملية بنجاح",
                     text: result,
-                    icon: "success"
+                    icon: "success",
+                    confirmButtonText: "تم"
                 });
 
                 </Text>
@@ -28,7 +29,8 @@
                 Swal.fire({
                     icon: "error",
                     title: "فشلت العملية",
-                    text: result
+                    text: result,
+                    confirmButtonText: "تم"
 
                 });
                 </Text>
@@ -45,14 +47,14 @@
             form.querySelector('input[name="CheckWhichFunction"]').value = "cancel";
 
             Swal.fire({
-                title: "هل تريد إلغاء تسجيلك في الجلسة؟",
+                title: "هل تريد إلغاء التسجيل في الجلسة؟",
                 text: "هل انت متأكد!؟",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "نعم الغي التسجيل",
-                cancelButtonText: "كلا"
+                cancelButtonText: "إلغاء"
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
@@ -80,14 +82,14 @@
 }
 <div class="block mb-4">
     <div class="block-header border-bottom px-4 py-3">
-        <h5 class="m-0">التسجيل</h5>
+        <h5 class="m-0">فهرس التسجيل</h5>
         <div class="d-flex gap-2">
             <div class="form-group">
                 <input type="text" class="form-control table__quick_search"
                        placeholder="البحث السريع ...">
             </div>
-
-            <a  asp-action="Create" class="btn btn-primary">
+            
+            <a asp-action="SessionsRegCards" class="btn btn-primary">
                 إضافة تسجيل جديد
             </a>
             
@@ -114,9 +116,7 @@
                         @Html.DisplayNameFor(n => n.FullNameAr)
 
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(n => n.FullNameEn)
-                    </th>
+                   
                     <th>
                         @Html.DisplayNameFor(n => n.Phone)
                     </th>
@@ -149,9 +149,7 @@
                         <td>
                             @item.FullNameAr
                         </td>
-                        <td>
-                            @item.FullNameEn
-                        </td>
+                       
                         <td>
                             @item.Phone
                         </td>
@@ -167,7 +165,8 @@
                                 <input type="hidden" name="CheckWhichFunction" id="CheckWhichFunction" value="" />
                                 <input type="hidden" name="id" value="@item.GUID" />
 
-                              
+
+                                <a asp-action="RegDetails" class="btn btn-sm btn-primary" asp-route-id="@item.GUID">عرض التفاصيل</a>
 
                                 @if (item.RegistrationStateId != 1)
                                 {

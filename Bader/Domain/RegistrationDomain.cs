@@ -18,38 +18,144 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<RegistrationViewModel>> GetAllRegistrations()
         {
-
-            //return _context.tblColleges.Where(x => x.IsDeleted == false).ToList();
-
-            return await _context.tblRegistrations.Include(n => n.RegistrationState).Include(y => y.Session).Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now).Select(x => new RegistrationViewModel
+            try
             {
-
-
-                RegistrationStateId = x.RegistrationStateId,
-                SessionId = x.SessionId,
-                Username = x.Username,
-                FullNameAr = x.FullNameAr,
-                FullNameEn = x.FullNameEn,
-                Phone = x.Phone,
-                RegDate = x.RegDate,
-                GUID = x.GUID,
-                SessionNameAr = x.Session.SessionNameAr,
-                StateAr = x.RegistrationState.StateAr,
-                NumOfStudents=x.Session.NumOfStudents,
-
-
-
-            }).ToListAsync();
-
-
-
+                return await _context.tblRegistrations
+                    .Include(n => n.RegistrationState)
+                    .Include(y => y.Session)
+                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now)
+                    .Select(x => new RegistrationViewModel
+                    {
+                        RegistrationStateId = x.RegistrationStateId,
+                        SessionId = x.SessionId,
+                        Username = x.Username,
+                        FullNameAr = x.FullNameAr,
+                        FullNameEn = x.FullNameEn,
+                        Phone = x.Phone,
+                        RegDate = x.RegDate,
+                        GUID = x.GUID,
+                        SessionNameAr = x.Session.SessionNameAr,
+                        StateAr = x.RegistrationState.StateAr,
+                        NumOfStudents = x.Session.NumOfStudents,
+                    })
+                    .ToListAsync();
+            }
+            catch 
+            {
+                return new List<RegistrationViewModel>();
+           
+            }
         }
-        public async Task<IEnumerable<tblSessions>> GetSessions()
+
+
+
+        public async Task<IEnumerable<tblSessions>> GetSessionsOld()
         {
             return await _context.tblSessions.Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now).ToListAsync();
         }
+        public async Task<IEnumerable<SessionsViewModel>> GetSessions()
+        {
+            try
+            {
+                return await _context.tblSessions.Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now).Include(c => c.SessionState).Include(x => x.Course).Select(x => new SessionsViewModel
+                {
+                    SessionStateId = x.SessionStateId,
+                    SessionNameAr = x.SessionNameAr,
+                    SessionNameEn = x.SessionNameEn,
+                    CourseId = x.CourseId,
+                    TitleAr = x.TitleAr,
+                    TitleEn = x.TitleEn,
+                    Links = x.Links,
+                    NumOfStudents = x.NumOfStudents,
+                    SessionDate = x.SessionDate,
+                    RegEndDate = x.RegEndDate,
+                    RegStartDate = x.RegStartDate,
+                    GUID = x.GUID,
+                    IsDeleted = x.IsDeleted,
+                    StateAr = x.SessionState.StateAr,
+                    CourseNameAr = x.Course.CourseNameAr,
+                }).ToListAsync();
+            }
+            catch
+            {
+                return new List<SessionsViewModel>();
 
+            }
 
+        }
+        public async Task<SessionsViewModel> GetSessionsById(Guid guid)
+        {
+            try
+            {
+                tblSessions session = _context.tblSessions.Where(u => u.IsDeleted == false).Include(e => e.Course).AsNoTracking().FirstOrDefault(tblSessions => tblSessions.GUID == guid);
+                SessionsViewModel sessionsx = new SessionsViewModel();
+                sessionsx.GUID = session.GUID;
+
+                sessionsx.SessionNameAr = session.SessionNameAr;
+                sessionsx.SessionNameEn = session.SessionNameEn;
+                sessionsx.SessionStateId = session.SessionStateId;
+                sessionsx.CourseId = session.CourseId;
+                sessionsx.TitleAr = session.TitleAr;
+                sessionsx.TitleEn = session.TitleEn;
+                sessionsx.Links = session.Links;
+                sessionsx.NumOfStudents = session.NumOfStudents;
+                sessionsx.SessionDate = session.SessionDate;
+                sessionsx.RegEndDate = session.RegEndDate;
+                sessionsx.RegStartDate = session.RegStartDate;
+                sessionsx.CourseNameAr = session.Course.CourseNameAr;
+                return sessionsx;
+            }
+            catch
+            {
+                return null;
+
+            }
+        }
+
+        public async Task<SessionsViewModel> GetSessionByIdNotGuid(int id)
+        {
+            try
+            {
+                tblSessions session = await _context.tblSessions.Include(e => e.Course).FirstOrDefaultAsync(e => e.Id == id);
+
+                SessionsViewModel sessionsx = new SessionsViewModel();
+                sessionsx.GUID = session.GUID;
+
+                sessionsx.SessionNameAr = session.SessionNameAr;
+                sessionsx.SessionNameEn = session.SessionNameEn;
+                sessionsx.SessionStateId = session.SessionStateId;
+                sessionsx.CourseId = session.CourseId;
+                sessionsx.TitleAr = session.TitleAr;
+                sessionsx.TitleEn = session.TitleEn;
+                sessionsx.Links = session.Links;
+                sessionsx.NumOfStudents = session.NumOfStudents;
+                sessionsx.SessionDate = session.SessionDate;
+                sessionsx.RegEndDate = session.RegEndDate;
+                sessionsx.RegStartDate = session.RegStartDate;
+                sessionsx.CourseNameAr = session.Course.CourseNameAr;
+
+                return sessionsx;
+            }
+            catch
+            {
+                return null;
+
+            }
+
+        }
+
+        public int GetSessionsIdByGUId(Guid guid)
+        {
+            try
+            {
+                var seesion = _context.tblSessions.Where(u => u.IsDeleted == false).AsNoTracking().FirstOrDefault(tblSessions => tblSessions.GUID == guid);
+                return seesion.Id;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
 
         public async Task<int> AddRegistration(RegistrationViewModel Reg)
         {
@@ -93,22 +199,30 @@ namespace Bader.Domain
         }
         public async Task<RegistrationViewModel> GetRegByGuid(Guid gudi)
         {
-            var reg = _context.tblRegistrations.AsNoTracking().FirstOrDefault(tblRegistrations => tblRegistrations.GUID == gudi);
+            try
+            {
+                var reg = _context.tblRegistrations.AsNoTracking().FirstOrDefault(tblRegistrations => tblRegistrations.GUID == gudi);
 
 
-            RegistrationViewModel regx = new RegistrationViewModel();
+                RegistrationViewModel regx = new RegistrationViewModel();
 
-            regx.SessionId = reg.SessionId;
-            regx.Username = reg.Username;
-            regx.FullNameAr = reg.FullNameAr;
-            regx.FullNameEn = reg.FullNameEn;
-            regx.Phone = reg.Phone;
-            regx.RegDate = reg.RegDate;
+                regx.SessionId = reg.SessionId;
+                regx.Username = reg.Username;
+                regx.FullNameAr = reg.FullNameAr;
+                regx.FullNameEn = reg.FullNameEn;
+                regx.Phone = reg.Phone;
+                regx.RegDate = reg.RegDate;
 
-            regx.GUID = reg.GUID;
-            regx.RegistrationStateId = reg.RegistrationStateId;
+                regx.GUID = reg.GUID;
+                regx.RegistrationStateId = reg.RegistrationStateId;
 
-            return regx;
+                return regx;
+            }
+            catch
+            {
+                return null;
+
+            }
         }
 
         public Guid GetGuidByUsername(string username)

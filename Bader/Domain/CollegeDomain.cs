@@ -1,4 +1,4 @@
-﻿using Bader.Migrations;
+﻿
 using Bader.Models;
 using Bader.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -19,22 +19,30 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<CollegeViewModel>> GetAllColleges()
         {
-            
-            //return _context.tblColleges.Where(x => x.IsDeleted == false).ToList();
 
-            return await _context.tblColleges.Where(u=> u.IsDeleted==false).Select(x => new CollegeViewModel
+            try
             {
-                
-                CollegeCode= x.CollegeCode,
-                CollegeNameAr = x.CollegeNameAr,
-                CollegeNameEn = x.CollegeNameEn,
-                BuildingNum = x.BuildingNum,
-                GUID = x.GUID,
-                
-            }).ToListAsync();
+
+                return await _context.tblColleges.Where(u => u.IsDeleted == false).Select(x => new CollegeViewModel
+                {
+
+                    CollegeCode = x.CollegeCode,
+                    CollegeNameAr = x.CollegeNameAr,
+                    CollegeNameEn = x.CollegeNameEn,
+                    BuildingNum = x.BuildingNum,
+                    GUID = x.GUID,
+
+                }).ToListAsync();
 
 
-          
+            }
+            catch
+            {
+                return new List<CollegeViewModel>();
+
+            }
+
+
         }
 
         public async Task<int> AddCollege(CollegeViewModel college) 
@@ -70,18 +78,25 @@ namespace Bader.Domain
         
         public async Task<CollegeViewModel> GetCollegebyId(Guid gudi)
         {
-            var college =  _context.tblColleges.AsNoTracking().FirstOrDefault(tblColleges => tblColleges.GUID == gudi);
+            try
+            {
+                var college = _context.tblColleges.AsNoTracking().FirstOrDefault(tblColleges => tblColleges.GUID == gudi);
 
-          
-            CollegeViewModel collegex = new CollegeViewModel();
-         
-            collegex.CollegeNameAr = college.CollegeNameAr;
-            collegex.CollegeNameEn = college.CollegeNameEn;//
-            collegex.CollegeCode = college.CollegeCode;
-            collegex.BuildingNum = college.BuildingNum;
-            collegex.GUID= college.GUID;
-       
-            return  collegex;
+
+                CollegeViewModel collegex = new CollegeViewModel();
+
+                collegex.CollegeNameAr = college.CollegeNameAr;
+                collegex.CollegeNameEn = college.CollegeNameEn;//
+                collegex.CollegeCode = college.CollegeCode;
+                collegex.BuildingNum = college.BuildingNum;
+                collegex.GUID = college.GUID;
+
+                return collegex;
+            }
+            catch
+            {
+                return null;
+            }
         }
         public int GetCollegeIdByGuid(Guid gudi) {
             
@@ -125,7 +140,6 @@ namespace Bader.Domain
         public async Task<bool> BuildingNumExists(int BuildingNum, Guid guid)
         {
 
-            //var CheckExist = _context.tblColleges.SingleOrDefault(n => n.BuildingNum == BuildingNum);
             return await _context.tblColleges.Where(u => u.GUID != guid).Where(u => u.IsDeleted ==false).AnyAsync(u => u.BuildingNum == BuildingNum);
             
         }
