@@ -48,7 +48,7 @@
 @*                                     <td>@Html.DisplayFor(modelItem => item.GUID)</td>
  *@                                 
                                     <td class="action_td text-end">
-                                        <a  asp-controller=""  class="btn btn-sm btn-primary">عرض</a>
+                                       @*  <a  asp-controller=""  class="btn btn-sm btn-primary">عرض</a> *@
                                         <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
                                         <form method="post" class="d-inline" onclick="DisplayAlert(event, this)" >
                                             <input type="hidden" name="id" value="@item.GUID" />

@@ -8,7 +8,7 @@
     <div class="page_content">
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0"> تعديل مقرر</h5>
+                <h5 class="m-0"> تعديل المقرر</h5>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
@@ -20,7 +20,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CourseNameAr" class="mb-1">أسم المقرر بالعربي</label>
+                                        <label asp-for="CourseNameAr" class="mb-1">اسم المقرر بالعربي</label>
                                         <input asp-for="CourseNameAr" type="text" placeholder="رياضيات" class="form-control">
                                         <span asp-validation-for="CourseNameAr" class="text-danger"></span>
                                     </div>
@@ -28,7 +28,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CourseNameEn" class="mb-1">أسم المقرر بالإنجليزي</label>
+                                        <label asp-for="CourseNameEn" class="mb-1">اسم المقرر بالإنجليزي</label>
                                         <input asp-for="CourseNameEn" type="text" placeholder="Math" class="form-control text-start">
                                         <span asp-validation-for="CourseNameEn" class="text-danger"></span>
                                     </div>
@@ -37,7 +37,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="CourseNum" class="mb-1">رمز المقرر</label>
-                                        <input asp-for="CourseNum" type="number" placeholder="1234" class="form-control text-start">
+                                        <input asp-for="CourseNum" type="text" placeholder="1234" class="form-control text-start">
                                         <span asp-validation-for="CourseNum" class="text-danger"></span>
                                     </div>
                                 </div><!-- END ITEM -->
@@ -51,7 +51,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CollegeId" class="mb-1">أسم الكلية</label>
+                                        <label asp-for="CollegeId" class="mb-1">اسم الكلية</label>
                                         <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
 
                                     </div>

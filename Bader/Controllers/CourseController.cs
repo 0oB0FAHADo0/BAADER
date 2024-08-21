@@ -97,6 +97,12 @@ namespace Bader.Controllers
                         return View(model);
 
                     }
+                    if (model.CourseNum <= 0) {
+
+                        ModelState.AddModelError("CourseNum", "خطأ في رمز المقرر");
+                        return View(model);
+
+                    }
 
                     int check = await _CourseDomain.addCourse(model);
                      if(check == 1)
@@ -138,6 +144,13 @@ namespace Bader.Controllers
                     {
                         ModelState.AddModelError("CourseNum", "هذا المقرر موجود مسبقاً");
                         return View(model);
+                    }
+                    if (model.CourseNum <= 0)
+                    {
+
+                        ModelState.AddModelError("CourseNum", "خطأ في رمز المقرر");
+                        return View(model);
+
                     }
 
                     int check = await _CourseDomain.UpdateCourse(model);
