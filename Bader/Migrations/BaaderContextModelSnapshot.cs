@@ -222,7 +222,7 @@ namespace Bader.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CollegeId")
+                    b.Property<int>("CollegeId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("GUID")
@@ -576,7 +576,9 @@ namespace Bader.Migrations
                 {
                     b.HasOne("Bader.Models.tblColleges", "College")
                         .WithMany("Permissions")
-                        .HasForeignKey("CollegeId");
+                        .HasForeignKey("CollegeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Bader.Models.tblRoles", "Role")
                         .WithMany("Permissions")

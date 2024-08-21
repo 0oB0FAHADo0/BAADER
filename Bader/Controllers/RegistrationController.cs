@@ -29,8 +29,8 @@ namespace Bader.Controllers
                      new Claim(ClaimTypes.Role, "nothing"),
                      new Claim(ClaimTypes.NameIdentifier, "nothing"),
                      new Claim("PhoneNumber", "123456789"), 
-                     new Claim("NameAr", "حسن"), 
-                     new Claim("NameEn", "Hassan") 
+                     new Claim("NameAr", "حسن"),
+                     new Claim("NameEn", "Hassan")
                      };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -63,7 +63,7 @@ namespace Bader.Controllers
 
                     if (check == 1)
                     {
-                        ViewData["Successful"] = "تم الغاء التسجيل بنجاح";
+                        ViewData["Successful"] = "تم إلغاء التسجيل بنجاح.";
 
                     }
                     else
@@ -93,7 +93,7 @@ namespace Bader.Controllers
 
                         if (check == 1)
                         {
-                            ViewData["Successful"] = "تم إعادة التسجيل بنجاح";
+                            ViewData["Successful"] = " .تم إعادة التسجيل بنجاح";
 
                         }
                         else
@@ -106,7 +106,7 @@ namespace Bader.Controllers
                     else
                     {
 
-                        ViewData["Falied"] = "الجلسه ممتلئة بالفعل";
+                        ViewData["Falied"] = "الجلسة ممتلئة.";
 
                     }
                 }
@@ -126,7 +126,7 @@ namespace Bader.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(Guid id)
         {
             try
             {
@@ -135,9 +135,18 @@ namespace Bader.Controllers
                 ViewBag.NameEn = User.FindFirst("NameEn").Value;
                 ViewBag.PhoneNumber = User.FindFirst("PhoneNumber").Value;
 
+                var  session = await _RegistrationDomain.GetSessionsById(id);
+                ViewBag.SessionNameAr = session.SessionNameAr;
+                ViewBag.CourseNameAr = session.CourseNameAr;
+                ViewBag.TitleAr = session.TitleAr;
+                ViewBag.NumOfStudents = session.NumOfStudents;
+                ViewBag.SessionDate = session.SessionDate;
+                ViewBag.RegStartDate = session.RegStartDate;
+                ViewBag.RegEndDate = session.RegEndDate;
+                ViewBag.sessionID =  _RegistrationDomain.GetSessionsIdByGUId(session.GUID); 
 
-                var SessionsInfo = await _RegistrationDomain.GetSessions();
-                ViewBag.SessuonsList = new SelectList(SessionsInfo, "Id", "SessionNameAr");
+
+
 
             }
             catch
@@ -153,29 +162,47 @@ namespace Bader.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(RegistrationViewModel Reg)
         {
-            ViewBag.username = User.FindFirst(ClaimTypes.Name).Value;
-            ViewBag.fullnameAr = User.FindFirst("NameAr").Value;
-            ViewBag.NameEn = User.FindFirst("NameEn").Value;
-            ViewBag.PhoneNumber = User.FindFirst("PhoneNumber").Value;
+            
 
+            
             try
             {
+                ViewBag.username = User.FindFirst(ClaimTypes.Name).Value;
+                ViewBag.fullnameAr = User.FindFirst("NameAr").Value;
+                ViewBag.NameEn = User.FindFirst("NameEn").Value;
+                ViewBag.PhoneNumber = User.FindFirst("PhoneNumber").Value;
+                var session = await _RegistrationDomain.GetSessionByIdNotGuid(Reg.SessionId);
+                ViewBag.SessionNameAr = session.SessionNameAr;
+                ViewBag.CourseNameAr = session.CourseNameAr;
+                ViewBag.TitleAr = session.TitleAr;
+                ViewBag.NumOfStudents = session.NumOfStudents;
+                ViewBag.SessionDate = session.SessionDate;
+                ViewBag.RegStartDate = session.RegStartDate;
+                ViewBag.RegEndDate = session.RegEndDate;
+                ViewBag.sessionID = _RegistrationDomain.GetSessionsIdByGUId(session.GUID);
+
                 if (ModelState.IsValid)
                 {
+                    Reg.Username= User.FindFirst(ClaimTypes.Name).Value;
+                    Reg.FullNameAr = User.FindFirst("NameAr").Value;
+                    Reg.FullNameEn=User.FindFirst("NameEn").Value;
+                    Reg.Phone = User.FindFirst("PhoneNumber").Value;
                     if (await _RegistrationDomain.DidUserRegBefore(Reg.Username, Reg.SessionId))
                     {
 
-                        ModelState.AddModelError("Username", "لا يمكن للمستخدم التسجيل بالجلسه اكثر من مره");
-                        var SessionsInfo = await _RegistrationDomain.GetSessions();
-                        ViewBag.SessuonsList = new SelectList(SessionsInfo, "Id", "SessionNameAr");
+                        ModelState.AddModelError("Username", "انت مسجل بالفعل.");
+                        ViewData["NoRegForYou"] = "انت مسجل بالفعل.";
+
+
+
                         return View(Reg);
                     }
                     int checkNumOfStudent = await _RegistrationDomain.CheckCountReg(Reg.SessionId);
                     if (checkNumOfStudent == 0)
                     {
-                        ModelState.AddModelError("SessionId", "الجلسه ممتلئه");
-                        var SessionsInfo = await _RegistrationDomain.GetSessions();
-                        ViewBag.SessuonsList = new SelectList(SessionsInfo, "Id", "SessionNameAr");
+                        
+                        ViewData["NoRegForYou"] = "الجلسة ممتلئة.";
+
                         return View(Reg);
                     }
 
@@ -189,7 +216,7 @@ namespace Bader.Controllers
 
                         if (check == 1)
                         {
-                            ViewData["Successful"] = "تم الغاء التسجيل بنجاح";
+                            ViewData["Successful"] = "تم التسجيل في الجلسة بنجاح.";
 
                         }
                         else
@@ -204,7 +231,7 @@ namespace Bader.Controllers
                         int check = await _RegistrationDomain.AddRegistration(Reg);
                         if (check == 1)
                         {
-                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                            ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
 
                         }
                         else
@@ -227,5 +254,56 @@ namespace Bader.Controllers
 
             return View();
         }
+
+
+
+
+
+        public async Task<IActionResult> SessionsRegCards()
+        {
+            try
+            {
+
+
+
+                var domainInfo = await _RegistrationDomain.GetSessions();
+                return View(domainInfo);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public async Task<IActionResult> RegDetails(Guid id)
+        {
+            try
+            {
+                var reg = await _RegistrationDomain.GetRegByGuid(id);
+
+
+
+                ViewBag.username = reg.Username;
+                ViewBag.fullnameAr = reg.FullNameAr;
+                ViewBag.NameEn = reg.FullNameEn;
+                ViewBag.PhoneNumber = reg.Phone;
+                var session = await _RegistrationDomain.GetSessionByIdNotGuid(reg.SessionId);
+                ViewBag.SessionNameAr = session.SessionNameAr;
+                ViewBag.CourseNameAr = session.CourseNameAr;
+                ViewBag.TitleAr = session.TitleAr;
+                ViewBag.NumOfStudents = session.NumOfStudents;
+                ViewBag.SessionDate = session.SessionDate;
+                ViewBag.RegStartDate = session.RegStartDate;
+                ViewBag.RegEndDate = session.RegEndDate;
+
+
+
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
     }
 }
