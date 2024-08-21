@@ -15,18 +15,27 @@ namespace Bader.Domain
         }
         public async Task<IEnumerable<CourseViewModel>> GetCourses()
         {
-            return await _context.tblCourses.Include(x => x.College).Include( x => x.Level).Where(x => x.IsDeleted == false).Select(x => new CourseViewModel
+            try
             {
-                CourseNum = x.CourseNum,
-                CourseNameAr = x.CourseNameAr,
-                CourseNameEn = x.CourseNameEn,
-                CollegeId = x.CollegeId,
-                LevelId = x.LevelId,
-                CollageNameAr = x.College.CollegeNameAr,
-                LevelNameAr = x.Level.LevelNameAr,
-                GUID = x.GUID,
-                
-            }).ToListAsync();
+                return await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Where(x => x.IsDeleted == false).Select(x => new CourseViewModel
+                {
+                    CourseNum = x.CourseNum,
+                    CourseNameAr = x.CourseNameAr,
+                    CourseNameEn = x.CourseNameEn,
+                    CollegeId = x.CollegeId,
+                    LevelId = x.LevelId,
+                    CollageNameAr = x.College.CollegeNameAr,
+                    LevelNameAr = x.Level.LevelNameAr,
+                    GUID = x.GUID,
+
+                }).ToListAsync();
+            }
+            catch (Exception ex) {
+            
+                return new List<CourseViewModel>();
+
+            }
+            
         }
 
         public async Task<IEnumerable<CourseViewModel>> GetSomeCourses()
@@ -49,12 +58,27 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<tblColleges>> GetCollages()
         {
-            return await _context.tblColleges.Where(u => u.IsDeleted == false).ToListAsync();
+            try
+            {
+                return await _context.tblColleges.Where(u => u.IsDeleted == false).ToListAsync();
+            }
+            catch (Exception ex) {
+                return new List<tblColleges>();
+            }
+            
         } 
         
         public async Task<IEnumerable<tblLevels>> GetLevels()
         {
-            return await _context.tblLevels.Where(u => u.IsDeleted == false).ToListAsync();
+            try
+            {
+                return await _context.tblLevels.Where(u => u.IsDeleted == false).ToListAsync();
+            }
+            catch
+            {
+                return new List<tblLevels>();
+            }
+           
         }
 
 
@@ -78,6 +102,7 @@ namespace Bader.Domain
             }
             catch (Exception ex)
             {
+                
                 return 0;
             }
             

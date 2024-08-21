@@ -13,7 +13,7 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="Edit" onsubmit="return Update(event)">
+                        <form asp-action="Edit">
                             <input type="hidden" asp-for="GUID" />
 @*                             <input type="hidden" asp-for="Id" />
  *@                            <div class="row">
@@ -56,10 +56,10 @@
 
                                     </div>
                                 </div><!-- END ITEM -->
-                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
+                                <div >
                                     <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
                                     <div></div>
-                                    <div><a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div>
+                                  
                                 </div>
                             </div>
                         </form>
@@ -70,41 +70,45 @@
     </div>
 </section>
 
-<script>
-    async function Update(event) {
-        event.preventDefault();
-        const result = await Swal.fire({
-            title: "تحديث بيانات مقرر",
-            text: "هل انت متأكد ؟",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "تحديث",
-            cancelButtonText: "إلغاء"
-        });
-        if (result.isConfirmed) {
-            const form = event.target;
-            const formData = new FormData(form);
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: formData
-            });
-            const data = await response.json();
 
-            Swal.fire({
-                title: data.success ? "نجاح" : "خطأ",
-                text: data.message,
-                icon: data.success ? "success" : "error"
-            }).then(() => {
-                if (data.success) {
-                    window.location.href = '@Url.Action("Index", "Course")';
-                }
-            });
-        }
-    }
-</script>
 
 @section Scripts {
     @{
+
+        <script>
+            @{
+                if (@ViewData["Successful"] != null)
+                {
+
+                    <Text>
+                     var result = '@Html.Raw(ViewData["Successful"])';
+
+                    Swal.fire({
+                        title: "تمت العملية",
+                        text: result,
+                        icon: "success"
+                    }).then(function () {
+                        window.location.href = '@Url.Action("Index", "Course")';
+                    });
+                    </Text>
+
+                }
+                else if (@ViewData["Falied"] != null)
+                {
+                    <Text>
+                    var result = '@Html.Raw(ViewData["Falied"])';
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "فشلت العملية",
+                        text: result
+
+                    });
+                    </Text>
+                }
+            }
+        </script>
+
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }

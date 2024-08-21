@@ -50,7 +50,7 @@
                                     <td class="action_td text-end">
                                         <a  asp-controller=""  class="btn btn-sm btn-primary">عرض</a>
                                         <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
-                                        <form  method="post" class="d-inline" onsubmit="return Delete(event)">
+                                        <form method="post" class="d-inline" onclick="DisplayAlert(event, this)" >
                                             <input type="hidden" name="id" value="@item.GUID" />
                                             <button type="submit" class="btn btn-sm btn-danger">حذف</button>
                                         </form>
@@ -64,39 +64,69 @@
             </div>
         </div>
     </section><!-- End Page Wrap -->
+    @section Scripts {
 
-    <script>
-        async function Delete(event) {
-            event.preventDefault();
-            const result = await Swal.fire({
-                title: "حذف مقرر",
-                text: "هل انت متأكد ؟",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "حذف",
-                cancelButtonText: "إلغاء"
-            });
-            if (result.isConfirmed) {
-                const form = event.target;
-                const formData = new FormData(form);
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
 
+        <script>
+            @{
+                if (@ViewData["Successful"] != null)
+                {
+
+                    <Text>
+                    var result = '@Html.Raw(ViewData["Successful"])';
+
+                    Swal.fire({
+                        title: "تمت العملية",
+                        text: result,
+                        icon: "success"
+                    });
+
+                    </Text>
+                }
+                else if (@ViewData["Falied"] != null)
+                {
+                    <Text>
+                    var result = '@Html.Raw(ViewData["Falied"])';
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "فشلت العملية",
+                        text: result
+
+                    });
+                    </Text>
+                }
+            }
+        </script>
+
+
+        <script>
+            function DisplayAlert(event, element) {
+                event.preventDefault();
+
+                //   const url = element.getAttribute('href');
+                const form = element.closest('form')
                 Swal.fire({
-                    title: data.success ? "نجاح" : "خطأ",
-                    text: data.message,
-                    icon: data.success ? "success" : "error"
-                }).then(() => {
-                    if (data.success) {
-                        window.location.href = '@Url.Action("Index", "Course")';
+                    title: "حذف مقرر",
+                    text: "هل انت متأكد!؟",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "مسح",
+                    cancelButtonText: "الغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // window.location.href = url;
+                        form.submit();
                     }
                 });
+
             }
-        }
-    </script>
+        </script>
+
+
+    }
 
 </body>
 </html>
