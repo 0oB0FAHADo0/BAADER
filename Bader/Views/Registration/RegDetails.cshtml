@@ -1,0 +1,94 @@
+﻿<div class="block mb-4">
+    <div class="block-header border-bottom px-4 py-4">
+        <h5 class="m-0">تفاصيل التسجيل في الجلسة</h5>
+    </div>
+    <div class="block-body py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="post">
+                    <div class="row">
+                        <h5>معلومات المستخدم:</h5>
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">اسم المستخدم</label>
+                                <input type="text" class="form-control" value="@ViewBag.username" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">الاسم الكامل بالعربية</label>
+                                <input type="text" class="form-control" value="@ViewBag.fullnameAr" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+                        
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">رقم الهاتف</label>
+                                <input type="text" class="form-control" value="@ViewBag.PhoneNumber" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+
+                        <h5>معلومات الجلسة:</h5>
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">اسم الجلسة</label>
+                                <input type="text" class="form-control" value="@ViewBag.SessionNameAr" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">اسم المادة</label>
+                                <input type="text" class="form-control" value="@ViewBag.CourseNameAr" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">العنوان</label>
+                                <input type="text" class="form-control" value="@ViewBag.TitleAr" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">عدد الطلاب المسموح به</label>
+                                <input type="text" class="form-control" value="@ViewBag.NumOfStudents" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">تاريخ الجلسة</label>
+                                <input type="text" class="form-control" value="@ViewBag.SessionDate" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">تاريخ بداية التسجيل في الجلسة</label>
+                                <input type="text" class="form-control" value="@ViewBag.RegStartDate" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="mb-1">تاريخ نهاية التسجيل في الجلسة</label>
+                                <input type="text" class="form-control" value="@ViewBag.RegEndDate" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+
+
+                        <div>
+                            <button asp-action="Index" class="btn btn-primary px-5" title="save">العودة إلى الفهرس </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

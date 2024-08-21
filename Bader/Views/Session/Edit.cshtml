@@ -1,0 +1,185 @@
+﻿@model SessionsViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<section class="page_wrap">
+    <div class="page_content">
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">التعديل على البيانات  </h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="Edit">
+                            <input hidden asp-for="GUID" />
+                            <div class="row">
+         
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="SessionNameAr" class="mb-1">اسم الجلسة بالعربي </label>
+                                        <input asp-for="SessionNameAr" type="text" placeholder="" class="form-control">
+                                        <span asp-validation-for="SessionNameAr" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+
+                                <<!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="SessionNameEn" class="mb-1">  اسم الجلسة بالانجليزي  </label>
+                                        <input asp-for="SessionNameEn" type="text" placeholder="" class="form-control">
+                                        <span asp-validation-for="SessionNameEn" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="SessionStateId" class="mb-1">حالة الجلسة </label>
+                                        <select asp-for="SessionStateId" id="SessionStateId" class="form-control text-start" asp-items="ViewBag.SessionList"> </select>
+                                    </div>
+                                </div><!-- END ITEM -->
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CourseId" class="mb-1">اسم المادة  </label>
+                                        <select asp-for="CourseId" id="CourseId" class="form-control text-start" asp-items="ViewBag.CourseList"> </select>
+                                    </div>
+                                </div><!-- END ITEM -->
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="TitleAr" class="mb-1">العنوان بالعربي</label>
+                                        <input asp-for="TitleAr" type="text" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="TitleAr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="TitleEn" class="mb-1">العنوان بالانجليزي</label>
+                                        <input asp-for="TitleEn" type="text" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="TitleEn" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Links" class="mb-1">الرابط</label>
+                                        <input asp-for="Links" type="url" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="Links" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="NumOfStudents" class="mb-1">عددالطلاب</label>
+                                        <input asp-for="NumOfStudents" type="number" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="NumOfStudents" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="SessionDate" class="mb-1">تاريخ الجلسة</label>
+                                        <input asp-for="SessionDate" type="datetime-local" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="SessionDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="RegEndDate" class="mb-1">تاريخ نهايةالتسجيل</label>
+                                        <input asp-for="RegEndDate" type="datetime-local" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="RegEndDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="RegStartDate" class="mb-1">تاريخ بدايةالتسجيل</label>
+                                        <input asp-for="RegStartDate" type="datetime-local" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="RegStartDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+
+                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
+                                    <div><button type="submit" class="btn btn-primary px-5" title="save">تعديل</button></div>
+                                    @* <div>   </div>
+                                    <div><<a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div> *@
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+
+@section Scripts {
+     <script>
+        @{
+            if (@ViewData["Successful"] != null)
+            {
+
+                <Text>
+                                                                       var result = '@Html.Raw(ViewData["Successful"])';
+
+                                   Swal.fire({
+                                       title: "تمت العملية",
+                                       text: result,
+                                       icon: "success"
+                                   }).then(function () {
+                                       window.location.href = '@Url.Action("Index", "Session")';
+                                   });
+                </Text>
+
+            }
+            else if (@ViewData["Falied"] != null)
+            {
+                <Text>
+                                                                                               var result = '@Html.Raw(ViewData["Falied"])';
+
+                                   Swal.fire({
+                                       icon: "error",
+                                       title: "فشلت العملية",
+                                       text: result
+
+                                   });
+                </Text>
+            }
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

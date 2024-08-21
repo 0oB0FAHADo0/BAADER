@@ -1,0 +1,130 @@
+﻿@using Bader.ViewModels
+@model UserViewModel
+@{
+    Layout = null;
+}
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: seagreen;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .wrapper {
+            background-color: white;
+            text-align: center;
+            padding: 30px 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .wrapper h1{
+            font-size: 36px;
+            text-align: center;
+         }
+
+        .wrapper .input-box{
+            width: 100%;
+            height: 50px; 
+            margin: 30px 0; 
+
+         }
+
+        .input-box input {
+                width: 100%;
+                height: 100%;
+                background: #f5f5f5;
+                border: none;
+                outline: none;
+                border: 2px solid rgba(255, 255, 255, .2);
+                border-radius: 40px;
+                box-sizing: border-box;
+                font-size: 16px;
+                color: #333;
+                padding: 20px 45px 20px 20px;
+                text-align: right;
+            }
+
+        .btn {
+            background-color: seagreen;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                width: 100%;
+            }
+
+        .btn:hover {
+                background-color: seagreen;
+                }
+
+        .alert  {
+            color: red;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<div class="wrapper">
+<div class="block mb-4">
+    <div class="block-header border-bottom px-4 py-4">
+        <h1 class="m-0"> تسجيل الدخول</h1>
+    </div>
+    <div class="block-body py-5">
+            
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="post">
+                        @if (ViewData["ErrorMessage"] != null)
+                        {
+                            <div class="alert">
+                                @ViewData["ErrorMessage"]
+                            </div>
+                        }
+                    <div class="input-box">
+                        <!-- Username Field -->
+                        <label asp-for="Username" class="mb-1"></label>
+                        <input type="text" asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="input-box">
+                        <!-- Password Field -->
+                        <label asp-for="Password" class="mb-1"></label>
+                        <input type="password" asp-for="Password" class="form-control text-start" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                     
+                    
+                   <button type="submit" class="btn" title="save">تسجيل الدخول</button>
+
+                        
+                      
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</html>

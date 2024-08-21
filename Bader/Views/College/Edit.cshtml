@@ -1,0 +1,106 @@
+﻿@model CollegeViewModel
+
+
+@section Scripts {
+
+    <script>
+        @{
+            if (@ViewData["Successful"] != null)
+            {
+
+                <Text>
+                                    var result = '@Html.Raw(ViewData["Successful"])';
+
+                Swal.fire({
+                    title: "تمت العملية",
+                    text: result,
+                    icon: "success"
+                }).then(function () {
+                    window.location.href = '@Url.Action("Details", "College")';
+                });
+                </Text>
+
+            }
+            else if (@ViewData["Falied"] != null)
+            {
+                <Text>
+                                                            var result = '@Html.Raw(ViewData["Falied"])';
+
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result
+
+                });
+                </Text>
+            }
+        }
+    </script>
+
+
+}
+    
+<div class="block mb-4">
+    <div class="block-header border-bottom px-4 py-4">
+        <h5 class="m-0">تعديل الكلية</h5>
+    </div>
+    <div class="block-body py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="post">
+                    <div class="row">
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <input type="hidden" asp-for="GUID" />
+                                
+                                
+                                <label asp-for="CollegeNameAr" class="mb-1"></label>
+                                <input type="text" asp-for="CollegeNameAr" class="form-control" />
+                                <span asp-validation-for="CollegeNameAr" class="text-danger"></span>
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+
+                                <label asp-for="CollegeNameEn" class="mb-1"></label>
+                                <input type="text" asp-for="CollegeNameEn" class="form-control" class="form-control text-start" />
+                                <span asp-validation-for="CollegeNameEn" class="text-danger"></span>
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+                                <label asp-for="CollegeCode" class="mb-1"></label>
+                                <input type="text" asp-for="CollegeCode" class="form-control" />
+                                <span asp-validation-for="CollegeCode" class="text-danger"></span>
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+
+                                <label asp-for="BuildingNum" class="mb-1"></label>
+                                <input type="text" asp-for="BuildingNum" class="form-control" />
+                                <span asp-validation-for="BuildingNum" class="text-danger"></span>
+
+
+
+                            </div>
+                        </div><!-- END ITEM -->
+                        <div  >
+                            <div><button type="submit" class="btn btn-primary px-5" title="save" >حفظ</button></div>
+                            
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>

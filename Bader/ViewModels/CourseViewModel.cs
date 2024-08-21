@@ -20,7 +20,7 @@ namespace Bader.ViewModels
         public int LevelId { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("رقم المقرر")]
-        public int CourseNum { get; set; }
+        public string CourseNum { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("الاسم بالعربي")]
         public string CourseNameAr { get; set; }
@@ -35,7 +35,7 @@ namespace Bader.ViewModels
         [DisplayName("مستوى المقرر")]
         public string LevelNameAr { get; set; }
 
-        [DisplayName("أسم الكلية")]
+        [DisplayName("اسم الكلية")]
         public string CollageNameAr { get; set; }
 
         public Guid GUID { get; set; }

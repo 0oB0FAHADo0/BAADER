@@ -1,0 +1,142 @@
+﻿@model UserViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<section class="page_wrap">
+    <div class="page_content">
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">إضافة مستخدم </h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="Create">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Username" class="mb-1">اسم المستخدم</label>
+                                        <input asp-for="Username" type="text" placeholder="" class="form-control">
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="FullNameAr" class="mb-1">الاسم عربي</label>
+                                        <input asp-for="FullNameAr" type="text" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="FullNameAr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="FullNameEn" class="mb-1">الاسم English</label>
+                                        <input asp-for="FullNameEn" type="text" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="FullNameEn" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Password" class="mb-1">كلمة السر</label>
+                                        <input asp-for="Password" type="password" placeholder="********"
+                                               class="form-control text-start">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Email" class="mb-1">Email</label>
+                                        <input asp-for="Email" type="email" placeholder="example@student.kfu.edu"
+                                               class="form-control text-start">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Phone" class="mb-1">رقم الهاتف</label>
+                                        <input asp-for="Phone" type="number" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Usertype" class="mb-1">Select User Type</label>
+                                        <select asp-for="Usertype" id="userType" class="form-control text-start">
+                                            <option value="student">Student</option>
+                                            <option value="faculaty member">Faculaty</option>
+                                            <option value="stuff">Stuff</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CollegeNameAr" class="mb-1">اسم الكلية بالعربي</label>
+                                        <input asp-for="CollegeNameAr" type="text" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="CollegeNameAr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CollegeNameEn" class="mb-1">اسم الكلية بالانجليزي</label>
+                                        <input asp-for="CollegeNameEn" type="text" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="CollegeNameEn" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CollegeCode" class="mb-1">رمز الكلية </label>
+                                        <input asp-for="CollegeCode" type="number" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="CollegeCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
+                            <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
+                                <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
+                                <div>   </div>
+                                <div><<a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div>
+                            </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -7,7 +7,7 @@
         public int CollegeId { get; set; }
         public tblLevels Level { get; set; }
         public int LevelId { get; set; }
-        public int CourseNum { get; set; } 
+        public string CourseNum { get; set; } 
         public string CourseNameAr { get; set; }
         public string CourseNameEn { get; set; }
         public ICollection<tblSessions> Sessions { get; set; }

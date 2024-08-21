@@ -22,15 +22,28 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
             .AddCookie(options =>
             {
                 options.AccessDeniedPath = "/Home/Error";
-                options.LoginPath = "/account/login";
+                options.LoginPath = "/Access/login";
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);
                 //options.LoginPath = "/accounts/ErrorNotLoggedIn";
-              /////  //options.LogoutPath = "account/logout";
+                //options.LogoutPath = "account/logout";
             });
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("MustBeAdmin", p => p.RequireAuthenticatedUser().RequireRole("Admin"));
+
+    //New policies for College Codes
+
+   options.AddPolicy("CollegeCodePolicy15", policy =>
+   {
+       policy.RequireClaim("CollegeCode", "15");
+   });
+
+   options.AddPolicy("CollegeCodePolicy19", policy =>
+   {
+       policy.RequireClaim("CollegeCode", "19");
+   });
+
 });
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -44,11 +57,13 @@ builder.Services.AddScoped<ContentDomain>();
 builder.Services.AddScoped<PermissionDomain>();
 builder.Services.AddScoped<UserDomain>();// While running don`t forget to type In URL: Users/Create 
 
-
+builder.Services.AddScoped<SessionDomain>();
 
 builder.Services.AddScoped<CourseDomain>();
+builder.Services.AddScoped<RegistrationDomain>();
 
 builder.Services.AddScoped<CollegeDomain>();
+builder.Services.AddScoped<LevelDomain>();
 var app = builder.Build();
 // Configure the HTTP request pipeline.  
 if (!app.Environment.IsDevelopment())
@@ -70,7 +85,8 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Access}/{action=Login}/{id?}");
+   //pattern: "{controller=Home}/{action=Index}/{id?}");
 //app.UseEndpoints(endpoints =>
 //{
 //    endpoints.MapControllerRoute(
