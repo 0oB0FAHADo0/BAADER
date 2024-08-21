@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bader.Migrations
 {
-    public partial class addDb : Migration
+    public partial class AddDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,8 +17,8 @@ namespace Bader.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollegeNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CollegeNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CollegeCode = table.Column<int>(type: "int", nullable: false),
-                    BuildingNum = table.Column<int>(type: "int", nullable: false),
+                    CollegeCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BuildingNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -191,7 +191,10 @@ namespace Bader.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Usertype = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Usertype = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CollegeNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CollegeNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CollegeCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -206,7 +209,7 @@ namespace Bader.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollegeId = table.Column<int>(type: "int", nullable: false),
                     LevelId = table.Column<int>(type: "int", nullable: false),
-                    CourseNum = table.Column<int>(type: "int", nullable: false),
+                    CourseNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CourseNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CourseNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),

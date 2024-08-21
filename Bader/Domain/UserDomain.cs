@@ -23,7 +23,10 @@ namespace Bader.Domain
                 FullNameEn = x.FullNameEn,
                 Password = x.Password,
                 Usertype = x.Usertype,
-                Phone = x.Phone,    
+                Phone = x.Phone,
+                CollegeNameAr = x.CollegeNameAr,
+                CollegeNameEn = x.CollegeNameEn,
+                CollegeCode = x.CollegeCode
             }).ToListAsync();
         }
         public async Task AddUser(UserViewModel user)
@@ -36,7 +39,10 @@ namespace Bader.Domain
             userx.FullNameEn = user.FullNameEn;
             userx.Password = user.Password;
             userx.Usertype = user.Usertype;
-            userx.Phone = user.Phone;       
+            userx.Phone = user.Phone;
+            userx.CollegeNameAr = user.CollegeNameAr;
+            userx.CollegeNameEn = user.CollegeNameEn;
+            userx.CollegeCode = user.CollegeCode;
             _context.tblUsers.Add(userx);
             await _context.SaveChangesAsync();
         }
@@ -51,6 +57,9 @@ namespace Bader.Domain
             userx.Password = user.Password;
             userx.Usertype = user.Usertype;
             userx.Phone = user.Phone;
+            userx.CollegeNameAr = user.CollegeNameAr;
+            userx.CollegeNameEn = user.CollegeNameEn;
+            userx.CollegeCode = user.CollegeCode;
             _context.tblUsers.Update(userx);
             await _context.SaveChangesAsync();
         }
@@ -66,7 +75,40 @@ namespace Bader.Domain
             userx.Password = user.Password;
             userx.Usertype = user.Usertype;
             userx.Phone = user.Phone;
+            userx.CollegeNameAr = user.CollegeNameAr;
+            userx.CollegeNameEn = user.CollegeNameEn;
+            userx.CollegeCode = user.CollegeCode;
             return userx;
+        }
+        public async Task<UserViewModel> ValidateUser(string username, string password)
+        {
+            var user = await _context.tblUsers.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+            if (user == null)
+                return null;
+
+            // Fetch the user's role information
+            var userPermission = await _context.tblPermissions.FirstOrDefaultAsync(p => p.Username == username);
+            tblRoles userRole = null;
+            if (userPermission != null)
+            {
+                userRole = await _context.tblRoles.FirstOrDefaultAsync(r => r.Id == userPermission.RoleId);
+            }
+
+            return new UserViewModel
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                FullNameAr = user.FullNameAr,
+                FullNameEn = user.FullNameEn,
+                Password = user.Password,
+                Usertype = user.Usertype,
+                Phone = user.Phone,
+                CollegeNameAr = user.CollegeNameAr,
+                CollegeNameEn = user.CollegeNameEn,
+                CollegeCode = user.CollegeCode,
+                RoleNameEn = userRole?.RoleNameEn ?? "Regular User"
+            };
         }
         public async Task<bool> EmailExists(int id,string email)
         {

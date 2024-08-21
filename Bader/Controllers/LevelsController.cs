@@ -10,90 +10,153 @@ using Bader.Domain;
 using Bader.ViewModels;
 using System.Linq.Expressions;
 using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Authorization;
 
 
-public class LevelsController : Controller
+namespace Bader.Controllers
 {
-    private readonly LevelDomain _LevelDomain;
-
-    public LevelsController(LevelDomain context)
+    [Authorize]
+    public class LevelsController : Controller
     {
-        _LevelDomain = context;
-    }
+        private readonly LevelDomain _LevelDomain;
 
-
-    [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        var DomainInfo = await _LevelDomain.GetLevels();
-
-
-
-        return View(DomainInfo);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Index(Guid id)
-    {
-
-        try
+        public LevelsController(LevelDomain context)
         {
-            LevelViewModel Level = await _LevelDomain.GetLevelbyId(id);
+            _LevelDomain = context;
+        }
+        //[Authorize(Policy = "CollegeCodePolicy19")]
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var DomainInfo = await _LevelDomain.GetLevels();
 
-            Level.IsDeleted = true;
-            int check = await _LevelDomain.UpdateLevel(Level);
 
-            if (check == 1)
+
+            return View(DomainInfo);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(Guid id)
+        {
+
+            try
             {
-                ViewData["Successful"] = "تم الحذف بنجاح";
+                LevelViewModel Level = await _LevelDomain.GetLevelbyId(id);
+
+                Level.IsDeleted = true;
+                int check = await _LevelDomain.UpdateLevel(Level);
+
+                if (check == 1)
+                {
+                    ViewData["Successful"] = "تم الحذف بنجاح";
+
+                }
+                else
+                {
+
+                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+
+                }
 
             }
-            else
+            catch
             {
-
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
 
             }
 
+
+
+            var DomainInfo = await _LevelDomain.GetLevels();
+            return View(DomainInfo);
         }
-        catch
-        {
-            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
 
+
+
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
         }
 
 
-
-        var DomainInfo = await _LevelDomain.GetLevels();
-        return View(DomainInfo);
-    }
-
-
-
-
-    [HttpGet]
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-
-    public async Task<IActionResult> Create(LevelViewModel Level)
-    {
-
-        try
+        public async Task<IActionResult> Create(LevelViewModel Level)
         {
-            if (ModelState.IsValid)
+
+            try
             {
-                if (await _LevelDomain.LevelNumExists(Level.LevelNum, Level.GUID))
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("LevelNum", "رقم المستوى مستخدم من قبل");
-                    return View(Level);
+                    if (await _LevelDomain.LevelNumExists(Level.LevelNum, Level.GUID))
+                    {
+                        ModelState.AddModelError("LevelNum", "رقم المستوى مستخدم من قبل");
+                        return View(Level);
+                    }
+                    int check = await _LevelDomain.AddLevel(Level);
+                    if (check == 1)
+                    {
+                        ViewData["Successful"] = "تم الإضافة بنجاح";
+
+                    }
+                    else
+                    {
+                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+
+                    }
+
+
+
                 }
-                int check = await _LevelDomain.AddLevel(Level);
+            }
+            catch
+            {
+                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+
+            }
+
+
+            return View(Level);
+
+
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+
+            try
+            {
+                LevelViewModel Level = await _LevelDomain.GetLevelbyId(id);
+                return View(Level);
+            }
+            catch
+            {
+
+            }
+
+
+
+
+            return View();
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(LevelViewModel Level)
+        {
+            try
+            {
+
+                int check = await _LevelDomain.UpdateLevel(Level);
                 if (check == 1)
                 {
-                    ViewData["Successful"] = "تم الإضافة بنجاح";
+                    ViewData["Successful"] = "تم التعديل بنجاح";
 
                 }
                 else
@@ -103,78 +166,20 @@ public class LevelsController : Controller
                 }
 
 
-
             }
-        }
-        catch
-        {
-            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-        }
-
-
-        return View(Level);
-
-
-
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> Edit(Guid id)
-    {
-
-        try
-        {
-            LevelViewModel Level = await _LevelDomain.GetLevelbyId(id);
-            return View(Level);
-        }
-        catch
-        {
-
-        }
-
-
-
-
-        return View();
-    }
-
-
-
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(LevelViewModel Level)
-    {
-        try
-        {
-
-            int check = await _LevelDomain.UpdateLevel(Level);
-            if (check == 1)
-            {
-                ViewData["Successful"] = "تم التعديل بنجاح";
-
-            }
-            else
+            catch
             {
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
 
             }
 
 
-        }
-        catch
-        {
-            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+
+
+
+            return View(Level);
 
         }
-
-
-
-
-
-        return View(Level);
-
     }
 }
 

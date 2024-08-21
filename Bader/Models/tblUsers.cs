@@ -10,7 +10,8 @@
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Usertype { get; set; }
-
-
+        public string CollegeNameAr { get; set; }
+        public string CollegeNameEn { get; set; }
+        public string CollegeCode { get; set; }
     }
 }

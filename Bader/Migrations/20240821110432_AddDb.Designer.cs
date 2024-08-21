@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bader.Migrations
 {
     [DbContext(typeof(BaaderContext))]
-    [Migration("20240819084457_addDb")]
-    partial class addDb
+    [Migration("20240821110432_AddDb")]
+    partial class AddDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,11 +32,11 @@ namespace Bader.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("BuildingNum")
-                        .HasColumnType("int");
+                    b.Property<string>("BuildingNum")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CollegeCode")
-                        .HasColumnType("int");
+                    b.Property<string>("CollegeCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CollegeNameAr")
                         .HasColumnType("nvarchar(max)");
@@ -139,8 +139,8 @@ namespace Bader.Migrations
                     b.Property<string>("CourseNameEn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CourseNum")
-                        .HasColumnType("int");
+                    b.Property<string>("CourseNum")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("GUID")
                         .HasColumnType("uniqueidentifier");
@@ -517,6 +517,15 @@ namespace Bader.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CollegeCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CollegeNameAr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CollegeNameEn")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
