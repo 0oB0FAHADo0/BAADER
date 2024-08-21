@@ -35,7 +35,7 @@ namespace Bader.ViewModels
         [DisplayName("مستوى المقرر")]
         public string LevelNameAr { get; set; }
 
-        [DisplayName("أسم الكلية")]
+        [DisplayName("اسم الكلية")]
         public string CollageNameAr { get; set; }
 
         public Guid GUID { get; set; }

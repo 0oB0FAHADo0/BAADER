@@ -83,23 +83,35 @@ namespace Bader.Controllers
         {
             try
             {
+                var Collages = await _CourseDomain.GetCollages();
+                ViewBag.CollagesList = new SelectList(Collages, "Id", "CollegeNameAr");
+
+                var Levels = await _CourseDomain.GetLevels();
+                ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
                 if (ModelState.IsValid)
                 {
                     if (await _CourseDomain.CourseNumEx(model.GUID, model.CourseNum))
                     {
 
-                        return Json(new { success = false , Message = "هذا المقرر موجود مسبقاً." });
+                        ModelState.AddModelError("CourseNum", "هذا المقرر موجود مسبقاً");
+                        return View(model);
+
+                    }
+                    if (model.CourseNum <= 0) {
+
+                        ModelState.AddModelError("CourseNum", "خطأ في رمز المقرر");
+                        return View(model);
 
                     }
 
                     int check = await _CourseDomain.addCourse(model);
-                    if(check == 1)
+                     if(check == 1)
                     {
-                        return Json(new { success = true , message = "تمت الإضافة بنجاح." });
+                        ViewData["Successful"] = "تمت الإضافة بنجاح";
                     }
                     else
                     {
-                        return Json(new { success = false, message = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق" });
+                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
                     }
                     //return RedirectToAction(nameof(Index));
                 }
@@ -107,7 +119,7 @@ namespace Bader.Controllers
             }
             catch
             {
-                return Json(new { success = false, message = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق" });
+                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
             
             
@@ -121,30 +133,42 @@ namespace Bader.Controllers
         {
             try
             {
+                var Collages = await _CourseDomain.GetCollages();
+                ViewBag.CollagesList = new SelectList(Collages, "Id", "CollegeNameAr");
+
+                var Levels = await _CourseDomain.GetLevels();
+                ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
                 if (ModelState.IsValid)
                 {
                     if (await _CourseDomain.CourseNumEx(model.GUID, model.CourseNum))
                     {
-                        return Json(new { success = false , message = "هذا المقرر موجود مسبقاً" });
-                      //  return View(model);
+                        ModelState.AddModelError("CourseNum", "هذا المقرر موجود مسبقاً");
+                        return View(model);
+                    }
+                    if (model.CourseNum <= 0)
+                    {
+
+                        ModelState.AddModelError("CourseNum", "خطأ في رمز المقرر");
+                        return View(model);
+
                     }
 
                     int check = await _CourseDomain.UpdateCourse(model);
 
                     if(check == 1)
                     {
-                        return Json(new { success = true, message = "تم التحديث بنجاح" });
+                        ViewData["Successful"] = "تمت الإضافة بنجاح";
                     }
                     else
                     {
-                        return Json(new { success = false, message = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق" });
+                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
                     }
                    
                 }
             }
             catch {
 
-                return Json(new { success = false, message = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق" });
+                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
             return View(model);
         }
@@ -161,22 +185,26 @@ namespace Bader.Controllers
 
                 if(check == 1)
                 {
-                    return Json(new { success = true, message = "تم الحذف بنجاح" });
+                    ViewData["Successful"] = "تم الحذف بنجاح";
                 }
                 else
                 {
-                    return Json(new { success = false, message = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق" });
+                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
                 }
                // return RedirectToAction(nameof(Index));
             }
             catch (Exception ex) 
             {
-                return Json(new { success = false, message = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق" });
+                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
-            
+
+            var courses = await _CourseDomain.GetCourses();
+            return View (courses);
+
+
         }
 
-
+        
 
     }
 }
