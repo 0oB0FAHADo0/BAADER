@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم  بالنظام</title>
+
+    <!-- Favico -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/imgs/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/imgs/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/imgs/favicon/favicon-16x16.png">
+    <link rel="manifest" href="~/assets/imgs/favicon/site.webmanifest">
+    <link rel="mask-icon" href="~/assets/imgs/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="~/assets/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/assets/css/root.css">
+
+
+
+
+
+
+    <!--------- CSS Liberaries ---------->
+    <!-- Data Table -->
+    <link rel="stylesheet" href="~/assets/lib/DataTable/css/select.dataTables.min.css" />
+    <link rel="stylesheet" href="~/assets/lib/DataTable/css/datatables_customization.css" />
+    <!-- customization -->
+    <link rel="stylesheet" href="~/assets/css/app_rtl.css">
+
+</head>
+<body>
+    <main class="app_wrap">
+        <!-- Start Side Menu -->
+        <nav class="side_menu">
+            <div class="logo_wrap">
+                <img src="~/assets/imgs/KFU_Logo_Dark.png" alt="Logo">
+            </div>
+            <div class="menu_links">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor">
+                                </rect>
+                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                            </svg>
+                            <span>الرئيسية</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="orders.html" class="active">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z"
+                                      fill="currentColor"></path>
+                                <path opacity="0.3"
+                                      d="M12 12C11.4 12 11 11.6 11 11V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V11C13 11.6 12.6 12 12 12Z"
+                                      fill="currentColor"></path>
+                                <path opacity="0.3"
+                                      d="M18.1 21H5.9C5.4 21 4.9 20.6 4.8 20.1L3 13H21L19.2 20.1C19.1 20.6 18.6 21 18.1 21ZM13 18V15C13 14.4 12.6 14 12 14C11.4 14 11 14.4 11 15V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18ZM17 18V15C17 14.4 16.6 14 16 14C15.4 14 15 14.4 15 15V18C15 18.6 15.4 19 16 19C16.6 19 17 18.6 17 18ZM9 18V15C9 14.4 8.6 14 8 14C7.4 14 7 14.4 7 15V18C7 18.6 7.4 19 8 19C8.6 19 9 18.6 9 18Z"
+                                      fill="currentColor"></path>
+                            </svg>
+                            <span>الطلبات</span>
+                        </a>
+                    </li>
+                    <li class="sub_menu">
+                        <a href="JavaScript:void(0)">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.2" fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M11 3C10.4477 3 10 3.44772 10 4V4.56876C10 4.99658 9.71288 5.36825 9.31776 5.53229C8.9225 5.6964 8.46228 5.63386 8.15966 5.33123L7.75734 4.92891C7.36681 4.53839 6.73365 4.53839 6.34312 4.92891L4.92891 6.34313C4.53838 6.73365 4.53838 7.36681 4.92891 7.75734L5.33123 8.15966C5.63386 8.46229 5.6964 8.9225 5.53229 9.31776C5.36825 9.71288 4.99658 10 4.56877 10L4 10C3.44772 10 3 10.4477 3 11V13C3 13.5523 3.44772 14 4 14H4.56879C4.99659 14 5.36825 14.2871 5.53228 14.6822C5.69638 15.0775 5.63384 15.5377 5.33123 15.8403L4.92889 16.2426C4.53837 16.6331 4.53837 17.2663 4.92889 17.6568L6.34311 19.071C6.73363 19.4616 7.36679 19.4616 7.75732 19.071L8.1596 18.6688C8.46223 18.3661 8.92247 18.3036 9.31774 18.4677C9.71287 18.6317 10 19.0034 10 19.4313V20C10 20.5523 10.4477 21 11 21H13C13.5523 21 14 20.5523 14 20V19.4312C14 19.0034 14.2871 18.6318 14.6822 18.4677C15.0775 18.3036 15.5377 18.3661 15.8403 18.6688L16.2426 19.071C16.6331 19.4616 17.2663 19.4616 17.6568 19.071L19.071 17.6568C19.4616 17.2663 19.4616 16.6331 19.071 16.2426L18.6688 15.8403C18.3661 15.5377 18.3036 15.0775 18.4677 14.6822C18.6318 14.2871 19.0034 14 19.4312 14H20C20.5523 14 21 13.5523 21 13V11C21 10.4477 20.5523 10 20 10L19.4313 10C19.0034 10 18.6317 9.71287 18.4677 9.31774C18.3036 8.92247 18.3661 8.46223 18.6688 8.1596L19.071 7.75734C19.4615 7.36681 19.4616 6.73365 19.071 6.34312L17.6568 4.92891C17.2663 4.53838 16.6331 4.53838 16.2426 4.92891L15.8403 5.33123C15.5377 5.63384 15.0775 5.69638 14.6822 5.53228C14.2871 5.36825 14 4.99659 14 4.56879V4C14 3.44772 13.5523 3 13 3H11ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z"
+                                      fill="currentColor"></path>
+                                <path d="M10 4C10 3.44772 10.4477 3 11 3H13C13.5523 3 14 3.44772 14 4V4.56879C14 4.99659 14.2871 5.36825 14.6822 5.53228C15.0775 5.69638 15.5377 5.63384 15.8403 5.33123L16.2426 4.92891C16.6331 4.53838 17.2663 4.53838 17.6568 4.92891L19.071 6.34312C19.4616 6.73365 19.4616 7.36681 19.071 7.75734L18.6688 8.1596C18.3661 8.46223 18.3036 8.92247 18.4677 9.31774C18.6317 9.71287 19.0034 10 19.4313 10L20 10C20.5523 10 21 10.4477 21 11V13C21 13.5523 20.5523 14 20 14H19.4312C19.0034 14 18.6318 14.2871 18.4677 14.6822C18.3036 15.0775 18.3661 15.5377 18.6688 15.8403L19.071 16.2426C19.4616 16.6331 19.4616 17.2663 19.071 17.6568L17.6568 19.071C17.2663 19.4616 16.6331 19.4616 16.2426 19.071L15.8403 18.6688C15.5377 18.3661 15.0775 18.3036 14.6822 18.4677C14.2871 18.6317 14 19.0034 14 19.4312V20C14 20.5523 13.5523 21 13 21H11C10.4477 21 10 20.5523 10 20V19.4313C10 19.0034 9.71287 18.6317 9.31774 18.4677C8.92247 18.3036 8.46223 18.3661 8.1596 18.6688L7.75732 19.071C7.36679 19.4616 6.73363 19.4616 6.34311 19.071L4.92889 17.6568C4.53837 17.2663 4.53837 16.6331 4.92889 16.2426L5.33123 15.8403C5.63384 15.5377 5.69638 15.0775 5.53228 14.6822C5.36825 14.2871 4.99659 14 4.56879 14H4C3.44772 14 3 13.5523 3 13V11C3 10.4477 3.44772 10 4 10L4.56877 10C4.99658 10 5.36825 9.71288 5.53229 9.31776C5.6964 8.9225 5.63386 8.46229 5.33123 8.15966L4.92891 7.75734C4.53838 7.36681 4.53838 6.73365 4.92891 6.34313L6.34312 4.92891C6.73365 4.53839 7.36681 4.53839 7.75734 4.92891L8.15966 5.33123C8.46228 5.63386 8.9225 5.6964 9.31776 5.53229C9.71288 5.36825 10 4.99658 10 4.56876V4Z"
+                                      stroke="currentColor" stroke-width="1.5"></path>
+                                <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
+                                      stroke="currentColor" stroke-width="1.5"></path>
+                            </svg>
+                            <span>إدارة</span>
+                        </a>
+                        <ul>
+                            <li><a href="users.html"><span>المستخدمين</span></a></li>
+                            <li><a href="rules.html"><span>الأدوار</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="btm_link">
+                <button class="btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect opacity="0.3" width="12" height="2" rx="1" transform="matrix(-1 0 0 1 15.5 11)"
+                              fill="currentColor"></rect>
+                        <path d="M13.6313 11.6927L11.8756 10.2297C11.4054 9.83785 11.3732 9.12683 11.806 8.69401C12.1957 8.3043 12.8216 8.28591 13.2336 8.65206L16.1592 11.2526C16.6067 11.6504 16.6067 12.3496 16.1592 12.7474L13.2336 15.3479C12.8216 15.7141 12.1957 15.6957 11.806 15.306C11.3732 14.8732 11.4054 14.1621 11.8756 13.7703L13.6313 12.3073C13.8232 12.1474 13.8232 11.8526 13.6313 11.6927Z"
+                              fill="currentColor"></path>
+                        <path d="M8 5V6C8 6.55228 8.44772 7 9 7C9.55228 7 10 6.55228 10 6C10 5.44772 10.4477 5 11 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H11C10.4477 19 10 18.5523 10 18C10 17.4477 9.55228 17 9 17C8.44772 17 8 17.4477 8 18V19C8 20.1046 8.89543 21 10 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H10C8.89543 3 8 3.89543 8 5Z"
+                              fill="currentColor"></path>
+                    </svg>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </nav><!-- End Side Menu -->
+        <!-- Start Content wrapper -->
+        <section class="side_content">
+            <!-- Start Header Navbar -->
+            <header>
+                <ul class="nav me-auto">
+                    <li class="nav-item me-2">
+                        <a class="nav-link btn btn-dark-rgb text-gray-800 br-10" id="menu_state_btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 26 26"
+                                 stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                                 stroke-linejoin="round">
+                                <path d="M6 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                <path d="M16 4v16" />
+                                <path d="M10 10l2 2l-2 2" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="input-group overflow-hiddin bg-dark-rgb border-0 br-10">
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M20 11v-2a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v5a2 2 0 0 0 2 2h5" />
+                                    <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                    <path d="M20.2 20.2l1.8 1.8" />
+                                </svg>
+                            </span>
+                            <input type="text" class="form-control header__search_input ps-0" placeholder="البحث ...">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="nav d-flex">
+                    <li class="nav-item dropdown ms-2">
+                        <a class="nav-link dropdown-toggle btn btn-dark-rgb text-gray-800 br-10" id="account"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                                 stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
+                                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
+                            </svg>
+                        </a>
+                        <ul class="dropdown-menu account_dd br-stand border-1 border-gray-300 p-4 shadow" aria-labelledby="account">
+                            <li>
+                                <div class="d-flex flex-column">
+                                    <h6 class="mb-0">عبد الرحمن ال عبد اللطيف</h6>
+                                    <small class="text-muted m-0">aaaalatif@kfu.edu.sa</small>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider w-100">
+                            </li>
+                            <li><a class="dropdown-item" href="#">الملف الشخصي</a></li>
+                            <li><a class="dropdown-item" href="#">English Language</a></li>
+                            <li>
+                                <hr class="dropdown-divider w-100">
+                            </li>
+                            <li><a class="dropdown-item" href="#">تسجيل الخروج</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </header><!-- End Header Navbar -->
+            <!-- Start Page Wrap -->
+            <section class="page_wrap">
+                <div class="page_content">
+                    @RenderBody()
+                </div>
+            </section>
+            </div>
+
+            <!-- Start Footer -->
+            <footer class="d-flex justify-content-center align-items-center">
+                <p class="m-0 d-flex justify-content-center">
+                     الحقوق محفوظة لجامعة الملك فيصل 2024 © | تصميم وتطوير
+                    عمادة التعلم الإلكتروني وتقنية المعلومات
+                </p>
+            </footer><!-- End Footer -->
+            <!-- main JS Scripts -->
+            <script src="~/assets/js/jquery-3.4.1.min.js"></script>
+            <script src="~/assets/js/popper.min.js"></script>
+            <script src="~/assets/js/bootstrap.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <!--------- JS Liberaries ---------->
+            <script src="~/assets/lib/DataTable/js/dataTables.min.js"></script>
+
+            <!-- customization -->
+            <script src="~/assets/js/app.js"></script>
+            @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
