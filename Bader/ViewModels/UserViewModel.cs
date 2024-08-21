@@ -25,6 +25,8 @@ namespace Bader.ViewModels
         [DisplayName("الإسم بالإنجليزي")]
         public string FullNameEn { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [StringLength(100)]
+        [DisplayName("كلمة المرور")]
         public string Password { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [StringLength(100)]
@@ -38,5 +40,19 @@ namespace Bader.ViewModels
         [StringLength(100)]
         [DisplayName("نوع المستخدم")]
         public string Usertype { get; set; }
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [StringLength(100)]
+        [DisplayName("اسم الكلية بالعربي")]
+        public string CollegeNameAr { get; set; }
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [StringLength(100)]
+        [DisplayName("اسم الكلية بالانجليزي")]
+        public string CollegeNameEn { get; set; }
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [DisplayName("رمز الكلية")]
+        public string CollegeCode { get; set; }
+        public string RoleNameEn { get; set; }
+
     }
 }
+

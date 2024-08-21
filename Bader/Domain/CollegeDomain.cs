@@ -137,7 +137,7 @@ namespace Bader.Domain
             }
            
         }
-        public async Task<bool> BuildingNumExists(int BuildingNum, Guid guid)
+        public async Task<bool> BuildingNumExists(string BuildingNum, Guid guid)
         {
 
             return await _context.tblColleges.Where(u => u.GUID != guid).Where(u => u.IsDeleted ==false).AnyAsync(u => u.BuildingNum == BuildingNum);

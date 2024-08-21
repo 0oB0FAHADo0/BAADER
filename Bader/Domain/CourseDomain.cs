@@ -83,7 +83,7 @@ namespace Bader.Domain
             
         }
 
-        public async Task<bool> CourseNumEx(Guid id  , int CourseNum)
+        public async Task<bool> CourseNumEx(Guid id  , string CourseNum)
         {
 
             return await _context.tblCourses.Where(u => u.GUID != id).AnyAsync(u => u.CourseNum == CourseNum);
