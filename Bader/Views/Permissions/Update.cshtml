@@ -46,7 +46,7 @@
 
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">إضافة مستخدم </h5>
+                <h5 class="m-0">تعديل الصلاحية </h5>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
@@ -68,8 +68,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="RoleId" class="mb-1">رقم (الدور) الصلاحية</label>
-                                        <input asp-for="RoleId" type="text" placeholder="1 و 2 و 3"
-                                               class="form-control text-start">
+                                        <input asp-for="RoleId" type="text" placeholder="1 و 2 و 3" class="form-control text-start">
                                         <span asp-validation-for="RoleId" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -84,8 +83,7 @@
                                 </div>
                                 <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
                                     <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
-                                    <div><<a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div>
-                                </div>
+                                    </div>
                             </div>
                         </form>
 

@@ -138,6 +138,8 @@ namespace Bader.Controllers
 
         }
 
+
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public async IActionResult Delete(Guid id)
@@ -156,36 +158,36 @@ namespace Bader.Controllers
         //            failed = "حدث خطأ";
         //        }
         //    }
-        //    catch(Exception ex)
+        //    catch (Exception ex)
         //    {
         //        failed = " حدث خطأ";
         //    }
 
         //    return RedirectToAction(nameof(Index), new { successful = successful, failed = failed });
         //}
-        
 
-        // POST: Users/Edit/5
+
+        ////POST: Users/Edit/5
         //    [HttpGet]
-        //    public async Task<IActionResult> Delete(Guid id)
+        //public async Task<IActionResult> Delete(Guid id)
+        //{
+        //    var permission = await _PermissionDomain.GetPermissionIdByG(id);
+        //    if (permission == null)
         //    {
-        //        var permission = await _PermissionDomain.GetPermissionByGUID(id);
-        //        if (permission == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        return View(permission);
+        //        return NotFound();
         //    }
+        //    return View(permission);
+        //}
 
-        //    [HttpPost]
-        //    [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
 
-        //    public async Task<IActionResult> Delete(PermissionViewModel permission)
-        //    {
+        //public async Task<IActionResult> Delete(PermissionViewModel permission)
+        //{
 
-        //        await _PermissionDomain.DeletePermission(permission);
-        //        return RedirectToAction(nameof(Index));
-        //    }
+        //    await _PermissionDomain.DeletePermission(permission);
+        //    return RedirectToAction(nameof(Index));
+        //}
 
 
     }

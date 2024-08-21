@@ -163,6 +163,31 @@ namespace Bader.Domain
             {
                 return 0;
             }
+
+        }
+        //public bool IsRoleNameDuplicate(string name, Guid? Permissionn = null)
+        //{
+        //    if (Permissionn == null)
+        //    {
+        //        // Check if there is any non-deleted permission with the given user name
+        //        return _context.tblPermissions.Any(u => u.Username == name && !u.IsDeleted);
+        //    }
+        //    else
+        //    {
+        //        // Check if there is any non-deleted permission with the given user name
+        //        // excluding the permission with the specified Permissionn ID
+        //        return _context.tblPermissions.Any(u => u.Username == name && u.Id != Permissionn && !u.IsDeleted);
+        //    }
+        //}
+        public int GetPermissionIdByGuid(Guid gudi)
+        {
+
+            var permissions = _context.tblPermissions.AsNoTracking().FirstOrDefault(tblPermissions => tblPermissions.GUID == gudi);
+
+            return permissions.Id;
+
+
+
         }
     }
 }
