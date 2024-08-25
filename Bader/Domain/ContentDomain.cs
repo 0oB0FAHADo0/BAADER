@@ -61,8 +61,21 @@ namespace Bader.Domain
             Contents.TitleEn = content.TitleEn;
             Contents.CourseId = content.CourseId;
             _context.tblContents.Add(Contents);
-            int check=await _context.SaveChangesAsync();
-            return check;
+
+                if (_context.SaveChanges() > 0)
+                {
+                    tblContentsLogs log = new tblContentsLogs();
+                    log.ContentID = Contents.Id;
+                    log.DateTime = DateTime.Now;
+                    log.OperationType = "Add";
+                    log.CreatedBy = "Hussain";
+                    log.AdditionalInfo = $"تم إضافة محتوى مقرر عن طريق هذا المستخدم";
+                    _context.tblContentsLogs.Add(log);
+                }
+
+                int check=await _context.SaveChangesAsync();
+
+                return check;
             }
             catch (Exception e)
             {
@@ -111,7 +124,19 @@ namespace Bader.Domain
             Contents.GUID = content.GUID;
             Contents.IsDeleted = content.IsDeleted;
             _context.tblContents.Update(Contents);
-            int check=await _context.SaveChangesAsync();
+
+                if (_context.SaveChanges() > 0)
+                {
+                    tblContentsLogs log = new tblContentsLogs();
+                    log.ContentID = Contents.Id;
+                    log.DateTime = DateTime.Now;
+                    log.OperationType = "Update";
+                    log.CreatedBy = "Hussain";
+                    log.AdditionalInfo = $"تم تحديث محتوى مقرر عن طريق هذا المستخدم";
+                    _context.tblContentsLogs.Add(log);
+                }
+
+                int check=await _context.SaveChangesAsync();
                 return check;
             }
             catch (Exception e)
@@ -138,7 +163,19 @@ namespace Bader.Domain
             Contents.GUID = contentss.GUID;
             Contents.IsDeleted = true;
             _context.tblContents.Update(Contents);
-            int check=await _context.SaveChangesAsync();
+
+                if (_context.SaveChanges() > 0)
+                {
+                    tblContentsLogs log = new tblContentsLogs();
+                    log.ContentID = Contents.Id;
+                    log.DateTime = DateTime.Now;
+                    log.OperationType = "Delete";
+                    log.CreatedBy = "Hussain";
+                    log.AdditionalInfo = $"تم حذف محتوى مقرر عن طريق هذا المستخدم";
+                    _context.tblContentsLogs.Add(log);
+                }
+
+                int check=await _context.SaveChangesAsync();
                 return check;
             }
             catch (Exception e)
