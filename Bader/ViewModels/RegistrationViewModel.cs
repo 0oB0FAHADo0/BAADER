@@ -47,6 +47,9 @@ namespace Bader.ViewModels
         public int NumOfStudents { get; set; }
 
 
+        [DisplayName("تاريخ الجلسة")]
+        public DateTime SessionDate { get; set; }
+
 
     }
 
