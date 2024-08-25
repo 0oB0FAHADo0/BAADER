@@ -10,6 +10,7 @@ using Bader.Domain;
 using Bader.ViewModels;
 using System.Linq.Expressions;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using System.IO.Compression;
 
 namespace Bader.Controllers
 {
@@ -97,12 +98,14 @@ namespace Bader.Controllers
                         return View(model);
 
                     }
-                    //if (model.CourseNum <= 0) {
+                    if (model.CourseNum == "0")
+                    {
 
-                    //    ModelState.AddModelError("CourseNum", "خطأ في رمز المقرر");
-                    //    return View(model);
+                        ModelState.AddModelError("CourseNum", "خطأ في رمز المقرر");
+                        return View(model);
 
-                    //}
+                    }
+                   
 
                     int check = await _CourseDomain.addCourse(model);
                      if(check == 1)

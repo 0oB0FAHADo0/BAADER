@@ -96,6 +96,17 @@ namespace Bader.Domain
                 course.GUID = Guid.NewGuid();
 
                 _context.tblCourses.Add(course);
+
+               if (_context.SaveChanges() > 0)
+                {
+                    tblCoursesLogs log = new tblCoursesLogs();
+                  //  log.CourseId = course.Id;
+                    log.OperationType = "Add";
+                    log.DateTime = DateTime.Now;
+                    log.CreatedBy = "ALi";
+                    log.AdditionalInfo = "تم إضافة مقرر بواسطة هذا المستخدم";
+                }
+
                 int check = _context.SaveChanges();
 
                 return check;
