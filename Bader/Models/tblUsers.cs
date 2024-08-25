@@ -13,5 +13,6 @@
         public string CollegeNameAr { get; set; }
         public string CollegeNameEn { get; set; }
         public string CollegeCode { get; set; }
+        public string Gender { get; set; }
     }
 }

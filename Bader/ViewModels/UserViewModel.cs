@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace Bader.ViewModels
 {
@@ -52,6 +53,8 @@ namespace Bader.ViewModels
         [DisplayName("رمز الكلية")]
         public string CollegeCode { get; set; }
         public string RoleNameEn { get; set; }
+
+        public string Gender { get; set; }
 
     }
 }
