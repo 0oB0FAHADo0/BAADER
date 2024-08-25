@@ -1,0 +1,189 @@
+﻿@model IEnumerable<RegistrationViewModel>
+
+
+
+@section Scripts {
+
+    <script>
+        @{
+            if (@ViewData["Successful"] != null)
+            {
+
+                <Text>
+                                                    var result = '@Html.Raw(ViewData["Successful"])';
+
+                Swal.fire({
+                    title: "تمت العملية بنجاح",
+                    text: result,
+                    icon: "success",
+                    confirmButtonText: "تم"
+                });
+
+                </Text>
+            }
+            else if (@ViewData["Falied"] != null)
+            {
+                <Text>
+                                                            var result = '@Html.Raw(ViewData["Falied"])';
+
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result,
+                    confirmButtonText: "تم"
+
+                });
+                </Text>
+            }
+        }
+    </script>
+
+
+    <script>
+        function DisplayAlert(event, element) {
+            event.preventDefault();
+
+            const form = element.closest('form');
+            form.querySelector('input[name="CheckWhichFunction"]').value = "cancel";
+
+            Swal.fire({
+                title: "هل تريد إلغاء التسجيل في الجلسة؟",
+                text: "هل انت متأكد!؟",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "نعم الغي التسجيل",
+                cancelButtonText: "إلغاء"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+
+        }
+    </script>
+
+
+    <script>
+        function SendReActive(event, element) {
+            event.preventDefault();
+
+            const form = element.closest('form');
+            form.querySelector('input[name="CheckWhichFunction"]').value = "ReActive";
+            form.submit();
+
+
+
+        }
+    </script>
+
+
+}
+<div class="block mb-4">
+    <div class="block-header border-bottom px-4 py-3">
+        <h5 class="m-0">فهرس التسجيل</h5>
+        <div class="d-flex gap-2">
+            <div class="form-group">
+                <input type="text" class="form-control table__quick_search"
+                       placeholder="البحث السريع ...">
+            </div>
+
+            <a asp-action="SessionsRegCards" class="btn btn-primary">
+                إضافة تسجيل جديد
+            </a>
+
+        </div>
+    </div>
+    <div class="block-body">
+        <table class="table table-hover js-dataTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(n => n.StateAr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.NumOfStudents)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.SessionNameAr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.SessionDate)
+                    </th>
+                   
+                   
+
+
+                    <th class=""></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="cursor-pointer">
+
+
+                        <td>
+                            @item.StateAr
+                        </td>
+                        <td>
+                            @item.NumOfStudents
+                        </td>
+                        <td>
+                            @item.SessionNameAr
+                        </td>
+
+                        <td>
+                            @item.SessionDate
+                        </td>
+                       
+
+
+
+                        <td class="action_td text-end">
+                            <form method="post">
+
+                                <input type="hidden" name="CheckWhichFunction" id="CheckWhichFunction" value="" />
+                                <input type="hidden" name="id" value="@item.GUID" />
+
+
+                                <a asp-action="RegDetails" class="btn btn-sm btn-primary" asp-route-id="@item.GUID">عرض التفاصيل</a>
+
+                                @if (item.RegistrationStateId != 1)
+                                {
+
+
+
+                                    <a class="btn btn-sm btn-success" onclick="SendReActive(event, this)">
+                                        إعادة التفعيل
+                                    </a>
+                                }
+
+
+
+
+                                @if (item.RegistrationStateId != 2)
+                                {
+
+
+                                    <a class="btn btn-sm btn-danger" onclick="DisplayAlert(event, this)">
+                                        الغاء التسجيل
+                                    </a>
+                                }
+
+
+
+
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
