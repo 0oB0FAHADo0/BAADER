@@ -97,8 +97,8 @@ namespace Bader.Domain
 
                 _context.tblCourses.Add(course);
 
-               if (_context.SaveChanges() > 0)
-                {
+                _context.SaveChanges();
+                
                     tblCoursesLogs log = new tblCoursesLogs();
                     log.CourseId = course.Id;
                     log.OperationType = "Add";
@@ -106,7 +106,7 @@ namespace Bader.Domain
                     log.CreatedBy = "ALi";
                     log.AdditionalInfo = $"تم إضافة مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
                     _context.tblCoursesLogs.Add(log);
-                }
+                
 
                 int check = _context.SaveChanges();
 
@@ -148,8 +148,8 @@ namespace Bader.Domain
 
                 _context.tblCourses.Update(course);
 
-                if (_context.SaveChanges() > 0)
-                {
+                _context.SaveChanges();
+                
                     tblCoursesLogs log = new tblCoursesLogs();
                     log.CourseId = course.Id;
                     log.OperationType = "Update";
@@ -157,7 +157,7 @@ namespace Bader.Domain
                     log.CreatedBy = "ALi";
                     log.AdditionalInfo = $"تم تحديث مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
                     _context.tblCoursesLogs.Add(log);
-                }
+                
 
                 int check = _context.SaveChanges();
 
@@ -198,8 +198,8 @@ namespace Bader.Domain
                     course.IsDeleted = true;
                     _context.tblCourses.Update(course);
 
-                    if (_context.SaveChanges() > 0)
-                    {
+                    _context.SaveChanges() ;
+                    
                         tblCoursesLogs log = new tblCoursesLogs();
                         log.CourseId = course.Id;
                         log.OperationType = "Delete";
@@ -207,7 +207,7 @@ namespace Bader.Domain
                         log.CreatedBy = "ALi";
                         log.AdditionalInfo = $"تم حذف مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
                         _context.tblCoursesLogs.Add(log);
-                    }
+                    
 
                     int check = await _context.SaveChangesAsync();
                     return check;

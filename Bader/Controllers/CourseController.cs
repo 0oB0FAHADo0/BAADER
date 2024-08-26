@@ -26,6 +26,7 @@ namespace Bader.Controllers
         }
 
         [HttpGet]
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _CourseDomain.GetCourses());

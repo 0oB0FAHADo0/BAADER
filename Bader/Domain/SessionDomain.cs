@@ -64,8 +64,8 @@ namespace Bader.Domain
                 Sessionx.IsDeleted = Session.IsDeleted;
                 _context.tblSessions.Add(Sessionx);
 
-                if( _context.SaveChanges() > 0)
-                {
+                _context.SaveChanges();
+                
                     tblSessionsLogs log = new tblSessionsLogs();
                     log.SessionId = Sessionx.Id;
                     log.DateTime = DateTime.Now;
@@ -73,7 +73,7 @@ namespace Bader.Domain
                     log.CreatedBy = "Abdullmahsen";
                     log.AdditionalInfo = "تم إضافة جلسة عن طريق هذا المستخدم";
                     _context.tblSessionsLogs.Add(log);
-                }
+                
 
                 int check = await _context.SaveChangesAsync();
                 return check;
@@ -112,8 +112,8 @@ namespace Bader.Domain
 
                 _context.tblSessions.Update(sessionsx);
 
-                if (_context.SaveChanges() > 0)
-                {
+                _context.SaveChanges();
+                
                     tblSessionsLogs log = new tblSessionsLogs();
                     log.SessionId = sessionsx.Id;
                     log.DateTime = DateTime.Now;
@@ -121,7 +121,7 @@ namespace Bader.Domain
                     log.CreatedBy = "Abdullmahsen";
                     log.AdditionalInfo = "تم تحديث جلسة عن طريق هذا المستخدم";
                     _context.tblSessionsLogs.Add(log);
-                }
+                
 
                 int check = await _context.SaveChangesAsync();
                 return check;

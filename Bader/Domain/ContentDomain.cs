@@ -62,8 +62,7 @@ namespace Bader.Domain
             Contents.CourseId = content.CourseId;
             _context.tblContents.Add(Contents);
 
-                if (_context.SaveChanges() > 0)
-                {
+                _context.SaveChanges();              
                     tblContentsLogs log = new tblContentsLogs();
                     log.ContentID = Contents.Id;
                     log.DateTime = DateTime.Now;
@@ -71,7 +70,7 @@ namespace Bader.Domain
                     log.CreatedBy = "Hussain";
                     log.AdditionalInfo = $"تم إضافة محتوى مقرر عن طريق هذا المستخدم";
                     _context.tblContentsLogs.Add(log);
-                }
+                
 
                 int check=await _context.SaveChangesAsync();
 
@@ -125,8 +124,8 @@ namespace Bader.Domain
             Contents.IsDeleted = content.IsDeleted;
             _context.tblContents.Update(Contents);
 
-                if (_context.SaveChanges() > 0)
-                {
+                _context.SaveChanges();
+                
                     tblContentsLogs log = new tblContentsLogs();
                     log.ContentID = Contents.Id;
                     log.DateTime = DateTime.Now;
@@ -134,7 +133,7 @@ namespace Bader.Domain
                     log.CreatedBy = "Hussain";
                     log.AdditionalInfo = $"تم تحديث محتوى مقرر عن طريق هذا المستخدم";
                     _context.tblContentsLogs.Add(log);
-                }
+                
 
                 int check=await _context.SaveChangesAsync();
                 return check;
@@ -164,8 +163,8 @@ namespace Bader.Domain
             Contents.IsDeleted = true;
             _context.tblContents.Update(Contents);
 
-                if (_context.SaveChanges() > 0)
-                {
+                _context.SaveChanges();
+                
                     tblContentsLogs log = new tblContentsLogs();
                     log.ContentID = Contents.Id;
                     log.DateTime = DateTime.Now;
@@ -173,7 +172,7 @@ namespace Bader.Domain
                     log.CreatedBy = "Hussain";
                     log.AdditionalInfo = $"تم حذف محتوى مقرر عن طريق هذا المستخدم";
                     _context.tblContentsLogs.Add(log);
-                }
+                
 
                 int check=await _context.SaveChangesAsync();
                 return check;
