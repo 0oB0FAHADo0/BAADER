@@ -11,9 +11,11 @@ using Bader.ViewModels;
 using System.Linq.Expressions;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using System.IO.Compression;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bader.Controllers
 {
+    [Authorize]
     public class CourseController : Controller
     {
         private readonly CourseDomain _CourseDomain;
@@ -35,13 +37,7 @@ namespace Bader.Controllers
             return View(await _CourseDomain.GetSomeCourses());
         }
 
-        [HttpGet]
-        public async Task<IActionResult> UserIndex()
-        {
-            return View(await _CourseDomain.GetSomeCourses());
-        }
-
-
+      
 
         [HttpGet]
         public async Task<IActionResult> Create()

@@ -40,7 +40,7 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<CourseViewModel>> GetSomeCourses()
         {
-            int UserId = 9;
+            int UserId = 1;
             return await _context.tblCourses.Include(x => x.Level).Include(x => x.College).Where(x => x.IsDeleted == false).Where(x => x.CollegeId == UserId).Select(x => new CourseViewModel
             {
                 CourseNum = x.CourseNum,
