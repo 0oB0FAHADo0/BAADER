@@ -1,5 +1,6 @@
 ﻿using Bader.Models;
 using Bader.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -62,6 +63,18 @@ namespace Bader.Domain
                 Sessionx.GUID = Guid.NewGuid();
                 Sessionx.IsDeleted = Session.IsDeleted;
                 _context.tblSessions.Add(Sessionx);
+
+                if( _context.SaveChanges() > 0)
+                {
+                    tblSessionsLogs log = new tblSessionsLogs();
+                    log.SessionId = Sessionx.Id;
+                    log.DateTime = DateTime.Now;
+                    log.OperationType = "Add";
+                    log.CreatedBy = "Abdullmahsen";
+                    log.AdditionalInfo = "تم إضافة جلسة عن طريق هذا المستخدم";
+                    _context.tblSessionsLogs.Add(log);
+                }
+
                 int check = await _context.SaveChangesAsync();
                 return check;
             }
@@ -98,6 +111,18 @@ namespace Bader.Domain
                 sessionsx.IsDeleted = session.IsDeleted;
 
                 _context.tblSessions.Update(sessionsx);
+
+                if (_context.SaveChanges() > 0)
+                {
+                    tblSessionsLogs log = new tblSessionsLogs();
+                    log.SessionId = sessionsx.Id;
+                    log.DateTime = DateTime.Now;
+                    log.OperationType = "Update";
+                    log.CreatedBy = "Abdullmahsen";
+                    log.AdditionalInfo = "تم تحديث جلسة عن طريق هذا المستخدم";
+                    _context.tblSessionsLogs.Add(log);
+                }
+
                 int check = await _context.SaveChangesAsync();
                 return check;
             }

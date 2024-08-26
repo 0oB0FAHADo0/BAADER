@@ -176,6 +176,19 @@ namespace Bader.Domain
 
 
                 _context.tblRegistrations.Add(Regx);
+
+                if( _context.SaveChanges() > 0)
+                {
+                    tblRegistrationsLogs log = new tblRegistrationsLogs();
+                    log.RegistrationId = Regx.Id;
+                    log.DateTime = DateTime.Now;
+                    log.CreatedBy = "Hassan";
+                    log.OperationType = "Add";
+                    log.RegistrationState = "مقبول";
+                    log.AdditionalInfo = "تم تقديم طلب عن طريق هذا المستخدم";
+                    _context.tblRegistrationsLogs.Add(log);
+                }
+
                 int check = await _context.SaveChangesAsync();
                 return check;
             }
@@ -258,6 +271,19 @@ namespace Bader.Domain
                 Regx.RegistrationStateId = Reg.RegistrationStateId;
                 Regx.RegDate = Reg.RegDate;
                 _context.tblRegistrations.Update(Regx);
+
+                if (_context.SaveChanges() > 0)
+                {
+                    tblRegistrationsLogs log = new tblRegistrationsLogs();
+                    log.RegistrationId = Regx.Id;
+                    log.DateTime = DateTime.Now;
+                    log.CreatedBy = "Hassan";
+                    log.OperationType = "Update";
+                    log.RegistrationState = "مقبول";
+                    log.AdditionalInfo = "تم تعديل طلب عن طريق هذا المستخدم";
+                    _context.tblRegistrationsLogs.Add(log);
+                }
+
                 int check = await _context.SaveChangesAsync();
                 return check;
             }
