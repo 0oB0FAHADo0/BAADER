@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Bader.Models;
 using Bader.Domain;
 using Bader.ViewModels;
+using System.Security.Claims;
 
 namespace Bader.Controllers
 {
@@ -32,7 +33,7 @@ namespace Bader.Controllers
             SessionsViewModel session = await _SessionsDomain.GetSessionsById(Id);
             session.IsDeleted = true;
 
-            int check = await _SessionsDomain.UpdateSessions(session);
+            int check = await _SessionsDomain.UpdateSessions(session , User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             if (check == 1)
             {
@@ -82,7 +83,7 @@ namespace Bader.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    int check = await _SessionsDomain.AddSessions(session); ;
+                    int check = await _SessionsDomain.AddSessions(session, User.FindFirst(ClaimTypes.NameIdentifier).Value); 
                     if (check == 1)
                     {
                         ViewData["Successful"] = "تمت الإضافة بنجاح";
@@ -134,7 +135,7 @@ namespace Bader.Controllers
 
                 if (ModelState.IsValid)
                   {
-                    int check = await _SessionsDomain.UpdateSessions(session);
+                    int check = await _SessionsDomain.UpdateSessions(session, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     if (check == 1)
                     {
                         ViewData["Successful"] = "تم التعديل بنجاح";

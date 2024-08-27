@@ -43,7 +43,7 @@ namespace Bader.Domain
         {//
             return await _context.tblCourses.Where(u => u.IsDeleted == false).ToListAsync();
         }
-        public async Task <int> AddSessions(SessionsViewModel Session)
+        public async Task <int> AddSessions(SessionsViewModel Session , String username)
         {
             try
             {
@@ -70,8 +70,8 @@ namespace Bader.Domain
                     log.SessionId = Sessionx.Id;
                     log.DateTime = DateTime.Now;
                     log.OperationType = "Add";
-                    log.CreatedBy = "Abdullmahsen";
-                    log.AdditionalInfo = "تم إضافة جلسة عن طريق هذا المستخدم";
+                    log.CreatedBy = username;
+                    log.AdditionalInfo = $"تم إضافة {Sessionx.SessionNameAr} عن طريق هذا المستخدم";
                     _context.tblSessionsLogs.Add(log);
                 
 
@@ -89,7 +89,7 @@ namespace Bader.Domain
             var seesion = _context.tblSessions.Where(u => u.IsDeleted == false).AsNoTracking().FirstOrDefault(tblSessions=> tblSessions.GUID== guid);
             return seesion.Id;
         }
-        public async Task <int> UpdateSessions(SessionsViewModel session)
+        public async Task <int> UpdateSessions(SessionsViewModel session, String username)
         {
             try
             {
@@ -118,8 +118,8 @@ namespace Bader.Domain
                     log.SessionId = sessionsx.Id;
                     log.DateTime = DateTime.Now;
                     log.OperationType = "Update";
-                    log.CreatedBy = "Abdullmahsen";
-                    log.AdditionalInfo = "تم تحديث جلسة عن طريق هذا المستخدم";
+                    log.CreatedBy = username;
+                    log.AdditionalInfo = $"تم تحديث {sessionsx.SessionNameAr} عن طريق هذا المستخدم";
                     _context.tblSessionsLogs.Add(log);
                 
 
