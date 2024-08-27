@@ -109,5 +109,7 @@ namespace Bader.ViewModels
         //end
 
         public bool IsDeleted { get; set; }
+
+        public string Gender { get; set; }
     }
 }
