@@ -2,6 +2,7 @@
 using Bader.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace Bader.Controllers
 {
@@ -26,7 +27,7 @@ namespace Bader.Controllers
             {
                 ContentViewModel Content = await _ContentDomain.GetContentByGUID(id);
                 Content.IsDeleted = true;
-                int check = await _ContentDomain.UpdateContent(Content);
+                int check = await _ContentDomain.UpdateContent(Content, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 if (check == 1)
                 {
                     ViewData["Successful"] = "تم الحذف بنجاح";
@@ -57,7 +58,7 @@ namespace Bader.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int check =await _ContentDomain.AddContent(content);
+                    int check =await _ContentDomain.AddContent(content , User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     //return RedirectToAction(nameof(Index));
                     if (check == 1)
                     {
@@ -103,7 +104,7 @@ namespace Bader.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int check=await _ContentDomain.UpdateContent(content);
+                    int check=await _ContentDomain.UpdateContent(content , User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     //return RedirectToAction(nameof(Index));
                     if (check == 1)
                     {
@@ -144,7 +145,7 @@ namespace Bader.Controllers
         public async Task<IActionResult> Delete(ContentViewModel content)
         {
  
-                await _ContentDomain.DeleteContent(content);
+                await _ContentDomain.DeleteContent(content, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 return RedirectToAction(nameof(Index));
 
         }

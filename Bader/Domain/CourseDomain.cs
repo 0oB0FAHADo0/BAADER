@@ -127,7 +127,7 @@ namespace Bader.Domain
         }
 
 
-        public async Task<int> UpdateCourse(CourseViewModel cou)
+        public async Task<int> UpdateCourse(CourseViewModel cou , String username)
         {
             try
             {
@@ -154,7 +154,7 @@ namespace Bader.Domain
                     log.CourseId = course.Id;
                     log.OperationType = "Update";
                     log.DateTime = DateTime.Now;
-                    log.CreatedBy = "ALi";
+                    log.CreatedBy = username;
                     log.AdditionalInfo = $"تم تحديث مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
                     _context.tblCoursesLogs.Add(log);
                 
@@ -188,7 +188,7 @@ namespace Bader.Domain
             return course;
         }
 
-        public async Task<int> DeleteCourse(Guid id)
+        public async Task<int> DeleteCourse(Guid id , String username)
         {
             try
             {
@@ -204,7 +204,7 @@ namespace Bader.Domain
                         log.CourseId = course.Id;
                         log.OperationType = "Delete";
                         log.DateTime = DateTime.Now;
-                        log.CreatedBy = "ALi";
+                        log.CreatedBy = username;
                         log.AdditionalInfo = $"تم حذف مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
                         _context.tblCoursesLogs.Add(log);
                     
