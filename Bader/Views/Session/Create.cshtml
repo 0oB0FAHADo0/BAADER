@@ -44,7 +44,22 @@
                                         <label asp-for="SessionStateId" class="mb-1">حالة الجلسة </label>
                                         <select asp-for="SessionStateId" id="SessionStateId" class="form-control text-start" asp-items="ViewBag.SessionList"> </select>
                                     </div>
-                                </div><!-- END ITEM -->
+                                </div>
+                                <!-- END ITEM -->
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Gender" class="mb-1">الجنس</label>
+                                        <select asp-for="Gender" class="form-control">
+                                            <option value="">اختر الجنس</option>
+                                            <option value="ذكر">ذكر</option>
+                                            <option value="أنثى">أنثى</option>
+                                        </select>
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
 
                                 <!-- START ITEM -->
                                 <div class="col-md-6">

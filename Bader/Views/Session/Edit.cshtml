@@ -21,13 +21,13 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="SessionNameAr" class="mb-1">اسم الجلسة بالعربي </label>
+                                        <label asp-for="SessionNameAr" class="mb-1"> اسم الجلسة بالعربي </label>
                                         <input asp-for="SessionNameAr" type="text" placeholder="" class="form-control">
                                         <span asp-validation-for="SessionNameAr" class="text-danger"></span>
                                     </div>
                                 </div><!-- END ITEM -->
 
-                                <<!-- START ITEM -->
+                                <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="SessionNameEn" class="mb-1">  اسم الجلسة بالانجليزي  </label>
@@ -42,6 +42,20 @@
                                         <select asp-for="SessionStateId" id="SessionStateId" class="form-control text-start" asp-items="ViewBag.SessionList"> </select>
                                     </div>
                                 </div><!-- END ITEM -->
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Gender" class="mb-1">الجنس</label>
+                                        <select asp-for="Gender" class="form-control">
+                                            <option value="">اختر الجنس</option>
+                                            <option value="ذكر">ذكر</option>
+                                            <option value="أنثى">أنثى</option>
+                                        </select>
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
 
                                 <!-- START ITEM -->
                                 <div class="col-md-6">

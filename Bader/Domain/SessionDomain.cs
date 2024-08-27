@@ -21,6 +21,7 @@ namespace Bader.Domain
                 SessionStateId = x.SessionStateId,
                 SessionNameAr = x.SessionNameAr,
                 SessionNameEn = x.SessionNameEn,
+                Gender = x.Gender,
                 CourseId = x.CourseId,
                 TitleAr = x.TitleAr,
                 TitleEn = x.TitleEn,
@@ -52,6 +53,7 @@ namespace Bader.Domain
                 Sessionx.SessionStateId = Session.SessionStateId;
                 Sessionx.SessionNameAr = Session.SessionNameAr;
                 Sessionx.SessionNameEn = Session.SessionNameEn;
+                Sessionx.Gender = Session.Gender;
                 Sessionx.CourseId = Session.CourseId;
                 Sessionx.TitleAr = Session.TitleAr;
                 Sessionx.TitleEn = Session.TitleEn;
@@ -100,6 +102,7 @@ namespace Bader.Domain
                 sessionsx.SessionNameAr = session.SessionNameAr;
                 sessionsx.SessionNameEn = session.SessionNameEn;
                 sessionsx.SessionStateId = session.SessionStateId;
+                sessionsx.Gender = session.Gender;
                 sessionsx.CourseId = session.CourseId;
                 sessionsx.TitleAr = session.TitleAr;
                 sessionsx.TitleEn = session.TitleEn;
