@@ -23,7 +23,7 @@ namespace Bader.Domain
                 return await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
                     .Include(y => y.Session)
-                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now)
+                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId==1)
                     .Select(x => new RegistrationViewModel
                     {
                         RegistrationStateId = x.RegistrationStateId,

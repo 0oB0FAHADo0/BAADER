@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using System.IO.Compression;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Bader.Controllers
 {
@@ -104,7 +105,7 @@ namespace Bader.Controllers
                     }
                    
 
-                    int check = await _CourseDomain.addCourse(model);
+                    int check = await _CourseDomain.addCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                      if(check == 1)
                     {
                         ViewData["Successful"] = "تمت الإضافة بنجاح";

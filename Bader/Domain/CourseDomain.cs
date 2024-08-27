@@ -83,7 +83,7 @@ namespace Bader.Domain
 
 
 
-        public async Task<int> addCourse(CourseViewModel cou)
+        public async Task<int> addCourse(CourseViewModel cou,string username)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace Bader.Domain
                     log.CourseId = course.Id;
                     log.OperationType = "Add";
                     log.DateTime = DateTime.Now;
-                    log.CreatedBy = "ALi";
+                    log.CreatedBy = username;
                     log.AdditionalInfo = $"تم إضافة مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
                     _context.tblCoursesLogs.Add(log);
                 
