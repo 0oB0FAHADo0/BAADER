@@ -27,7 +27,9 @@ namespace Bader.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _CourseDomain.GetSomeCourses());
+            var collagecode = User.FindFirst("CollegeCode").Value;
+
+            return View(await _CourseDomain.GetSomeCourses(collagecode));
         }
     }
 }

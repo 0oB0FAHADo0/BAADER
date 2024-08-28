@@ -38,10 +38,13 @@ namespace Bader.Domain
             
         }
 
-        public async Task<IEnumerable<CourseViewModel>> GetSomeCourses()
+        public async Task<IEnumerable<CourseViewModel>> GetSomeCourses(string collagecode)
         {
-            int UserId = 1;
-            return await _context.tblCourses.Include(x => x.Level).Include(x => x.College).Where(x => x.IsDeleted == false).Where(x => x.CollegeId == UserId).Select(x => new CourseViewModel
+           // int UserId = 1;
+
+
+
+            return await _context.tblCourses.Include(x => x.Level).Include(x => x.College).Where(x => x.IsDeleted == false).Where(x => x.College.CollegeCode == collagecode ).Select(x => new CourseViewModel
             {
                 CourseNum = x.CourseNum,
                 CourseNameAr = x.CourseNameAr,

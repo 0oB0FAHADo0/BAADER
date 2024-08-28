@@ -34,10 +34,10 @@ namespace Bader.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UserIndexold()
-        {
-            return View(await _CourseDomain.GetSomeCourses());
-        }
+        //public async Task<IActionResult> UserIndexold()
+        //{
+        //    return View(await _CourseDomain.GetSomeCourses());
+        //}
 
       
 

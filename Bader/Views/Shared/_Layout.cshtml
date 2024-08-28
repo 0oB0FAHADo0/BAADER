@@ -60,7 +60,7 @@
                             <span>الرئيسية</span>
                         </a>
                     </li>
-                    <li>
+                    @* <li>
                         <a href="orders.html" >
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -75,7 +75,7 @@
                             </svg>
                             <span>الطلبات</span>
                         </a>
-                    </li>
+                    </li> *@
                     <li class="sub_menu">
                         <a href="JavaScript:void(0)">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
@@ -100,20 +100,21 @@
                         <ul>
                             @if(userrole == "Super Admin" || userrole == "Admin")
                             {
-                                <li><a href="users.html"><span>إدارة المستخدمين</span></a></li>
-                                <li><a href="rules.html"><span>إدارة المقررات</span></a></li>
-                                <li><a href="rules.html"><span>إدارة الجلسات</span></a></li>
+                                <li><a href="@Url.Action("Index", "Permission")"><span>إدارة المستخدمين</span></a></li>
+                                <li><a href="@Url.Action("Index", "Course")"><span>إدارة المقررات</span></a></li>
+                                <li><a href="@Url.Action("Index", "Session")"><span>إدارة الجلسات</span></a></li>
+                                <li><a href="@Url.Action("Index", "Registration")"><span>إدارة التسجيل</span></a></li>
                                 @if (userrole == "Super Admin")
                                 {
-                                    <li><a href="rules.html"><span>إدارة الكليات</span></a></li>
+                                    <li><a href="@Url.Action("Details", "College")"><span>إدارة الكليات</span></a></li>
                                 }
 
                             }
                             @if(userrole == "Student" || userrole == null)
                             {
-                                <li><a href="users.html"><span>المقررات</span></a></li>
-                                <li><a href="users.html"><span>التسجيل في الجلسات</span></a></li>
-                                <li><a href="users.html"><span>جلساتي</span></a></li>
+                                <li><a href="@Url.Action("Index", "UserCourse")"><span>المقررات</span></a></li>
+                                <li><a href="@Url.Action("SessionsRegCards", "UserRegistration")"><span>التسجيل في الجلسات</span></a></li>
+                                <li><a href="@Url.Action("UserIndex", "UserRegistration")"><span>جلساتي</span></a></li>
                             }
 
                         </ul>
