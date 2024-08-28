@@ -47,17 +47,62 @@ namespace Bader.Domain
             }
         }
 
+        public async Task<IEnumerable<RegistrationViewModel>> GetAllRegistrationsByUsername(string username)
+        {
+            try
+            {
+                return await _context.tblRegistrations
+                    .Include(n => n.RegistrationState)
+                    .Include(y => y.Session)
+                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
+                    .Where(u=> u.Username == username)
+                    .Select(x => new RegistrationViewModel
+                    {
+                        RegistrationStateId = x.RegistrationStateId,
+                        SessionId = x.SessionId,
+                        Username = x.Username,
+                        FullNameAr = x.FullNameAr,
+                        FullNameEn = x.FullNameEn,
+                        Phone = x.Phone,
+                        RegDate = x.RegDate,
+                        GUID = x.GUID,
+                        SessionNameAr = x.Session.SessionNameAr,
+                        StateAr = x.RegistrationState.StateAr,
+                        NumOfStudents = x.Session.NumOfStudents,
+                    })
+                    .ToListAsync();
+            }
+            catch
+            {
+                return new List<RegistrationViewModel>();
 
+            }
+        }
 
         public async Task<IEnumerable<tblSessions>> GetSessionsOld()
         {
             return await _context.tblSessions.Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now).ToListAsync();
         }
-        public async Task<IEnumerable<SessionsViewModel>> GetSessions()
+
+        public int GetCollegeIdByCollegeCode(string CollegeCode)
         {
             try
             {
-                return await _context.tblSessions.Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now).Include(c => c.SessionState).Include(x => x.Course).Select(x => new SessionsViewModel
+                var College = _context.tblColleges.Where(u => u.IsDeleted == false).AsNoTracking().FirstOrDefault(tblColleges => tblColleges.CollegeCode == CollegeCode);
+                return College.Id;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public async Task<IEnumerable<SessionsViewModel>> GetSessions(string CollegeCode)
+        {
+            try
+            {
+                int collegeId = GetCollegeIdByCollegeCode(CollegeCode);
+
+                return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course).Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode== CollegeCode).Select(x => new SessionsViewModel
                 {
                     SessionStateId = x.SessionStateId,
                     SessionNameAr = x.SessionNameAr,
@@ -75,6 +120,9 @@ namespace Bader.Domain
                     StateAr = x.SessionState.StateAr,
                     CourseNameAr = x.Course.CourseNameAr,
                 }).ToListAsync();
+
+                
+                
             }
             catch
             {
@@ -331,7 +379,24 @@ namespace Bader.Domain
 
 
 
+        public void UpdateSessionStates()
+        {
+            DateTime currentTime = DateTime.Now;
 
+            // Query sessions where SessionDate, RegEndDate, and RegStartDate are all in the past
+            var sessionsToUpdate = _context.tblSessions
+                .Where(s => currentTime > s.SessionDate && currentTime > s.RegEndDate )
+                .ToList();
+
+            // Update the SessionStateId and SessionState for each session
+            foreach (var session in sessionsToUpdate)
+            {
+                session.SessionStateId = 2;
+            }   
+
+            // Save changes to the database
+            _context.SaveChanges();
+        }
 
 
     }
