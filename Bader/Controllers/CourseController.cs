@@ -46,7 +46,9 @@ namespace Bader.Controllers
         {
             var Collages = await _CourseDomain.GetCollages();
             ViewBag.CollagesList = new SelectList(Collages, "Id", "CollegeNameAr");
+
             
+
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
@@ -64,6 +66,8 @@ namespace Bader.Controllers
 
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
+
+
 
 
             if (user == null)

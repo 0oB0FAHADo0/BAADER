@@ -1,6 +1,7 @@
 ﻿@{
     var fullNameAr = User.FindFirst("FullNameAr")?.Value;
     var Email = User.FindFirst("Email")?.Value;
+    var userrole = User.FindFirst("Usertype").Value;
 }
 <!DOCTYPE html>
 <html lang="en" dir="rtl" data-theme="light">
@@ -47,7 +48,7 @@
             <div class="menu_links">
                 <ul>
                     <li>
-                        <a href="index.html">
+                        <a href="@Url.Action("Index", "Home")" >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
@@ -60,7 +61,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="orders.html" class="active">
+                        <a href="orders.html" >
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z"
@@ -86,11 +87,35 @@
                                 <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
                                       stroke="currentColor" stroke-width="1.5"></path>
                             </svg>
-                            <span>إدارة</span>
+                            @if(userrole == "Admin" || userrole == "SuperAdmin" || userrole == "Editor")
+                            {
+                                <span>إدارة</span>
+                            }
+                            else
+                            {
+                                <span>العمليات</span>
+                            }
+
                         </a>
                         <ul>
-                            <li><a href="users.html"><span>المستخدمين</span></a></li>
-                            <li><a href="rules.html"><span>الأدوار</span></a></li>
+                            @if(userrole == "Super Admin" || userrole == "Admin")
+                            {
+                                <li><a href="users.html"><span>إدارة المستخدمين</span></a></li>
+                                <li><a href="rules.html"><span>إدارة المقررات</span></a></li>
+                                <li><a href="rules.html"><span>إدارة الجلسات</span></a></li>
+                                @if (userrole == "Super Admin")
+                                {
+                                    <li><a href="rules.html"><span>إدارة الكليات</span></a></li>
+                                }
+
+                            }
+                            @if(userrole == "Student" || userrole == null)
+                            {
+                                <li><a href="users.html"><span>المقررات</span></a></li>
+                                <li><a href="users.html"><span>التسجيل في الجلسات</span></a></li>
+                                <li><a href="users.html"><span>جلساتي</span></a></li>
+                            }
+
                         </ul>
                     </li>
                 </ul>

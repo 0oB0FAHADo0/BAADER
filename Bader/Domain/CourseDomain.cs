@@ -94,6 +94,7 @@ namespace Bader.Domain
                 course.CollegeId = cou.CollegeId;
                 course.LevelId = cou.LevelId;
                 course.GUID = Guid.NewGuid();
+                
 
                 _context.tblCourses.Add(course);
 
@@ -108,7 +109,7 @@ namespace Bader.Domain
                     _context.tblCoursesLogs.Add(log);
                 
 
-                int check = _context.SaveChanges();
+                int check =await _context.SaveChangesAsync();
 
                 return check;
             }
@@ -159,7 +160,7 @@ namespace Bader.Domain
                     _context.tblCoursesLogs.Add(log);
                 
 
-                int check = _context.SaveChanges();
+                int check =await _context.SaveChangesAsync();
 
                 return check;
             }
