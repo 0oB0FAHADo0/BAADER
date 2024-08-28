@@ -1,17 +1,14 @@
 ﻿using Bader.Models;
 using Bader.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Text.RegularExpressions;
 
 namespace Bader.Domain
 {
-    public class RegistrationDomain
+    public class UserRegistrationDomain
     {
-
         private readonly BaaderContext _context;
 
-        public RegistrationDomain(BaaderContext context)
+        public UserRegistrationDomain(BaaderContext context)
         {
             _context = context;
         }
@@ -23,7 +20,7 @@ namespace Bader.Domain
                 return await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
                     .Include(y => y.Session)
-                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId==1)
+                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
                     .Select(x => new RegistrationViewModel
                     {
                         RegistrationStateId = x.RegistrationStateId,
@@ -40,10 +37,10 @@ namespace Bader.Domain
                     })
                     .ToListAsync();
             }
-            catch 
+            catch
             {
                 return new List<RegistrationViewModel>();
-           
+
             }
         }
 
@@ -55,7 +52,7 @@ namespace Bader.Domain
                     .Include(n => n.RegistrationState)
                     .Include(y => y.Session)
                     .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
-                    .Where(u=> u.Username == username)
+                    .Where(u => u.Username == username)
                     .Select(x => new RegistrationViewModel
                     {
                         RegistrationStateId = x.RegistrationStateId,
@@ -102,7 +99,7 @@ namespace Bader.Domain
             {
                 int collegeId = GetCollegeIdByCollegeCode(CollegeCode);
 
-                return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course).Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode== CollegeCode).Select(x => new SessionsViewModel
+                return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course).Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode == CollegeCode).Select(x => new SessionsViewModel
                 {
                     SessionStateId = x.SessionStateId,
                     SessionNameAr = x.SessionNameAr,
@@ -121,8 +118,8 @@ namespace Bader.Domain
                     CourseNameAr = x.Course.CourseNameAr,
                 }).ToListAsync();
 
-                
-                
+
+
             }
             catch
             {
@@ -205,7 +202,7 @@ namespace Bader.Domain
             }
         }
 
-        public async Task<int> AddRegistration(RegistrationViewModel Reg , String username)
+        public async Task<int> AddRegistration(RegistrationViewModel Reg, String username)
         {
             try
             {
@@ -220,22 +217,22 @@ namespace Bader.Domain
                 Regx.RegDate = DateTime.Now;
 
                 Regx.GUID = Guid.NewGuid();
-                Regx.RegistrationStateId = 1; 
+                Regx.RegistrationStateId = 1;
 
 
                 _context.tblRegistrations.Add(Regx);
 
                 _context.SaveChanges();
-                
-                    tblRegistrationsLogs log = new tblRegistrationsLogs();
-                    log.RegistrationId = Regx.Id;
-                    log.DateTime = DateTime.Now;
-                    log.CreatedBy = username;
-                    log.OperationType = "Add";
-                    log.RegistrationState = "مقبول";
-                    log.AdditionalInfo = "تم تقديم طلب عن طريق هذا المستخدم";
-                    _context.tblRegistrationsLogs.Add(log);
-                
+
+                tblRegistrationsLogs log = new tblRegistrationsLogs();
+                log.RegistrationId = Regx.Id;
+                log.DateTime = DateTime.Now;
+                log.CreatedBy = username;
+                log.OperationType = "Add";
+                log.RegistrationState = "مقبول";
+                log.AdditionalInfo = "تم تقديم طلب عن طريق هذا المستخدم";
+                _context.tblRegistrationsLogs.Add(log);
+
 
                 int check = await _context.SaveChangesAsync();
                 return check;
@@ -255,7 +252,7 @@ namespace Bader.Domain
         public async Task<bool> CheckForreActiveInCreate(String username, int SessionId)
         {
 
-            return await _context.tblRegistrations.Where(u => u.SessionId == SessionId).AnyAsync(u => u.Username == username && u.RegistrationStateId==2);
+            return await _context.tblRegistrations.Where(u => u.SessionId == SessionId).AnyAsync(u => u.Username == username && u.RegistrationStateId == 2);
 
         }
         public async Task<RegistrationViewModel> GetRegByGuid(Guid gudi)
@@ -321,16 +318,16 @@ namespace Bader.Domain
                 _context.tblRegistrations.Update(Regx);
 
                 _context.SaveChanges();
-                
-                    tblRegistrationsLogs log = new tblRegistrationsLogs();
-                    log.RegistrationId = Regx.Id;
-                    log.DateTime = DateTime.Now;
-                    log.CreatedBy = username ;
-                    log.OperationType = "Update";
-                    log.RegistrationState = "مقبول";
-                    log.AdditionalInfo = "تم تعديل طلب عن طريق هذا المستخدم";
-                    _context.tblRegistrationsLogs.Add(log);
-                
+
+                tblRegistrationsLogs log = new tblRegistrationsLogs();
+                log.RegistrationId = Regx.Id;
+                log.DateTime = DateTime.Now;
+                log.CreatedBy = username;
+                log.OperationType = "Update";
+                log.RegistrationState = "مقبول";
+                log.AdditionalInfo = "تم تعديل طلب عن طريق هذا المستخدم";
+                _context.tblRegistrationsLogs.Add(log);
+
 
                 int check = await _context.SaveChangesAsync();
                 return check;
@@ -371,10 +368,10 @@ namespace Bader.Domain
             {
 
             }
-            
+
             return 0;
-            
-            
+
+
         }
 
 
@@ -385,19 +382,18 @@ namespace Bader.Domain
 
             // Query sessions where SessionDate, RegEndDate, and RegStartDate are all in the past
             var sessionsToUpdate = _context.tblSessions
-                .Where(s => currentTime > s.SessionDate && currentTime > s.RegEndDate )
+                .Where(s => currentTime > s.SessionDate && currentTime > s.RegEndDate)
                 .ToList();
 
             // Update the SessionStateId and SessionState for each session
             foreach (var session in sessionsToUpdate)
             {
                 session.SessionStateId = 2;
-            }   
+            }
 
             // Save changes to the database
             _context.SaveChanges();
         }
-
 
     }
 }

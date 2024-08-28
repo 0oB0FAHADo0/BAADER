@@ -143,7 +143,12 @@ namespace Bader.Domain
             return await _context.tblColleges.Where(u => u.GUID != guid).Where(u => u.IsDeleted ==false).AnyAsync(u => u.BuildingNum == BuildingNum);
             
         }
+        public async Task<bool> CollegeCodeExists(string CollegeCode, Guid guid)
+        {
 
+            return await _context.tblColleges.Where(u => u.GUID != guid).Where(u => u.IsDeleted == false).AnyAsync(u => u.CollegeCode == CollegeCode);
+
+        }
 
 
     }

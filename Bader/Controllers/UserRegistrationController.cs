@@ -1,116 +1,19 @@
 ﻿using Bader.Domain;
-using Bader.Models;
 using Bader.ViewModels;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bader.Controllers
 {
-    public class RegistrationController : Controller
+    public class UserRegistrationController : Controller
     {
 
         private readonly RegistrationDomain _RegistrationDomain;
 
-        public RegistrationController(RegistrationDomain registrationDomain)
+        public UserRegistrationController(RegistrationDomain registrationDomain)
         {
             _RegistrationDomain = registrationDomain;
         }
-
-        public async Task<IActionResult> Index()
-        {
-            try
-            {
-                 _RegistrationDomain.UpdateSessionStates();
-
-                var domainInfo = await _RegistrationDomain.GetAllRegistrations();
-                return View(domainInfo);
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        [HttpPost]
-        public async Task<IActionResult> Index(Guid id, string CheckWhichFunction)
-        {
-            if (CheckWhichFunction == "cancel")
-            {
-                try
-                {
-                    RegistrationViewModel Reg = await _RegistrationDomain.GetRegByGuid(id);
-
-                    Reg.RegistrationStateId = 2;
-                    int check = await _RegistrationDomain.UpdateRegistration(Reg , User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-                    if (check == 1)
-                    {
-                        ViewData["Successful"] = "تم إلغاء التسجيل بنجاح.";
-
-                    }
-                    else
-                    {
-
-                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-                    }
-
-                }
-                catch
-                {
-                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-                }
-            }
-            //else if(CheckWhichFunction == "ReActive")
-            //{
-            //    try
-            //    {
-            //        RegistrationViewModel Reg = await _RegistrationDomain.GetRegByGuid(id);
-
-            //        int checkNumOfStudent = await _RegistrationDomain.CheckCountReg(Reg.SessionId);
-            //        if (checkNumOfStudent == 1)
-            //        {
-            //            Reg.RegistrationStateId = 1;
-            //            int check = await _RegistrationDomain.UpdateRegistration(Reg);
-
-            //            if (check == 1)
-            //            {
-            //                ViewData["Successful"] = " .تم إعادة التسجيل بنجاح";
-
-            //            }
-            //            else
-            //            {
-
-            //                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-            //            }
-            //        }
-            //        else
-            //        {
-
-            //            ViewData["Falied"] = "الجلسة ممتلئة.";
-
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-            //    }
-            //}
-
-
-
-            var domainInfo = await _RegistrationDomain.GetAllRegistrations();
-            return View(domainInfo);
-        }
-
-
-
 
         public async Task<IActionResult> UserIndex()
         {
@@ -300,7 +203,7 @@ namespace Bader.Controllers
                     //    }
                     //}
 
-                    int check = await _RegistrationDomain.AddRegistration(reg , User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    int check = await _RegistrationDomain.AddRegistration(reg, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     if (check == 1)
                     {
                         ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
@@ -378,9 +281,5 @@ namespace Bader.Controllers
         }
 
 
-
-       
-    
-
-}
+    }
 }

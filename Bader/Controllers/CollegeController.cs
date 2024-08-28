@@ -83,6 +83,12 @@ public class CollegeController : Controller
                     ModelState.AddModelError("BuildingNum", "لا يمكن ان يوجد رقم المبنى لاكثر من كلية");
                     return View(college);
                 }
+                if (await _CollegeDomain.CollegeCodeExists(college.CollegeCode, college.GUID))
+                {
+                    ModelState.AddModelError("CollegeCode", "لا يمكن ان يوجد رقم كلية متكرر");
+                    return View(college);
+                }
+
                 int check=await _CollegeDomain.AddCollege(college);
                 if(check ==1)
                 {
@@ -146,8 +152,13 @@ public class CollegeController : Controller
                     ModelState.AddModelError("BuildingNum", "لا يمكن ان يوجد رقم المبنى لاكثر من كلية");
                     return View(college);
                 }
+                if (await _CollegeDomain.CollegeCodeExists(college.CollegeCode, college.GUID))
+                {
+                    ModelState.AddModelError("CollegeCode", "لا يمكن ان يوجد رقم كلية متكرر");
+                    return View(college);
+                }
 
-               int check= await _CollegeDomain.UpdateCollege(college);
+                int check= await _CollegeDomain.UpdateCollege(college);
                 //return RedirectToAction("Details");
 
                 if(check == 1)

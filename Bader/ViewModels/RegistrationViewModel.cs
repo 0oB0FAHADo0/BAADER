@@ -51,6 +51,19 @@ namespace Bader.ViewModels
         public DateTime SessionDate { get; set; }
 
 
-    }
+		[DisplayName("اسم المقرر")]
+		public string CourseNameAr { get; set; }
+
+		[DisplayName("العنوان بالعربي")]
+		public string TitleAr { get; set; }
+
+		[DisplayName("تاريخ بداية التسجيل")]
+		public DateTime RegStartDate { get; set; }
+
+
+		[DisplayName("تاريخ نهاية التسجيل")]
+		public DateTime RegEndDate { get; set; }
+
+	}
 
 }
