@@ -19,6 +19,13 @@ namespace Bader.Controllers
 
         public IActionResult Index()
         {
+            var userrole = User.FindFirst("Usertype").Value;
+
+            if (userrole == "Student" || userrole == null)
+            {
+                return RedirectToAction("Index", "UserCourse");
+            }
+
             return View();
         }
 

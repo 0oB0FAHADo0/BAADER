@@ -19,5 +19,7 @@
         public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsDeleted { get; set; } = false;
 
+        public string Gender { get; set; }
+
     }
 }

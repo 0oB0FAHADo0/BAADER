@@ -28,6 +28,8 @@ namespace Bader.ViewModels
 
         public bool IsDeleted { get; set; }
         public Guid GUID { get; set; }
-       
+
+        public string Gender { get; set; }
+
     }
 }

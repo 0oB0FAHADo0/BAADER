@@ -154,7 +154,7 @@ namespace Bader.Controllers
 
                     //}
 
-                    int check = await _CourseDomain.UpdateCourse(model);
+                    int check = await _CourseDomain.UpdateCourse(model , User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                     if(check == 1)
                     {
@@ -182,7 +182,7 @@ namespace Bader.Controllers
 
             try
             {
-               int check = await _CourseDomain.DeleteCourse(id);
+               int check = await _CourseDomain.DeleteCourse(id, User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                 if(check == 1)
                 {

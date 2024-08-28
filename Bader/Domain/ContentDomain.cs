@@ -49,7 +49,7 @@ namespace Bader.Domain
 
             
         }
-        public async Task<int> AddContent(ContentViewModel content)
+        public async Task<int> AddContent(ContentViewModel content , String username)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Bader.Domain
                     log.ContentID = Contents.Id;
                     log.DateTime = DateTime.Now;
                     log.OperationType = "Add";
-                    log.CreatedBy = "Hussain";
+                    log.CreatedBy = username;
                     log.AdditionalInfo = $"تم إضافة محتوى مقرر عن طريق هذا المستخدم";
                     _context.tblContentsLogs.Add(log);
                 
@@ -107,7 +107,7 @@ namespace Bader.Domain
 
             
         }
-        public async Task<int> UpdateContent(ContentViewModel content)
+        public async Task<int> UpdateContent(ContentViewModel content , String username)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace Bader.Domain
                     log.ContentID = Contents.Id;
                     log.DateTime = DateTime.Now;
                     log.OperationType = "Update";
-                    log.CreatedBy = "Hussain";
+                    log.CreatedBy = username;
                     log.AdditionalInfo = $"تم تحديث محتوى مقرر عن طريق هذا المستخدم";
                     _context.tblContentsLogs.Add(log);
                 
@@ -146,7 +146,7 @@ namespace Bader.Domain
 
            
         }
-        public async Task<int> DeleteContent(ContentViewModel content)
+        public async Task<int> DeleteContent(ContentViewModel content , String username)
         {
             try
             {
@@ -169,7 +169,7 @@ namespace Bader.Domain
                     log.ContentID = Contents.Id;
                     log.DateTime = DateTime.Now;
                     log.OperationType = "Delete";
-                    log.CreatedBy = "Hussain";
+                    log.CreatedBy = username;
                     log.AdditionalInfo = $"تم حذف محتوى مقرر عن طريق هذا المستخدم";
                     _context.tblContentsLogs.Add(log);
                 

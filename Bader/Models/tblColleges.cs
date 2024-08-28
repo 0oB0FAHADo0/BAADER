@@ -11,5 +11,7 @@
         public ICollection<tblCourses> Courses { get; set; }
         public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsDeleted { get; set; }// test
+
+        public string Gender { get; set; }
     }
 }

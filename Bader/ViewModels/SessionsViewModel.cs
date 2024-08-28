@@ -94,6 +94,12 @@ namespace Bader.ViewModels
         //end
 
         //star
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [DisplayName("الجنس")]
+        public string Gender { get; set; }
+        //end
+
+        //star
 
         [DisplayName("حالة الجلسة")]
         public string StateAr { get; set; }
@@ -109,5 +115,7 @@ namespace Bader.ViewModels
         //end
 
         public bool IsDeleted { get; set; }
+
+        
     }
 }

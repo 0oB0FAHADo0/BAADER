@@ -44,7 +44,7 @@ namespace Bader.Controllers
                     RegistrationViewModel Reg = await _RegistrationDomain.GetRegByGuid(id);
 
                     Reg.RegistrationStateId = 2;
-                    int check = await _RegistrationDomain.UpdateRegistration(Reg);
+                    int check = await _RegistrationDomain.UpdateRegistration(Reg , User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                     if (check == 1)
                     {
@@ -135,7 +135,7 @@ namespace Bader.Controllers
                     RegistrationViewModel Reg = await _RegistrationDomain.GetRegByGuid(id);
 
                     Reg.RegistrationStateId = 2;
-                    int check = await _RegistrationDomain.UpdateRegistration(Reg);
+                    int check = await _RegistrationDomain.UpdateRegistration(Reg, User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                     if (check == 1)
                     {
@@ -300,7 +300,7 @@ namespace Bader.Controllers
                     //    }
                     //}
 
-                    int check = await _RegistrationDomain.AddRegistration(reg);
+                    int check = await _RegistrationDomain.AddRegistration(reg , User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     if (check == 1)
                     {
                         ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";

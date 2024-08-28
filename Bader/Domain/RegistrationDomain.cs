@@ -205,7 +205,7 @@ namespace Bader.Domain
             }
         }
 
-        public async Task<int> AddRegistration(RegistrationViewModel Reg)
+        public async Task<int> AddRegistration(RegistrationViewModel Reg , String username)
         {
             try
             {
@@ -230,7 +230,7 @@ namespace Bader.Domain
                     tblRegistrationsLogs log = new tblRegistrationsLogs();
                     log.RegistrationId = Regx.Id;
                     log.DateTime = DateTime.Now;
-                    log.CreatedBy = "Hassan";
+                    log.CreatedBy = username;
                     log.OperationType = "Add";
                     log.RegistrationState = "مقبول";
                     log.AdditionalInfo = "تم تقديم طلب عن طريق هذا المستخدم";
@@ -300,7 +300,7 @@ namespace Bader.Domain
 
             return Reg.Id;
         }
-        public async Task<int> UpdateRegistration(RegistrationViewModel Reg)
+        public async Task<int> UpdateRegistration(RegistrationViewModel Reg, String username)
         {
 
             try
@@ -325,7 +325,7 @@ namespace Bader.Domain
                     tblRegistrationsLogs log = new tblRegistrationsLogs();
                     log.RegistrationId = Regx.Id;
                     log.DateTime = DateTime.Now;
-                    log.CreatedBy = "Hassan";
+                    log.CreatedBy = username ;
                     log.OperationType = "Update";
                     log.RegistrationState = "مقبول";
                     log.AdditionalInfo = "تم تعديل طلب عن طريق هذا المستخدم";

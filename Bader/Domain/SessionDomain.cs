@@ -21,6 +21,7 @@ namespace Bader.Domain
                 SessionStateId = x.SessionStateId,
                 SessionNameAr = x.SessionNameAr,
                 SessionNameEn = x.SessionNameEn,
+                Gender = x.Gender,
                 CourseId = x.CourseId,
                 TitleAr = x.TitleAr,
                 TitleEn = x.TitleEn,
@@ -43,7 +44,7 @@ namespace Bader.Domain
         {//
             return await _context.tblCourses.Where(u => u.IsDeleted == false).ToListAsync();
         }
-        public async Task <int> AddSessions(SessionsViewModel Session)
+        public async Task <int> AddSessions(SessionsViewModel Session , String username)
         {
             try
             {
@@ -52,6 +53,7 @@ namespace Bader.Domain
                 Sessionx.SessionStateId = Session.SessionStateId;
                 Sessionx.SessionNameAr = Session.SessionNameAr;
                 Sessionx.SessionNameEn = Session.SessionNameEn;
+                Sessionx.Gender = Session.Gender;
                 Sessionx.CourseId = Session.CourseId;
                 Sessionx.TitleAr = Session.TitleAr;
                 Sessionx.TitleEn = Session.TitleEn;
@@ -70,8 +72,8 @@ namespace Bader.Domain
                     log.SessionId = Sessionx.Id;
                     log.DateTime = DateTime.Now;
                     log.OperationType = "Add";
-                    log.CreatedBy = "Abdullmahsen";
-                    log.AdditionalInfo = "تم إضافة جلسة عن طريق هذا المستخدم";
+                    log.CreatedBy = username;
+                    log.AdditionalInfo = $"تم إضافة {Sessionx.SessionNameAr} عن طريق هذا المستخدم";
                     _context.tblSessionsLogs.Add(log);
                 
 
@@ -89,7 +91,7 @@ namespace Bader.Domain
             var seesion = _context.tblSessions.Where(u => u.IsDeleted == false).AsNoTracking().FirstOrDefault(tblSessions=> tblSessions.GUID== guid);
             return seesion.Id;
         }
-        public async Task <int> UpdateSessions(SessionsViewModel session)
+        public async Task <int> UpdateSessions(SessionsViewModel session, String username)
         {
             try
             {
@@ -100,6 +102,7 @@ namespace Bader.Domain
                 sessionsx.SessionNameAr = session.SessionNameAr;
                 sessionsx.SessionNameEn = session.SessionNameEn;
                 sessionsx.SessionStateId = session.SessionStateId;
+                sessionsx.Gender = session.Gender;
                 sessionsx.CourseId = session.CourseId;
                 sessionsx.TitleAr = session.TitleAr;
                 sessionsx.TitleEn = session.TitleEn;
@@ -118,8 +121,8 @@ namespace Bader.Domain
                     log.SessionId = sessionsx.Id;
                     log.DateTime = DateTime.Now;
                     log.OperationType = "Update";
-                    log.CreatedBy = "Abdullmahsen";
-                    log.AdditionalInfo = "تم تحديث جلسة عن طريق هذا المستخدم";
+                    log.CreatedBy = username;
+                    log.AdditionalInfo = $"تم تحديث {sessionsx.SessionNameAr} عن طريق هذا المستخدم";
                     _context.tblSessionsLogs.Add(log);
                 
 
