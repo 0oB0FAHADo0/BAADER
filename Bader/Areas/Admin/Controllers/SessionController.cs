@@ -11,8 +11,9 @@ using Bader.Domain;
 using Bader.ViewModels;
 using System.Security.Claims;
 
-namespace Bader.Controllers
+namespace Bader.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class SessionController : Controller
     {
         private readonly SessionDomain _SessionsDomain;
@@ -33,7 +34,7 @@ namespace Bader.Controllers
             SessionsViewModel session = await _SessionsDomain.GetSessionsById(Id);
             session.IsDeleted = true;
 
-            int check = await _SessionsDomain.UpdateSessions(session , User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            int check = await _SessionsDomain.UpdateSessions(session, User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             if (check == 1)
             {
@@ -50,7 +51,7 @@ namespace Bader.Controllers
 
             return View(await _SessionsDomain.GetSessions());
 
-            
+
         }
 
         [HttpGet]
@@ -75,7 +76,7 @@ namespace Bader.Controllers
 
             try
             {
-              //  if (session.RegEndDate<session.RegStartDate) {
+                //  if (session.RegEndDate<session.RegStartDate) {
                 var SessionState = await _SessionsDomain.getFromSessionsState();
                 ViewBag.SessionList = new SelectList(SessionState, "Id", "StateAr");
 
@@ -83,7 +84,7 @@ namespace Bader.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    int check = await _SessionsDomain.AddSessions(session, User.FindFirst(ClaimTypes.NameIdentifier).Value); 
+                    int check = await _SessionsDomain.AddSessions(session, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     if (check == 1)
                     {
                         ViewData["Successful"] = "تمت الإضافة بنجاح";
@@ -101,8 +102,8 @@ namespace Bader.Controllers
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
 
             }
-           
-             return View();
+
+            return View();
 
         }
 
@@ -131,10 +132,11 @@ namespace Bader.Controllers
 
         public async Task<IActionResult> Edit(SessionsViewModel session)
         {
-            try {
+            try
+            {
 
                 if (ModelState.IsValid)
-                  {
+                {
                     int check = await _SessionsDomain.UpdateSessions(session, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     if (check == 1)
                     {
@@ -146,9 +148,10 @@ namespace Bader.Controllers
                         ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
 
                     }
-                   }
                 }
-            catch {
+            }
+            catch
+            {
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
 
             }
@@ -157,12 +160,12 @@ namespace Bader.Controllers
             //return RedirectToAction("Index");
 
         }
-         
-        }
 
-       
-       
     }
+
+
+
+}
 
 
 

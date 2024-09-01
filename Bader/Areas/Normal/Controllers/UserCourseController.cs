@@ -12,8 +12,9 @@ using System.Linq.Expressions;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using System.IO.Compression;
 using Microsoft.AspNetCore.Authorization;
-namespace Bader.Controllers
+namespace Bader.Areas.Normal.Controllers
 {
+    [Area("Normal")]
     public class UserCourseController : Controller
     {
 
@@ -27,7 +28,9 @@ namespace Bader.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _CourseDomain.GetSomeCourses());
+            var collagecode = User.FindFirst("CollegeCode").Value;
+
+            return View(await _CourseDomain.GetSomeCourses(collagecode));
         }
     }
 }

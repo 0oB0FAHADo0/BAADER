@@ -10,7 +10,7 @@
             {
 
                 <Text>
-                                                    var result = '@Html.Raw(ViewData["Successful"])';
+                                    var result = '@Html.Raw(ViewData["Successful"])';
 
                 Swal.fire({
                     title: "تمت العملية بنجاح",
@@ -24,7 +24,7 @@
             else if (@ViewData["Falied"] != null)
             {
                 <Text>
-                                                            var result = '@Html.Raw(ViewData["Falied"])';
+                                            var result = '@Html.Raw(ViewData["Falied"])';
 
                 Swal.fire({
                     icon: "error",
@@ -73,11 +73,11 @@
             form.querySelector('input[name="CheckWhichFunction"]').value = "ReActive";
             form.submit();
 
-
+           
 
         }
     </script>
-
+   
 
 }
 <div class="block mb-4">
@@ -88,11 +88,11 @@
                 <input type="text" class="form-control table__quick_search"
                        placeholder="البحث السريع ...">
             </div>
-
-            <a asp-action="SessionsRegCards" class="btn btn-primary">
+            
+         @*    <a asp-action="SessionsRegCards" class="btn btn-primary">
                 إضافة تسجيل جديد
-            </a>
-
+            </a> *@
+            
         </div>
     </div>
     <div class="block-body">
@@ -109,11 +109,21 @@
                         @Html.DisplayNameFor(n => n.SessionNameAr)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(n => n.SessionDate)
+                        @Html.DisplayNameFor(n => n.Username)
+
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.FullNameAr)
+
                     </th>
                    
+                    <th>
+                        @Html.DisplayNameFor(n => n.Phone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.RegDate)
+                    </th>
                    
-
 
                     <th class=""></th>
                 </tr>
@@ -133,16 +143,24 @@
                         <td>
                             @item.SessionNameAr
                         </td>
-
                         <td>
-                            @item.SessionDate
+                            @item.Username
+                        </td>
+                        <td>
+                            @item.FullNameAr
+                        </td>
+                       
+                        <td>
+                            @item.Phone
+                        </td>
+                        <td>
+                            @item.RegDate
                         </td>
                        
 
 
-
                         <td class="action_td text-end">
-                            <form method="post">
+                            <form method="post" >
 
                                 <input type="hidden" name="CheckWhichFunction" id="CheckWhichFunction" value="" />
                                 <input type="hidden" name="id" value="@item.GUID" />
@@ -150,16 +168,16 @@
 
                                 <a asp-action="RegDetails" class="btn btn-sm btn-primary" asp-route-id="@item.GUID">عرض التفاصيل</a>
 
-                                @if (item.RegistrationStateId != 1)
+             @*                    @if (item.RegistrationStateId != 1)
                                 {
-
+                                   
 
 
                                     <a class="btn btn-sm btn-success" onclick="SendReActive(event, this)">
                                         إعادة التفعيل
                                     </a>
                                 }
-
+ *@
 
 
 
@@ -172,12 +190,12 @@
                                     </a>
                                 }
 
-
+                                
 
 
 
                             </form>
-
+                           
                         </td>
 
                     </tr>

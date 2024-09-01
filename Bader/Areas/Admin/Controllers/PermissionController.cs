@@ -10,8 +10,9 @@ using Bader.Domain;
 using Bader.ViewModels;
 using System.Security;
 
-namespace Bader.Controllers
+namespace Bader.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class PermissionController : Controller
     {
         private readonly PermissionDomain _PermissionDomain;
@@ -22,11 +23,11 @@ namespace Bader.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index( string successful = " ", string failed = " ")
+        public async Task<IActionResult> Index(string successful = " ", string failed = " ")
         {
-            if(successful != "")
+            if (successful != "")
                 ViewData["success"] = successful;
-            else if(failed !=" ")
+            else if (failed != " ")
                 ViewData["Failed"] = failed;
             return View(await _PermissionDomain.GetPermissions());
         }
@@ -36,15 +37,15 @@ namespace Bader.Controllers
         {
             try
             {
-                    int check = await _PermissionDomain.DeletePermission(id);
-                    if (check == 1)
-                    {
-                        ViewData["Successful"] = "تم الحذف الصلاحية بنجاح";
-                    }
-                    else
-                    {
-                        ViewData["Failed"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-                    }
+                int check = await _PermissionDomain.DeletePermission(id);
+                if (check == 1)
+                {
+                    ViewData["Successful"] = "تم الحذف الصلاحية بنجاح";
+                }
+                else
+                {
+                    ViewData["Failed"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                }
             }
             catch
             {

@@ -38,10 +38,13 @@ namespace Bader.Domain
             
         }
 
-        public async Task<IEnumerable<CourseViewModel>> GetSomeCourses()
+        public async Task<IEnumerable<CourseViewModel>> GetSomeCourses(string collagecode)
         {
-            int UserId = 1;
-            return await _context.tblCourses.Include(x => x.Level).Include(x => x.College).Where(x => x.IsDeleted == false).Where(x => x.CollegeId == UserId).Select(x => new CourseViewModel
+           // int UserId = 1;
+
+
+
+            return await _context.tblCourses.Include(x => x.Level).Include(x => x.College).Where(x => x.IsDeleted == false).Where(x => x.College.CollegeCode == collagecode ).Select(x => new CourseViewModel
             {
                 CourseNum = x.CourseNum,
                 CourseNameAr = x.CourseNameAr,
@@ -94,6 +97,7 @@ namespace Bader.Domain
                 course.CollegeId = cou.CollegeId;
                 course.LevelId = cou.LevelId;
                 course.GUID = Guid.NewGuid();
+                
 
                 _context.tblCourses.Add(course);
 
@@ -108,7 +112,7 @@ namespace Bader.Domain
                     _context.tblCoursesLogs.Add(log);
                 
 
-                int check = _context.SaveChanges();
+                int check =await _context.SaveChangesAsync();
 
                 return check;
             }
@@ -159,7 +163,7 @@ namespace Bader.Domain
                     _context.tblCoursesLogs.Add(log);
                 
 
-                int check = _context.SaveChanges();
+                int check =await _context.SaveChangesAsync();
 
                 return check;
             }

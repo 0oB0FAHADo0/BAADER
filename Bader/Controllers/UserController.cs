@@ -66,21 +66,21 @@ namespace Bader.Controllers
 
         public async Task<IActionResult> Edit(UserViewModel user)
         {
-               if (ModelState.IsValid)
-                {
-                if (await _UserDomain.EmailExists(user.Id,user.Email))
+            if (ModelState.IsValid)
+            {
+                if (await _UserDomain.EmailExists(user.Id, user.Email))
                 {
                     ModelState.AddModelError("Email", "البريد الإلكتروني نستخدم بالفعل.");
                     return View(user);
                 }
                 await _UserDomain.UpdateUser(user);
-                    return RedirectToAction(nameof(Index));
-                }
-                return View(user);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
         }
 
 
     }
-    
+
 }
 
