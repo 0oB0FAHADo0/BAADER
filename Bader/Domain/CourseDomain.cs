@@ -228,5 +228,18 @@ namespace Bader.Domain
            
         }
 
+        public async Task<tblColleges> GetCollageById(int id)
+        {
+            try
+            {
+                return await _context.tblColleges.FirstOrDefaultAsync(u => u.Id == id && u.IsDeleted == false);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
     }
 }

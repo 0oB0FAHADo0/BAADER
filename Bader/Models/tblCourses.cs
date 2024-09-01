@@ -1,18 +1,19 @@
 ﻿namespace Bader.Models
 {
-    public class tblCourses //ali ( viewModel,controler,view, domain) (add , update, delete)
+    public class tblCourses
     {
         public int Id { get; set; }
         public tblColleges College { get; set; }
         public int CollegeId { get; set; }
+        public tblMajors Major { get; set; }
+        public int MajorId { get; set; }
         public tblLevels Level { get; set; }
         public int LevelId { get; set; }
-        public string CourseNum { get; set; } 
+        public string CourseNum { get; set; }
         public string CourseNameAr { get; set; }
         public string CourseNameEn { get; set; }
         public ICollection<tblSessions> Sessions { get; set; }
         public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsDeleted { get; set; } = false;
-
     }
 }
