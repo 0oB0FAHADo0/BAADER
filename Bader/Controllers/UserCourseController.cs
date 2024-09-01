@@ -12,9 +12,9 @@ using System.Linq.Expressions;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using System.IO.Compression;
 using Microsoft.AspNetCore.Authorization;
-namespace Bader.Areas.Normal.Controllers
+namespace Bader.Controllers
 {
-    [Area("Normal")]
+    
     public class UserCourseController : Controller
     {
 

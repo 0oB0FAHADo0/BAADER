@@ -87,35 +87,17 @@
                                 <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
                                       stroke="currentColor" stroke-width="1.5"></path>
                             </svg>
-                            @if(userrole == "Admin" || userrole == "SuperAdmin" || userrole == "Editor")
-                            {
-                                <span>إدارة</span>
-                            }
-                            else
-                            {
+                           
                                 <span>العمليات</span>
-                            }
+                            
 
                         </a>
                         <ul>
-                            @if(userrole == "Super Admin" || userrole == "Admin")
-                            {
-                                <li><a href="@Url.Action("Index", "Permission")"><span>إدارة المستخدمين</span></a></li>
-                                <li><a href="@Url.Action("Index", "Course")"><span>إدارة المقررات</span></a></li>
-                                <li><a href="@Url.Action("Index", "Session")"><span>إدارة الجلسات</span></a></li>
-                                <li><a href="@Url.Action("Index", "Registration")"><span>إدارة التسجيل</span></a></li>
-                                @if (userrole == "Super Admin")
-                                {
-                                    <li><a href="@Url.Action("Details", "College")"><span>إدارة الكليات</span></a></li>
-                                }
-
-                            }
-                            @if(userrole == "Student" || userrole == null)
-                            {
+                           
                                 <li><a href="@Url.Action("Index", "UserCourse")"><span>المقررات</span></a></li>
                                 <li><a href="@Url.Action("SessionsRegCards", "UserRegistration")"><span>التسجيل في الجلسات</span></a></li>
                                 <li><a href="@Url.Action("UserIndex", "UserRegistration")"><span>جلساتي</span></a></li>
-                            }
+                            
 
                         </ul>
                     </li>

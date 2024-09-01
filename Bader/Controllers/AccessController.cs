@@ -86,7 +86,7 @@ namespace Bader.Controllers
                     }
                     else if (user.Usertype == "Student" || user.Usertype == null)
                     {
-                        return RedirectToAction("Index", "UserCourse", new { area = "Normal" });
+                        return RedirectToAction("Index", "UserCourse");
                     }
 
 

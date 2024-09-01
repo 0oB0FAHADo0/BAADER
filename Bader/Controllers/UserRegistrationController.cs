@@ -3,9 +3,9 @@ using Bader.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Bader.Areas.Normal.Controllers
+namespace Bader.Controllers
 {
-    [Area("Normal")]
+   
     public class UserRegistrationController : Controller
     {
 
