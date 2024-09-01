@@ -14,8 +14,9 @@ using System.IO.Compression;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
-namespace Bader.Controllers
+namespace Bader.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize]
     public class CourseController : Controller
     {
@@ -27,7 +28,7 @@ namespace Bader.Controllers
         }
 
         [HttpGet]
-        [Authorize (Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _CourseDomain.GetCourses());
@@ -39,7 +40,7 @@ namespace Bader.Controllers
         //    return View(await _CourseDomain.GetSomeCourses());
         //}
 
-      
+
 
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -47,7 +48,7 @@ namespace Bader.Controllers
             var Collages = await _CourseDomain.GetCollages();
             ViewBag.CollagesList = new SelectList(Collages, "Id", "CollegeNameAr");
 
-            
+
 
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
@@ -75,7 +76,7 @@ namespace Bader.Controllers
                 return NotFound();
             }
 
-        
+
 
             return View(user);
         }
@@ -107,10 +108,10 @@ namespace Bader.Controllers
                         return View(model);
 
                     }
-                   
+
 
                     int check = await _CourseDomain.addCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                     if(check == 1)
+                    if (check == 1)
                     {
                         ViewData["Successful"] = "تمت الإضافة بنجاح";
                     }
@@ -120,14 +121,14 @@ namespace Bader.Controllers
                     }
                     //return RedirectToAction(nameof(Index));
                 }
-                
+
             }
             catch
             {
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
-            
-            
+
+
 
             return View(model);
         }
@@ -158,9 +159,9 @@ namespace Bader.Controllers
 
                     //}
 
-                    int check = await _CourseDomain.UpdateCourse(model , User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    int check = await _CourseDomain.UpdateCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                    if(check == 1)
+                    if (check == 1)
                     {
                         ViewData["Successful"] = "تمت الإضافة بنجاح";
                     }
@@ -168,10 +169,11 @@ namespace Bader.Controllers
                     {
                         ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
                     }
-                   
+
                 }
             }
-            catch {
+            catch
+            {
 
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
@@ -186,9 +188,9 @@ namespace Bader.Controllers
 
             try
             {
-               int check = await _CourseDomain.DeleteCourse(id, User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                int check = await _CourseDomain.DeleteCourse(id, User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                if(check == 1)
+                if (check == 1)
                 {
                     ViewData["Successful"] = "تم الحذف بنجاح";
                 }
@@ -196,20 +198,20 @@ namespace Bader.Controllers
                 {
                     ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
                 }
-               // return RedirectToAction(nameof(Index));
+                // return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
 
             var courses = await _CourseDomain.GetCourses();
-            return View (courses);
+            return View(courses);
 
 
         }
 
-        
+
 
     }
 }

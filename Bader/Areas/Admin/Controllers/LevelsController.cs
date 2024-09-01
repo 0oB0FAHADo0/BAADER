@@ -13,8 +13,9 @@ using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Authorization;
 
 
-namespace Bader.Controllers
+namespace Bader.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize]
     public class LevelsController : Controller
     {

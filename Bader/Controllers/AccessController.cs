@@ -80,6 +80,16 @@ namespace Bader.Controllers
                     new ClaimsPrincipal(identity),
                     properties);
 
+                    if (user.Usertype == "Admin" || user.Usertype == "Super Admin")
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    }
+                    else if (user.Usertype == "Student" || user.Usertype == null)
+                    {
+                        return RedirectToAction("Index", "UserCourse", new { area = "Normal" });
+                    }
+
+
                     //HttpContext.Session.SetString("ClaimsPrincipal", JsonConvert.SerializeObject(User));
 
                     return RedirectToAction("Index", "Home");

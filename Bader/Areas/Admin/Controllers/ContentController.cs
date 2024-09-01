@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 
-namespace Bader.Controllers
+namespace Bader.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ContentController : Controller
     {
         private readonly ContentDomain _ContentDomain;
@@ -35,7 +36,7 @@ namespace Bader.Controllers
                 else
                 {
                     ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-                }  
+                }
             }
             catch (Exception ex)
             {
@@ -58,7 +59,7 @@ namespace Bader.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int check =await _ContentDomain.AddContent(content , User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    int check = await _ContentDomain.AddContent(content, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     //return RedirectToAction(nameof(Index));
                     if (check == 1)
                     {
@@ -66,16 +67,16 @@ namespace Bader.Controllers
                     }
                     else
                     {
-                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
                     }
                 }
-                else 
-                { 
-                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-                var Courses = await _ContentDomain.GetCourses();
-                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                else
+                {
+                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                    var Courses = await _ContentDomain.GetCourses();
+                    ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
                 }
-        }
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
@@ -104,7 +105,7 @@ namespace Bader.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int check=await _ContentDomain.UpdateContent(content , User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    int check = await _ContentDomain.UpdateContent(content, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     //return RedirectToAction(nameof(Index));
                     if (check == 1)
                     {
@@ -118,10 +119,10 @@ namespace Bader.Controllers
                 else
                 {
                     ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-                 var Courses = await _ContentDomain.GetCourses();
-                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                    var Courses = await _ContentDomain.GetCourses();
+                    ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -144,9 +145,9 @@ namespace Bader.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(ContentViewModel content)
         {
- 
-                await _ContentDomain.DeleteContent(content, User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                return RedirectToAction(nameof(Index));
+
+            await _ContentDomain.DeleteContent(content, User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            return RedirectToAction(nameof(Index));
 
         }
 
