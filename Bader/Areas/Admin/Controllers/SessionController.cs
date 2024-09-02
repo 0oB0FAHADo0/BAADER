@@ -10,10 +10,12 @@ using Bader.Models;
 using Bader.Domain;
 using Bader.ViewModels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin, Editor")]
     public class SessionController : Controller
     {
         private readonly SessionDomain _SessionsDomain;

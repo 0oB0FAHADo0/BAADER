@@ -17,7 +17,7 @@ using System.Security.Claims;
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class CourseController : Controller
     {
         private readonly CourseDomain _CourseDomain;

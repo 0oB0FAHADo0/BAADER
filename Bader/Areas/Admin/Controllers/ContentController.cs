@@ -1,5 +1,6 @@
 ﻿using Bader.Domain;
 using Bader.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin, Editor")]
     public class ContentController : Controller
     {
         private readonly ContentDomain _ContentDomain;

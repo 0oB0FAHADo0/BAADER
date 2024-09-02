@@ -4,11 +4,12 @@ using Bader.Models;
 using Bader.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.CodeAnalysis.Scripting.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
+    [Authorize(Roles = "SuperAdmin")]
     public class CollegeController : Controller
     {
         private readonly CollegeDomain _CollegeDomain;

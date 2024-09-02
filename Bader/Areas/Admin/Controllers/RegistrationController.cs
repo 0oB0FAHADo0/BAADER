@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class RegistrationController : Controller
     {
 
