@@ -54,7 +54,7 @@ namespace Bader.ViewModels
         public string CollegeCode { get; set; }
         public string RoleNameEn { get; set; }
 
-        public string Gender { get; set; }
+        public bool Gender { get; set; }
 
     }
 }

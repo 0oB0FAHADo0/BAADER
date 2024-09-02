@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bader.Migrations
 {
-    public partial class AddDb : Migration
+    public partial class NewDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,7 +20,8 @@ namespace Bader.Migrations
                     CollegeCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BuildingNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,7 +51,7 @@ namespace Bader.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OperationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -76,6 +77,22 @@ namespace Bader.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblLevels", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblMajors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MajorNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MajorNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblMajors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,7 +211,8 @@ namespace Bader.Migrations
                     Usertype = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CollegeNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CollegeNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CollegeCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CollegeCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -208,6 +226,7 @@ namespace Bader.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollegeId = table.Column<int>(type: "int", nullable: false),
+                    MajorId = table.Column<int>(type: "int", nullable: false),
                     LevelId = table.Column<int>(type: "int", nullable: false),
                     CourseNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CourseNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -223,13 +242,19 @@ namespace Bader.Migrations
                         column: x => x.CollegeId,
                         principalTable: "tblColleges",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblCourses_tblLevels_LevelId",
                         column: x => x.LevelId,
                         principalTable: "tblLevels",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_tblCourses_tblMajors_MajorId",
+                        column: x => x.MajorId,
+                        principalTable: "tblMajors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,13 +277,13 @@ namespace Bader.Migrations
                         column: x => x.CollegeId,
                         principalTable: "tblColleges",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblPermissions_tblRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "tblRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -284,7 +309,7 @@ namespace Bader.Migrations
                         column: x => x.CourseId,
                         principalTable: "tblCourses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -305,7 +330,8 @@ namespace Bader.Migrations
                     RegEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RegStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -315,13 +341,13 @@ namespace Bader.Migrations
                         column: x => x.CourseId,
                         principalTable: "tblCourses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblSessions_tblSessionsState_SessionStateId",
                         column: x => x.SessionStateId,
                         principalTable: "tblSessionsState",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -347,13 +373,13 @@ namespace Bader.Migrations
                         column: x => x.RegistrationStateId,
                         principalTable: "tblRegistrationsState",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblRegistrations_tblSessions_SessionId",
                         column: x => x.SessionId,
                         principalTable: "tblSessions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -370,6 +396,11 @@ namespace Bader.Migrations
                 name: "IX_tblCourses_LevelId",
                 table: "tblCourses",
                 column: "LevelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblCourses_MajorId",
+                table: "tblCourses",
+                column: "MajorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblPermissions_CollegeId",
@@ -451,6 +482,9 @@ namespace Bader.Migrations
 
             migrationBuilder.DropTable(
                 name: "tblLevels");
+
+            migrationBuilder.DropTable(
+                name: "tblMajors");
         }
     }
 }

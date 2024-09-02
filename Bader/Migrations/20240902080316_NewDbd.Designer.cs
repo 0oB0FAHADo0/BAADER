@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bader.Migrations
 {
     [DbContext(typeof(BaaderContext))]
-    [Migration("20240827101932_addingGender")]
-    partial class addingGender
+    [Migration("20240902080316_NewDbd")]
+    partial class NewDbd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -154,11 +154,16 @@ namespace Bader.Migrations
                     b.Property<int>("LevelId")
                         .HasColumnType("int");
 
+                    b.Property<int>("MajorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CollegeId");
 
                     b.HasIndex("LevelId");
+
+                    b.HasIndex("MajorId");
 
                     b.ToTable("tblCourses");
                 });
@@ -217,6 +222,36 @@ namespace Bader.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tblLevels");
+                });
+
+            modelBuilder.Entity("Bader.Models.tblMajors", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CollegeId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GUID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MajorNameAr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MajorNameEn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CollegeId");
+
+                    b.ToTable("tblMajors");
                 });
 
             modelBuilder.Entity("Bader.Models.tblPermissions", b =>
@@ -587,9 +622,28 @@ namespace Bader.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Bader.Models.tblMajors", "Major")
+                        .WithMany("Courses")
+                        .HasForeignKey("MajorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("College");
 
                     b.Navigation("Level");
+
+                    b.Navigation("Major");
+                });
+
+            modelBuilder.Entity("Bader.Models.tblMajors", b =>
+                {
+                    b.HasOne("Bader.Models.tblColleges", "College")
+                        .WithMany("Majors")
+                        .HasForeignKey("CollegeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("College");
                 });
 
             modelBuilder.Entity("Bader.Models.tblPermissions", b =>
@@ -653,6 +707,8 @@ namespace Bader.Migrations
                 {
                     b.Navigation("Courses");
 
+                    b.Navigation("Majors");
+
                     b.Navigation("Permissions");
                 });
 
@@ -662,6 +718,11 @@ namespace Bader.Migrations
                 });
 
             modelBuilder.Entity("Bader.Models.tblLevels", b =>
+                {
+                    b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("Bader.Models.tblMajors", b =>
                 {
                     b.Navigation("Courses");
                 });

@@ -12,6 +12,6 @@
         public ICollection<tblMajors> Majors { get; set; }
         public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsDeleted { get; set; } = false;
-        public string Gender { get; set; }
+        public bool? Gender { get; set; }
     }
 }

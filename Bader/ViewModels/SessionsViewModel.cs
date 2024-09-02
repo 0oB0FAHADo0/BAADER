@@ -96,7 +96,7 @@ namespace Bader.ViewModels
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("الجنس")]
-        public string Gender { get; set; }
+        public bool? Gender { get; set; }
         //end
 
         //star

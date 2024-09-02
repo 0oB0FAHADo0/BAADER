@@ -45,8 +45,8 @@ namespace Bader.Migrations
                     b.Property<Guid>("GUID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("Gender")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -451,8 +451,8 @@ namespace Bader.Migrations
                     b.Property<Guid>("GUID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("Gender")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -575,8 +575,8 @@ namespace Bader.Migrations
                     b.Property<string>("FullNameEn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Gender")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
