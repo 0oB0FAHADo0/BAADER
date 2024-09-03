@@ -1,7 +1,7 @@
-﻿@model IEnumerable<CourseViewModel>
+﻿@model IEnumerable<MajorViewModel>
 
 @{
-     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Index";
 }
 
@@ -14,25 +14,23 @@
         <div class="page_content">
             <div class="block mb-4">
                 <div class="block-header border-bottom px-4 py-3">
-                    <h5 class="m-0">المقررات</h5>
+                    <h5 class="m-0">التخصصات</h5>
                     <div class="d-flex gap-2">
                         <div class="form-group">
                             <input type="text" class="form-control table__quick_search"
                                    placeholder="البحث السريع ...">
                         </div>
-                        <a asp-action="Create" class="btn btn-primary">إضافة مقرر</a>
+                        <a asp-action="Create" class="btn btn-primary">إضافة تخصص</a>
                     </div>
                 </div>
                 <div class="block-body">
                     <table class="table table-hover js-dataTable">
                         <thead>
                             <tr>
-                                <th>@Html.DisplayNameFor(x => x.CourseNum)</th>
-                                <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.CourseNameEn)</th>
-                                <th>@Html.DisplayNameFor(x => x.LevelNameAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.CollageNameAr)</th>
                                 <th>@Html.DisplayNameFor(x => x.MajorNameAr)</th>
+                                <th>@Html.DisplayNameFor(x => x.MajorNameEn)</th>
+                                <th>@Html.DisplayNameFor(x => x.CollageNameAr)</th>
+                               
                               
                                 <th>الإجراءات</th>
                             </tr>
@@ -41,23 +39,20 @@
                             @foreach (var item in Model)
                             {
                                 <tr class="cursor-pointer" goto="order_details.html">
-                                    <td>@Html.DisplayFor(modelItem => item.CourseNum)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CourseNameEn)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.LevelNameAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CollageNameAr)</td>
                                     <td>@Html.DisplayFor(modelItem => item.MajorNameAr)</td>
-                                
+                                    <td>@Html.DisplayFor(modelItem => item.MajorNameEn)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CollageNameAr)</td>
+                                   
                                     <td class="action_td text-end">
-                                       @*  <a  asp-controller=""  class="btn btn-sm btn-primary">عرض</a> *@
+                                        @*  <a  asp-controller=""  class="btn btn-sm btn-primary">عرض</a> *@
                                         <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
-                                        <form method="post" class="d-inline" onclick="DisplayAlert(event, this)" >
+                                        <form method="post" class="d-inline" onclick="DisplayAlert(event, this)">
                                             <input type="hidden" name="id" value="@item.GUID" />
                                             <button type="submit" class="btn btn-sm btn-danger">حذف</button>
                                         </form>
                                     </td>
-                                   
-                                </tr> 
+
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -74,7 +69,7 @@
                 {
 
                     <Text>
-                    var result = '@Html.Raw(ViewData["Successful"])';
+                                        var result = '@Html.Raw(ViewData["Successful"])';
 
                     Swal.fire({
                         title: "تمت العملية",
@@ -87,7 +82,7 @@
                 else if (@ViewData["Falied"] != null)
                 {
                     <Text>
-                    var result = '@Html.Raw(ViewData["Falied"])';
+                                        var result = '@Html.Raw(ViewData["Falied"])';
 
                     Swal.fire({
                         icon: "error",
@@ -108,7 +103,7 @@
                 //   const url = element.getAttribute('href');
                 const form = element.closest('form')
                 Swal.fire({
-                    title: "حذف مقرر",
+                    title: "حذف تخصص",
                     text: "هل انت متأكد!؟",
                     icon: "warning",
                     showCancelButton: true,

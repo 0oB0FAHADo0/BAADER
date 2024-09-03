@@ -48,11 +48,18 @@
                                         <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList"> </select>
                                     </div>
                                 </div><!-- END ITEM -->
-                                <!-- START ITEM -->
+                               @*  <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="CollegeId" class="mb-1">اسم الكلية</label>
                                         <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
+
+                                    </div>
+                                </div><!-- END ITEM --> *@
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="MajorId" class="mb-1">اسم التخصص</label>
+                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList"> </select>
 
                                     </div>
                                 </div><!-- END ITEM -->

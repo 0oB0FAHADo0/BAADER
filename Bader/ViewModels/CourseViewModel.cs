@@ -14,7 +14,11 @@ namespace Bader.ViewModels
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("معرف المقرر")]
         public int CollegeId { get; set; }
-        
+
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [DisplayName("رمز المقرر")]
+        public int CollegeCode { get; set; }
+
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("معرف المستوى")]
         public int LevelId { get; set; }
@@ -37,6 +41,13 @@ namespace Bader.ViewModels
 
         [DisplayName("اسم الكلية")]
         public string CollageNameAr { get; set; }
+
+        [DisplayName("اسم التخصص")]
+        public string MajorNameAr { get; set; }
+
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [DisplayName("معرف التخصص")]
+        public int MajorId { get; set; }
 
         public Guid GUID { get; set; }
 

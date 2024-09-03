@@ -68,6 +68,7 @@ builder.Services.AddScoped<RegistrationDomain>();
 
 builder.Services.AddScoped<CollegeDomain>();
 builder.Services.AddScoped<LevelDomain>();
+builder.Services.AddScoped<MajorDomain>();
 var app = builder.Build();
 // Configure the HTTP request pipeline.  
 if (!app.Environment.IsDevelopment())
