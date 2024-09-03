@@ -63,6 +63,7 @@ namespace Bader.Controllers
                 new Claim("CollegeNameAr", user.CollegeNameAr),
                 new Claim("CollegeNameEn", user.CollegeNameEn),
                 new Claim("CollegeCode", user.CollegeCode.ToString()),
+                new Claim("Role",  user.RoleNameEn),
                 new Claim(ClaimTypes.Role, user.RoleNameEn)
 
             };
@@ -80,11 +81,11 @@ namespace Bader.Controllers
                     new ClaimsPrincipal(identity),
                     properties);
 
-                    if (user.Usertype == "Admin" || user.Usertype == "Super Admin")
+                    if (user.RoleNameEn == "Admin" || user.RoleNameEn == "SuperAdmin")
                     {
                         return RedirectToAction("Index", "Home", new { area = "Admin" });
                     }
-                    else if (user.Usertype == "Student" || user.Usertype == null)
+                    else if (user.RoleNameEn == "Student" || user.RoleNameEn == null)
                     {
                         return RedirectToAction("Index", "UserCourse");
                     }

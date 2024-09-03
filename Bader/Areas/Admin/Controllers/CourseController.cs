@@ -28,7 +28,7 @@ namespace Bader.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult> Index()
         {
             return View(await _CourseDomain.GetCourses());
@@ -53,6 +53,9 @@ namespace Bader.Areas.Admin.Controllers
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
+            var Majors = await _CourseDomain.GetMajors();
+            ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+
             return View(new CourseViewModel());
         }
 
@@ -68,7 +71,8 @@ namespace Bader.Areas.Admin.Controllers
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-
+            var Majors = await _CourseDomain.GetMajors();
+            ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
 
 
             if (user == null)
@@ -92,6 +96,10 @@ namespace Bader.Areas.Admin.Controllers
 
                 var Levels = await _CourseDomain.GetLevels();
                 ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
+
+                var Majors = await _CourseDomain.GetMajors();
+                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+
                 if (ModelState.IsValid)
                 {
                     if (await _CourseDomain.CourseNumEx(model.GUID, model.CourseNum))
@@ -108,9 +116,10 @@ namespace Bader.Areas.Admin.Controllers
                         return View(model);
 
                     }
+                    
 
 
-                    int check = await _CourseDomain.addCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    int check = await _CourseDomain.addCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value , User.FindFirst("CollegeCode").Value); 
                     if (check == 1)
                     {
                         ViewData["Successful"] = "تمت الإضافة بنجاح";
@@ -144,6 +153,9 @@ namespace Bader.Areas.Admin.Controllers
 
                 var Levels = await _CourseDomain.GetLevels();
                 ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
+
+                var Majors = await _CourseDomain.GetMajors();
+                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
                 if (ModelState.IsValid)
                 {
                     if (await _CourseDomain.CourseNumEx(model.GUID, model.CourseNum))

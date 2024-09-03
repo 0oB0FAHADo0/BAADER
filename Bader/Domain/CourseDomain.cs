@@ -17,7 +17,7 @@ namespace Bader.Domain
         {
             try
             {
-                return await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Where(x => x.IsDeleted == false).Select(x => new CourseViewModel
+                return await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false).Select(x => new CourseViewModel
                 {
                     CourseNum = x.CourseNum,
                     CourseNameAr = x.CourseNameAr,
@@ -26,6 +26,8 @@ namespace Bader.Domain
                     LevelId = x.LevelId,
                     CollageNameAr = x.College.CollegeNameAr,
                     LevelNameAr = x.Level.LevelNameAr,
+                    MajorId = x.MajorId,
+                    MajorNameAr = x.Major.MajorNameAr,
                     GUID = x.GUID,
 
                 }).ToListAsync();
@@ -84,18 +86,40 @@ namespace Bader.Domain
            
         }
 
-
-
-        public async Task<int> addCourse(CourseViewModel cou,string username)
+        public async Task<IEnumerable<tblMajors>> GetMajors()
         {
             try
             {
+                return await _context.tblMajors.Where(u => u.IsDeleted == false).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return new List<tblMajors>();
+            }
+
+        }
+
+
+
+        public async Task<int> addCourse(CourseViewModel cou,string username , String CollageCode)
+        {
+            try
+            {
+                var college = await _context.tblColleges.Where(c => c.CollegeCode == CollageCode && c.IsDeleted == false).FirstOrDefaultAsync();
+
+                if (college == null)
+                {
+                    // Handle the case where the college is not found
+                    return 0;
+                }
+
                 tblCourses course = new tblCourses();
                 course.CourseNameAr = cou.CourseNameAr;
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
-                course.CollegeId = cou.CollegeId;
+                course.CollegeId = college.Id;
                 course.LevelId = cou.LevelId;
+                course.MajorId = cou.MajorId;
                 course.GUID = Guid.NewGuid();
                 
 
@@ -144,8 +168,9 @@ namespace Bader.Domain
                 course.CourseNameAr = cou.CourseNameAr;
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
-                course.CollegeId = cou.CollegeId;
+                course.CollegeId = cou.CollegeId ;
                 course.LevelId = cou.LevelId;
+                course.MajorId = cou.MajorId;
                 course.GUID = cou.GUID;
                 course.IsDeleted = cou.IsDeleted;
 
