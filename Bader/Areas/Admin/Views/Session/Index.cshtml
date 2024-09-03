@@ -1,22 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model IEnumerable<SessionsViewModel>
+﻿@model IEnumerable<SessionsViewModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
- @section Scripts{
+@section Scripts {
     <script>
         @{
             if (@ViewData["Successful"] != null)
             {
 
                 <Text>
-                                    var result = '@Html.Raw(ViewData["Successful"])';
+                                                                    var result = '@Html.Raw(ViewData["Successful"])';
 
                 Swal.fire({
                     title: "تمت العملية",
@@ -29,7 +24,7 @@
             else if (@ViewData["Falied"] != null)
             {
                 <Text>
-                                            var result = '@Html.Raw(ViewData["Falied"])';
+                                                                            var result = '@Html.Raw(ViewData["Falied"])';
 
                 Swal.fire({
                     icon: "error",
@@ -41,36 +36,34 @@
             }
         }
     </script>
-    
+
 
     <script>
-           function DisplayAlert(event,element) {
-           event.preventDefault();
+        function DisplayAlert(event, element) {
+            event.preventDefault();
 
-        //   const url = element.getAttribute('href');
-           const form = element.closest('form')
-           Swal.fire({
-               title: "هل تريد حذف الكلية من السجل؟",
-               text: "هل انت متأكد!؟",
-               icon: "warning",
-               showCancelButton: true,
-               confirmButtonColor: "#3085d6",
-               cancelButtonColor: "#d33",
-               confirmButtonText: "نعم امسحها",
-               cancelButtonText: "الغاء"
-           }).then((result) => {
-               if (result.isConfirmed) {
-                  // window.location.href = url;
-                   form.submit();
-               }
-           });
+            const form = element.closest('form')
+            Swal.fire({
+                title: "هل تريد حذف الجلسة من السجل؟",
+                text: "هل انت متأكد!؟",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "نعم قم بالحذف ",
+                cancelButtonText: "الغاء"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
 
-           }
+        }
     </script>
 
- 
- 
- }
+
+
+}
 
 <!DOCTYPE html>
 <html lang="en" dir="rtl" data-theme="light">
@@ -81,9 +74,9 @@
                 <div class="block-header border-bottom px-4 py-3">
                     <h5 class="m-0">الجلسات</h5>
                     <div class="d-flex gap-2">
-                       @*  <div class="form-group">
-                            <input type="text" class="form-control table__quick_search"
-                                   placeholder="البحث السريع ...">
+                        @*  <div class="form-group">
+                        <input type="text" class="form-control table__quick_search"
+                        placeholder="البحث السريع ...">
                         </div> *@
                         <a asp-action="Create" class="btn btn-primary"> إضافة جلسة </a>
                     </div>
@@ -94,14 +87,13 @@
                             <tr>
                                 <th>@Html.DisplayNameFor(x => x.SessionNameAr)</th>
                                 <th>@Html.DisplayNameFor(x => x.StateAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.Gender)</th>
-                               <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th> 
-                                <th>@Html.DisplayNameFor(x => x.TitleAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.Links)</th>
+                                <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th>
+                                <th hidden>@Html.DisplayNameFor(x => x.TitleAr)</th>
+                                <th hidden>@Html.DisplayNameFor(x => x.Links)</th>
                                 <th>@Html.DisplayNameFor(x => x.NumOfStudents)</th>
+                                <th hidden>@Html.DisplayNameFor(x => x.RegStartDate)</th>
+                                <th hidden>@Html.DisplayNameFor(x => x.RegEndDate)</th>
                                 <th>@Html.DisplayNameFor(x => x.SessionDate)</th>
-                                <th>@Html.DisplayNameFor(x => x.RegEndDate)</th>
-                                <th>@Html.DisplayNameFor(x => x.RegStartDate)</th>
                                 <th hidden>@Html.DisplayNameFor(x => x.GUID)</th>
                                 <th>الإجراءات</th>
                             </tr>
@@ -113,24 +105,24 @@
 
                                     <td>@Html.DisplayFor(modelItem => item.SessionNameAr)</td>
                                     <td>@Html.DisplayFor(modelItem => item.StateAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Gender)</td>
-                                     <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td> 
-                                    <td>@Html.DisplayFor(modelItem => item.TitleAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Links)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.TitleAr)</td>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.Links)</td>
                                     <td>@Html.DisplayFor(modelItem => item.NumOfStudents)</td>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.RegStartDate)</td>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.RegEndDate)</td>
                                     <td>@Html.DisplayFor(modelItem => item.SessionDate)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.RegEndDate)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.RegStartDate)</td>
                                     <td hidden>@Html.DisplayFor(modelItem => item.GUID)</td>
                                     <td class="action_td text-end">
-                                      
 
-                                       <form method="post">
-                                       
-                                        <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
-                                      
 
-                                        <input type="hidden" name="id" value="@item.GUID" />
+                                        <form method="post">
+
+                                            <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
+                                            <a asp-action="Details" asp-route-id="@item.GUID" class="btn btn-sm btn-primary">التفاصيل</a>
+                                            @*  @item.GUID *@
+
+                                            <input type="hidden" name="id" value="@item.GUID" />
                                             <a asp-action="Index" class="btn btn-sm btn-danger" onclick="DisplayAlert(event, this)">حذف</a>
                                         </form>
                                     </td>

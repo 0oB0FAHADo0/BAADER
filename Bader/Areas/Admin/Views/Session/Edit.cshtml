@@ -17,16 +17,15 @@
                         <form asp-action="Edit">
                             <input hidden asp-for="GUID" />
                             <div class="row">
-         
+
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="SessionNameAr" class="mb-1"> اسم الجلسة بالعربي </label>
+                                        <label asp-for="SessionNameAr" class="mb-1">   اسم الجلسة بالعربي </label>
                                         <input asp-for="SessionNameAr" type="text" placeholder="" class="form-control">
                                         <span asp-validation-for="SessionNameAr" class="text-danger"></span>
                                     </div>
                                 </div><!-- END ITEM -->
-
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
@@ -42,21 +41,6 @@
                                         <select asp-for="SessionStateId" id="SessionStateId" class="form-control text-start" asp-items="ViewBag.SessionList"> </select>
                                     </div>
                                 </div><!-- END ITEM -->
-
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="Gender" class="mb-1">الجنس</label>
-                                        <select asp-for="Gender" class="form-control">
-                                            <option value="">اختر الجنس</option>
-                                            <option value="ذكر">ذكر</option>
-                                            <option value="أنثى">أنثى</option>
-                                        </select>
-                                        <span asp-validation-for="Gender" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <!-- END ITEM -->
-
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
@@ -64,7 +48,6 @@
                                         <select asp-for="CourseId" id="CourseId" class="form-control text-start" asp-items="ViewBag.CourseList"> </select>
                                     </div>
                                 </div><!-- END ITEM -->
-
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
@@ -95,7 +78,6 @@
                                     </div>
                                 </div>
                                 <!-- END ITEM -->
-
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
@@ -106,7 +88,19 @@
                                     </div>
                                 </div>
                                 <!-- END ITEM -->
-
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Gender" class="mb-1">الجنس</label>
+                                        <select asp-for="Gender" class="form-control">
+                                            <option value="">اختر الجنس</option>
+                                            <option value="True">ذكر</option>
+                                            <option value="False">أنثى</option>
+                                        </select>
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
@@ -114,17 +108,6 @@
                                         <input asp-for="SessionDate" type="datetime-local" placeholder=""
                                                class="form-control text-start">
                                         <span asp-validation-for="SessionDate" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <!-- END ITEM -->
-
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="RegEndDate" class="mb-1">تاريخ نهايةالتسجيل</label>
-                                        <input asp-for="RegEndDate" type="datetime-local" placeholder=""
-                                               class="form-control text-start">
-                                        <span asp-validation-for="RegEndDate" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <!-- END ITEM -->
@@ -138,8 +121,19 @@
                                     </div>
                                 </div>
                                 <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="RegEndDate" class="mb-1">تاريخ نهايةالتسجيل</label>
+                                        <input asp-for="RegEndDate" type="datetime-local" placeholder=""
+                                               class="form-control text-start">
+                                        <span asp-validation-for="RegEndDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <!-- END ITEM -->
 
-                                <div class="d-flex justify-content-around  mb-3">
+
+                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
                                     <div><button type="submit" class="btn btn-primary px-5" title="save">تعديل</button></div>
                                     @* <div>   </div>
                                     <div><<a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div> *@
@@ -160,35 +154,35 @@
 
 
 @section Scripts {
-     <script>
+    <script>
         @{
             if (@ViewData["Successful"] != null)
             {
 
                 <Text>
-                                                                       var result = '@Html.Raw(ViewData["Successful"])';
+                                                                                                                       var result = '@Html.Raw(ViewData["Successful"])';
 
-                                   Swal.fire({
-                                       title: "تمت العملية",
-                                       text: result,
-                                       icon: "success"
-                                   }).then(function () {
-                                       window.location.href = '@Url.Action("Index", "Session")';
-                                   });
+                Swal.fire({
+                    title: "تمت العملية",
+                    text: result,
+                    icon: "success"
+                }).then(function () {
+                    window.location.href = '@Url.Action("Index", "Session")';
+                });
                 </Text>
 
             }
             else if (@ViewData["Falied"] != null)
             {
                 <Text>
-                                                                                               var result = '@Html.Raw(ViewData["Falied"])';
+                                                                                                                                               var result = '@Html.Raw(ViewData["Falied"])';
 
-                                   Swal.fire({
-                                       icon: "error",
-                                       title: "فشلت العملية",
-                                       text: result
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result
 
-                                   });
+                });
                 </Text>
             }
         }

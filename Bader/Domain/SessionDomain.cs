@@ -137,18 +137,19 @@ namespace Bader.Domain
         }
         public async Task<SessionsViewModel> GetSessionsById(Guid guid)
         {
-            var session = _context.tblSessions.Where(u => u.IsDeleted == false).AsNoTracking().FirstOrDefault(tblSessions => tblSessions.GUID == guid);
+            var session = _context.tblSessions.Include(x => x.SessionState).Include(y => y.Course).Where(u => u.IsDeleted == false).AsNoTracking().FirstOrDefault(tblSessions => tblSessions.GUID == guid);
             SessionsViewModel sessionsx = new SessionsViewModel();
             sessionsx.GUID =  session.GUID;
 
             sessionsx.SessionNameAr = session.SessionNameAr;
             sessionsx.SessionNameEn = session.SessionNameEn;
-            sessionsx.SessionStateId = session.SessionStateId;
-            sessionsx.CourseId = session.CourseId;
+            sessionsx.StateAr = session.SessionState.StateAr;
+            sessionsx.CourseNameAr = session.Course.CourseNameAr;
             sessionsx.TitleAr = session.TitleAr;
             sessionsx.TitleEn = session.TitleEn;
             sessionsx.Links = session.Links;
             sessionsx.NumOfStudents = session.NumOfStudents;
+            sessionsx.Gender = session.Gender;
             sessionsx.SessionDate = session.SessionDate;
             sessionsx.RegEndDate = session.RegEndDate;
             sessionsx.RegStartDate = session.RegStartDate;

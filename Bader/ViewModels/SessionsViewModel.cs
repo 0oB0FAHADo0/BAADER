@@ -59,6 +59,7 @@ namespace Bader.ViewModels
 
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [Url(ErrorMessage = "الرابط غير صالح")]
         [StringLength(200)]
         [DisplayName("الروابط")]
         public string Links { get; set; }
@@ -66,6 +67,7 @@ namespace Bader.ViewModels
 
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [Range(1, int.MaxValue, ErrorMessage = "يجب أن يكون عدد الطلاب أكبر من 0")]
         [DisplayName("عدد الطلاب")]
         public int NumOfStudents { get; set; }
         //end
@@ -94,7 +96,7 @@ namespace Bader.ViewModels
         //end
 
         //star
-        [Required(ErrorMessage = "هذا الحقل إجباري")]
+       // [Required(ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("الجنس")]
         public bool? Gender { get; set; }
         //end
