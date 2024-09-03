@@ -31,7 +31,7 @@ namespace Bader.Areas.Admin.Controllers
         
         public async Task<IActionResult> Index()
         {
-            return View(await _CourseDomain.GetCourses());
+            return View(await _CourseDomain.GetCourses(User.FindFirst("CollegeCode").Value));
         }
 
         [HttpGet]
@@ -171,7 +171,7 @@ namespace Bader.Areas.Admin.Controllers
 
                     //}
 
-                    int check = await _CourseDomain.UpdateCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    int check = await _CourseDomain.UpdateCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value, User.FindFirst("CollegeCode").Value);
 
                     if (check == 1)
                     {
@@ -217,7 +217,7 @@ namespace Bader.Areas.Admin.Controllers
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
 
-            var courses = await _CourseDomain.GetCourses();
+            var courses = await _CourseDomain.GetCourses(User.FindFirst("CollegeCode").Value);
             return View(courses);
 
 

@@ -13,11 +13,11 @@ namespace Bader.Domain
         {
             _context = context;
         }
-        public async Task<IEnumerable<CourseViewModel>> GetCourses()
+        public async Task<IEnumerable<CourseViewModel>> GetCourses(String CollageCode)
         {
             try
             {
-                return await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false).Select(x => new CourseViewModel
+                return await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false && x.College.CollegeCode == CollageCode).Select(x => new CourseViewModel
                 {
                     CourseNum = x.CourseNum,
                     CourseNameAr = x.CourseNameAr,
@@ -108,7 +108,7 @@ namespace Bader.Domain
 
                 if (college == null)
                 {
-                    // Handle the case where the college is not found
+                    
                     return 0;
                 }
 
@@ -154,10 +154,12 @@ namespace Bader.Domain
         }
 
 
-        public async Task<int> UpdateCourse(CourseViewModel cou , String username)
+        public async Task<int> UpdateCourse(CourseViewModel cou , String username , String CollageCode)
         {
             try
             {
+                var college = await _context.tblColleges.Where(c => c.CollegeCode == CollageCode && c.IsDeleted == false).FirstOrDefaultAsync();
+
                 var sii = await _context.tblCourses.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == cou.GUID);
                 tblCourses course = new tblCourses();
 
@@ -167,7 +169,7 @@ namespace Bader.Domain
                 course.CourseNameAr = cou.CourseNameAr;
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
-                course.CollegeId = cou.CollegeId ;
+                course.CollegeId = college.Id ;
                 course.LevelId = cou.LevelId;
                 course.MajorId = cou.MajorId;
                 course.GUID = cou.GUID;
