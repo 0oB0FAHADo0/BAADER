@@ -53,7 +53,7 @@ namespace Bader.Areas.Admin.Controllers
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-            var Majors = await _CourseDomain.GetMajors();
+            var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
             ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
 
             return View(new CourseViewModel());
@@ -71,7 +71,7 @@ namespace Bader.Areas.Admin.Controllers
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-            var Majors = await _CourseDomain.GetMajors();
+            var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
             ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
 
 
@@ -97,7 +97,7 @@ namespace Bader.Areas.Admin.Controllers
                 var Levels = await _CourseDomain.GetLevels();
                 ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-                var Majors = await _CourseDomain.GetMajors();
+                var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
                 ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
 
                 if (ModelState.IsValid)
@@ -154,7 +154,7 @@ namespace Bader.Areas.Admin.Controllers
                 var Levels = await _CourseDomain.GetLevels();
                 ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-                var Majors = await _CourseDomain.GetMajors();
+                var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
                 ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
                 if (ModelState.IsValid)
                 {

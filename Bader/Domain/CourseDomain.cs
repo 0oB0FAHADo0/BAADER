@@ -86,17 +86,16 @@ namespace Bader.Domain
            
         }
 
-        public async Task<IEnumerable<tblMajors>> GetMajors()
+        public async Task<IEnumerable<tblMajors>> GetMajors(string collageCode)
         {
             try
             {
-                return await _context.tblMajors.Where(u => u.IsDeleted == false).ToListAsync();
+                return await _context.tblMajors.Include(x => x.College).Where(x => x.IsDeleted == false && x.College.CollegeCode == collageCode).ToListAsync();
             }
             catch (Exception ex)
             {
                 return new List<tblMajors>();
             }
-
         }
 
 
