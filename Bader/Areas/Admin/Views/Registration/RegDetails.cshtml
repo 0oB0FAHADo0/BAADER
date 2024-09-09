@@ -1,4 +1,7 @@
-﻿<div class="block mb-4">
+﻿@model RegistrationViewModel
+
+
+<div class="block mb-4">
     <div class="block-header border-bottom px-4 py-4">
         <h5 class="m-0">تفاصيل التسجيل في الجلسة</h5>
     </div>
@@ -11,23 +14,22 @@
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">اسم المستخدم</label>
-                                <input type="text" class="form-control" value="@ViewBag.username" readonly />
+                                <label asp-for="Username" class="mb-1"></label>
+                                <input type="text" class="form-control" asp-for="Username" readonly />
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">الاسم الكامل بالعربية</label>
-                                <input type="text" class="form-control" value="@ViewBag.fullnameAr" readonly />
+                                <label asp-for="FullNameAr" class="mb-1"></label>
+                                <input asp-for="FullNameAr" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
-                        
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">رقم الهاتف</label>
-                                <input type="text" class="form-control" value="@ViewBag.PhoneNumber" readonly />
+                                <label asp-for="Phone" class="mb-1"></label>
+                                <input asp-for="Phone" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
 
@@ -35,50 +37,50 @@
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">اسم الجلسة</label>
-                                <input type="text" class="form-control" value="@ViewBag.SessionNameAr" readonly />
+                                <label asp-for="SessionNameAr" class="mb-1"></label>
+                                <input asp-for="SessionNameAr" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">اسم المادة</label>
-                                <input type="text" class="form-control" value="@ViewBag.CourseNameAr" readonly />
+                                <label asp-for="CourseNameAr" class="mb-1"></label>
+                                <input asp-for="CourseNameAr" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">العنوان</label>
-                                <input type="text" class="form-control" value="@ViewBag.TitleAr" readonly />
+                                <label asp-for="TitleAr" class="mb-1"></label>
+                                <input asp-for="TitleAr" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">عدد الطلاب المسموح به</label>
-                                <input type="text" class="form-control" value="@ViewBag.NumOfStudents" readonly />
+                                <label asp-for="NumOfStudents" class="mb-1"></label>
+                                <input asp-for="NumOfStudents" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">تاريخ الجلسة</label>
-                                <input type="text" class="form-control" value="@ViewBag.SessionDate" readonly />
+                                <label asp-for="SessionDate" class="mb-1">تاريخ الجلسة</label>
+                                <input asp-for="SessionDate" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">تاريخ بداية التسجيل في الجلسة</label>
-                                <input type="text" class="form-control" value="@ViewBag.RegStartDate" readonly />
+                                <label asp-for="RegStartDate" class="mb-1"></label>
+                                <input asp-for="RegStartDate" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="mb-1">تاريخ نهاية التسجيل في الجلسة</label>
-                                <input type="text" class="form-control" value="@ViewBag.RegEndDate" readonly />
+                                <label asp-for="RegEndDate" class="mb-1"></label>
+                                <input asp-for="RegEndDate" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
 

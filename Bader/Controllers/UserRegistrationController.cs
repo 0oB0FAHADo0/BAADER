@@ -258,22 +258,19 @@ namespace Bader.Controllers
 
 
 
-                ViewBag.username = reg.Username;
-                ViewBag.fullnameAr = reg.FullNameAr;
-                ViewBag.NameEn = reg.FullNameEn;
-                ViewBag.PhoneNumber = reg.Phone;
+                
                 var session = await _RegistrationDomain.GetSessionByIdNotGuid(reg.SessionId);
-                ViewBag.SessionNameAr = session.SessionNameAr;
-                ViewBag.CourseNameAr = session.CourseNameAr;
-                ViewBag.TitleAr = session.TitleAr;
-                ViewBag.NumOfStudents = session.NumOfStudents;
-                ViewBag.SessionDate = session.SessionDate;
-                ViewBag.RegStartDate = session.RegStartDate;
-                ViewBag.RegEndDate = session.RegEndDate;
+                reg.SessionNameAr = session.SessionNameAr;
+                reg.CourseNameAr = session.CourseNameAr;
+                reg.TitleAr = session.TitleAr;
+                reg.NumOfStudents = session.NumOfStudents;
+                reg.SessionDate = session.SessionDate;
+                reg.RegStartDate = session.RegStartDate;
+                reg.RegEndDate = session.RegEndDate;
 
+                
 
-
-                return View();
+                return View(reg);
             }
             catch
             {
