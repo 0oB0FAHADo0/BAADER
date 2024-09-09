@@ -33,6 +33,8 @@
                         </div><!-- END ITEM -->
 
                         <h5>معلومات الجلسة:</h5>
+
+                       
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
@@ -64,7 +66,14 @@
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label asp-for="SessionDate" class="mb-1">تاريخ الجلسة</label>
+                                <label asp-for="RegDate" class="mb-1"></label>
+                                <input asp-for="RegDate" type="text" class="form-control" readonly />
+                            </div>
+                        </div><!-- END ITEM -->
+                        <!-- START ITEM -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label asp-for="SessionDate" class="mb-1"></label>
                                 <input asp-for="SessionDate" type="text" class="form-control" readonly />
                             </div>
                         </div><!-- END ITEM -->
