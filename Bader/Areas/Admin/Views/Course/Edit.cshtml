@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var userrole = User.FindFirst("Role").Value;
 }
 
 <section class="page_wrap">
@@ -48,21 +49,30 @@
                                         <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList"> </select>
                                     </div>
                                 </div><!-- END ITEM -->
-                               @*  <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="CollegeId" class="mb-1">اسم الكلية</label>
-                                        <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
 
-                                    </div>
-                                </div><!-- END ITEM --> *@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="MajorId" class="mb-1">اسم التخصص</label>
-                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList"> </select>
-
+                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
+                                            <option value="">اختر التخصص</option>
+                                        </select>
                                     </div>
                                 </div><!-- END ITEM -->
+                                @if (userrole == "SuperAdmin")
+                                {
+                                    <!-- START ITEM -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="CollegeId" class="mb-1">اسم الكلية</label>
+                                            <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList">
+                                            <option value="">اختر الكلية</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- END ITEM -->
+                                }
+                                <div>
                                 <div >
                                     <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
                                     <div></div>
@@ -115,6 +125,67 @@
                 }
             }
         </script>
+
+        <script>
+            $(document).ready(function () {
+                // Initially check if there's a pre-selected college
+                var selectedCollegeId = $('#CollegeId').val();
+
+                // Function to fetch and populate majors based on the college ID
+                function fetchMajors(collegeId, selectedMajorId = null) {
+                    if (collegeId) {
+                        // Enable the major dropdown
+                        $('#MajorId').prop('disabled', false);
+
+                        // Make an AJAX call to fetch the majors
+                        $.ajax({
+                            url: '@Url.Action("GetMajorsByCollege", "Course")', // Ensure this action exists in your controller
+                            type: 'GET',
+                            data: { collegeId: collegeId },
+                            success: function (data) {
+                                // Clear the previous options
+                                $('#MajorId').empty();
+
+                                // Populate the major dropdown with the received data
+                                $.each(data, function (index, major) {
+                                    $('#MajorId').append(new Option(major.text, major.value));
+                                });
+
+                                // If a major is pre-selected (for editing), set it
+                                if (selectedMajorId) {
+                                    $('#MajorId').val(selectedMajorId);
+                                }
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "خطأ",
+                                    text: "حدث خطأ أثناء جلب التخصصات"
+                                });
+                            }
+                        });
+                    } else {
+                        // Disable the major dropdown if no college is selected
+                        $('#MajorId').prop('disabled', true);
+                        $('#MajorId').empty();
+                    }
+                }
+
+                // Fetch majors if there's a pre-selected college (for editing a course)
+                if (selectedCollegeId) {
+                    // Pre-selected major ID (from the course you're editing)
+                    var selectedMajorId = $('#MajorId').data('selected-major-id'); // Store the major ID in the HTML or inject via the backend
+                    fetchMajors(selectedCollegeId, selectedMajorId);
+                }
+
+                // Trigger when the college dropdown changes
+                $('#CollegeId').on('change', function () {
+                    var collegeId = $(this).val();
+                    fetchMajors(collegeId);
+                });
+            });
+        </script>
+
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

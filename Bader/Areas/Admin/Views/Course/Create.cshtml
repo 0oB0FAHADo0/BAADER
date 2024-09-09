@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var userrole = User.FindFirst("Role").Value;
     
 }
 
@@ -47,21 +48,52 @@
                                         <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList"> </select>
                                     </div>
                                 </div><!-- END ITEM -->
-
-                               @*  <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="CollegeId" class="mb-1">اسم الكلية</label>
-                                        <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
+                                @if(userrole == "SuperAdmin")
+                                {
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="MajorId" class="mb-1">اسم التخصص</label>
+                                            <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList" disabled>
+                                                <option value="">اختر التخصص</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div><!-- END ITEM --> *@
+                                }
+                                else
+                                {
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="MajorId" class="mb-1">اسم التخصص</label>
+                                            <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList" >
+                                                <option value="">اختر التخصص</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                }
+
+
                                 <!-- START ITEM -->
-                                <div class="col-md-6">
+                                @* <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="MajorId" class="mb-1">اسم التخصص</label>
                                         <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList"> </select>
                                     </div>
-                                </div><!-- END ITEM -->
+                                </div> *@<!-- END ITEM -->
+                                @if(userrole == "SuperAdmin")
+                                {
+                                    <!-- START ITEM -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="CollegeId" class="mb-1">اسم الكلية</label>
+                                            <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList">
+                                            <option value="">اختر الكلية</option>
+                                            </select>
+                                           
+                                        </div>
+                                    </div>
+
+                                    <!-- END ITEM -->
+                                }
                                 <div >
                                     <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
                                     <div></div>
@@ -113,6 +145,51 @@
                 }
             }
         </script>
+
+        <script>
+            $(document).ready(function () {
+                // Disable major dropdown initially
+                $('#MajorId').prop('disabled', true);
+
+                // Trigger when the college dropdown changes
+                $('#CollegeId').on('change', function () {
+                    var collegeId = $(this).val();
+
+                    if (collegeId) {
+                        // Enable the major dropdown
+                        $('#MajorId').prop('disabled', false);
+
+                        // Make an AJAX call to fetch the majors
+                        $.ajax({
+                            url: '@Url.Action("GetMajorsByCollege", "Course")', 
+                            type: 'GET',
+                            data: { collegeId: collegeId },
+                            success: function (data) {
+                                // Clear the previous options
+                                $('#MajorId').empty();
+
+                                // Populate the major dropdown with the received data
+                                $.each(data, function (index, major) {
+                                    $('#MajorId').append(new Option(major.text, major.value));
+                                });
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "خطأ",
+                                    text: "حدث خطأ أثناء جلب التخصصات"
+                                });
+                            }
+                        });
+                    } else {
+                        // Disable the major dropdown if no college is selected
+                        $('#MajorId').prop('disabled', true);
+                        $('#MajorId').empty();
+                    }
+                });
+            });
+        </script>
+
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

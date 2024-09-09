@@ -29,7 +29,6 @@ namespace Bader.Domain
                     CollegeCode = x.CollegeCode,
                     CollegeNameAr = x.CollegeNameAr,
                     CollegeNameEn = x.CollegeNameEn,
-                    BuildingNum = x.BuildingNum,
                     GUID = x.GUID,
 
                 }).ToListAsync();
@@ -55,7 +54,6 @@ namespace Bader.Domain
                 collegex.CollegeNameAr = college.CollegeNameAr;
                 collegex.CollegeNameEn = college.CollegeNameEn;
                 collegex.CollegeCode = college.CollegeCode;
-                collegex.BuildingNum = college.BuildingNum;
 
                 collegex.GUID = Guid.NewGuid();
                 collegex.IsDeleted = false;
@@ -88,7 +86,6 @@ namespace Bader.Domain
                 collegex.CollegeNameAr = college.CollegeNameAr;
                 collegex.CollegeNameEn = college.CollegeNameEn;//
                 collegex.CollegeCode = college.CollegeCode;
-                collegex.BuildingNum = college.BuildingNum;
                 collegex.GUID = college.GUID;
 
                 return collegex;
@@ -124,7 +121,6 @@ namespace Bader.Domain
                 collegex.CollegeNameAr = college.CollegeNameAr;
                 collegex.CollegeNameEn = college.CollegeNameEn;
                 collegex.CollegeCode = college.CollegeCode;
-                collegex.BuildingNum = college.BuildingNum;
                 collegex.IsDeleted = college.IsDeleted;
 
                 _context.tblColleges.Update(collegex);
@@ -137,12 +133,7 @@ namespace Bader.Domain
             }
            
         }
-        public async Task<bool> BuildingNumExists(string BuildingNum, Guid guid)
-        {
-
-            return await _context.tblColleges.Where(u => u.GUID != guid).Where(u => u.IsDeleted ==false).AnyAsync(u => u.BuildingNum == BuildingNum);
-            
-        }
+      
         public async Task<bool> CollegeCodeExists(string CollegeCode, Guid guid)
         {
 

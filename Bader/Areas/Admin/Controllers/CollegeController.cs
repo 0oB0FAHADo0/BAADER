@@ -82,11 +82,7 @@ namespace Bader.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (await _CollegeDomain.BuildingNumExists(college.BuildingNum, college.GUID))
-                    {
-                        ModelState.AddModelError("BuildingNum", "لا يمكن ان يوجد رقم المبنى لاكثر من كلية");
-                        return View(college);
-                    }
+
                     if (await _CollegeDomain.CollegeCodeExists(college.CollegeCode, college.GUID))
                     {
                         ModelState.AddModelError("CollegeCode", "لا يمكن ان يوجد رقم كلية متكرر");
@@ -152,11 +148,7 @@ namespace Bader.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (await _CollegeDomain.BuildingNumExists(college.BuildingNum, college.GUID))
-                    {
-                        ModelState.AddModelError("BuildingNum", "لا يمكن ان يوجد رقم المبنى لاكثر من كلية");
-                        return View(college);
-                    }
+
                     if (await _CollegeDomain.CollegeCodeExists(college.CollegeCode, college.GUID))
                     {
                         ModelState.AddModelError("CollegeCode", "لا يمكن ان يوجد رقم كلية متكرر");

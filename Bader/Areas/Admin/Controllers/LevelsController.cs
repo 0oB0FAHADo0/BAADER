@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bader.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin, SuperAdmin")]
     [Authorize]
     public class LevelsController : Controller
     {

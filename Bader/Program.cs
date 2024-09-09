@@ -65,7 +65,7 @@ builder.Services.AddScoped<SessionDomain>();
 
 builder.Services.AddScoped<CourseDomain>();
 builder.Services.AddScoped<RegistrationDomain>();
-
+builder.Services.AddScoped<AttendanceDomain>();
 builder.Services.AddScoped<CollegeDomain>();
 builder.Services.AddScoped<LevelDomain>();
 builder.Services.AddScoped<MajorDomain>();

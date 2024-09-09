@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin, Editor")]
+    [Authorize(Roles = "Admin, Editor, SuperAdmin")]
     public class SessionController : Controller
     {
         private readonly SessionDomain _SessionsDomain;

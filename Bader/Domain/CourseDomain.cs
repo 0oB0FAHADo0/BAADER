@@ -40,6 +40,34 @@ namespace Bader.Domain
             
         }
 
+        public async Task<IEnumerable<CourseViewModel>> GetAllCourses()
+        {
+            try
+            {
+                return await _context.tblCourses.Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false ).Select(x => new CourseViewModel
+                {
+                    CourseNum = x.CourseNum,
+                    CourseNameAr = x.CourseNameAr,
+                    CourseNameEn = x.CourseNameEn,
+                    CollegeId = x.CollegeId,
+                    LevelId = x.LevelId,
+                    CollageNameAr = x.College.CollegeNameAr,
+                    LevelNameAr = x.Level.LevelNameAr,
+                    MajorId = x.MajorId,
+                    MajorNameAr = x.Major.MajorNameAr,
+                    GUID = x.GUID,
+
+                }).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+                return new List<CourseViewModel>();
+
+            }
+
+        }
+
         public async Task<IEnumerable<CourseViewModel>> GetSomeCourses(string collagecode)
         {
            // int UserId = 1;
@@ -98,7 +126,58 @@ namespace Bader.Domain
             }
         }
 
+        public async Task<IEnumerable<tblMajors>> GetAllMajors()
+        {
+            try
+            {
+                return await _context.tblMajors.Where(x => x.IsDeleted == false ).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return new List<tblMajors>();
+            }
+        }
 
+        public async Task<int> addAllCourse(CourseViewModel cou, string username)
+        {
+            try
+            {
+                
+
+                tblCourses course = new tblCourses();
+                course.CourseNameAr = cou.CourseNameAr;
+                course.CourseNameEn = cou.CourseNameEn;
+                course.CourseNum = cou.CourseNum;
+                course.CollegeId = cou.CollegeId;
+                course.LevelId = cou.LevelId;
+                course.MajorId = cou.MajorId;
+                course.GUID = Guid.NewGuid();
+
+
+                _context.tblCourses.Add(course);
+
+                _context.SaveChanges();
+
+                tblCoursesLogs log = new tblCoursesLogs();
+                log.CourseId = course.Id;
+                log.OperationType = "Add";
+                log.DateTime = DateTime.Now;
+                log.CreatedBy = username;
+                log.AdditionalInfo = $"تم إضافة مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
+                _context.tblCoursesLogs.Add(log);
+
+
+                int check = await _context.SaveChangesAsync();
+
+                return check;
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+        }
 
         public async Task<int> addCourse(CourseViewModel cou,string username , String CollageCode)
         {
@@ -147,13 +226,58 @@ namespace Bader.Domain
             
         }
 
+
+
         public async Task<bool> CourseNumEx(Guid id  , string CourseNum)
         {
 
             return await _context.tblCourses.Where(u => u.GUID != id).AnyAsync(u => u.CourseNum == CourseNum);
         }
 
+        public async Task<int> UpdateAllCourse(CourseViewModel cou, String username)
+        {
+            try
+            {
 
+                var sii = await _context.tblCourses.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == cou.GUID);
+                tblCourses course = new tblCourses();
+
+                course.Id = sii.Id;
+
+
+                course.CourseNameAr = cou.CourseNameAr;
+                course.CourseNameEn = cou.CourseNameEn;
+                course.CourseNum = cou.CourseNum;
+                course.CollegeId = cou.CollegeId;
+                course.LevelId = cou.LevelId;
+                course.MajorId = cou.MajorId;
+                course.GUID = cou.GUID;
+                course.IsDeleted = cou.IsDeleted;
+
+
+                _context.tblCourses.Update(course);
+
+                _context.SaveChanges();
+
+                tblCoursesLogs log = new tblCoursesLogs();
+                log.CourseId = course.Id;
+                log.OperationType = "Update";
+                log.DateTime = DateTime.Now;
+                log.CreatedBy = username;
+                log.AdditionalInfo = $"تم تحديث مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
+                _context.tblCoursesLogs.Add(log);
+
+
+                int check = await _context.SaveChangesAsync();
+
+                return check;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+
+        }
         public async Task<int> UpdateCourse(CourseViewModel cou , String username , String CollageCode)
         {
             try
@@ -264,6 +388,13 @@ namespace Bader.Domain
             {
                 return null;
             }
+        }
+
+        public async Task<IEnumerable<tblMajors>> GetMajorsByCollegeId(int collegeId)
+        {
+            return await _context.tblMajors
+                .Where(m => m.CollegeId == collegeId && m.IsDeleted == false)
+                .ToListAsync();
         }
 
 

@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin, Editor")]
+    [Authorize(Roles = "Admin, Editor, SuperAdmin")]
     public class ContentController : Controller
     {
         private readonly ContentDomain _ContentDomain;
