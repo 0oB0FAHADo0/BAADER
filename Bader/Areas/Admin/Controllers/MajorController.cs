@@ -17,6 +17,7 @@ using System.Security.Claims;
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class MajorController : Controller
     {
         private readonly MajorDomain _MajorDomain;

@@ -105,6 +105,7 @@
                             @if(userrole == "Admin")
                             {
                                 <li><a href="@Url.Action("Index", "Course" ,  new { area = "Admin" })"><span>إدارة المقررات</span></a></li>
+                                <li><a href="@Url.Action("Index", "Major" ,  new { area = "Admin" })"><span>إدارة التخصصات</span></a></li>
                             }
                             @if (userrole == "Admin" || userrole == "Editor")
                                 {

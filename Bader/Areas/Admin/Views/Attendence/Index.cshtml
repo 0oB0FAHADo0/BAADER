@@ -1,0 +1,111 @@
+﻿@model IEnumerable<AttendenceViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl" data-theme="light">
+<body>
+    <section class="page_wrap">
+        <div class="page_content">
+            <div class="block mb-4">
+                <div class="block-header border-bottom px-4 py-3">
+                    <h5 class="m-0">الحضور</h5>
+                    <div class="d-flex gap-2">
+                        <div class="form-group">
+                            <input type="text" class="form-control table__quick_search"
+                                   placeholder="البحث السريع ...">
+                        </div>
+                        <a asp-action="Create" class="btn btn-primary">إضافة حضور</a>
+                    </div>
+                </div>
+                <div class="block-body">
+                   
+                        <p>لا توجد سجلات حضور لعرضها.</p>
+                    
+                   
+                        <table class="table table-hover js-dataTable">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(x => x.SessionId)</th>
+                                    <th>@Html.DisplayNameFor(x => x.UserName)</th>
+                                    <th>@Html.DisplayNameFor(x => x.SessionDate)</th>
+                                    <th>@Html.DisplayNameFor(x => x.IsAttend)</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="cursor-pointer">
+                                        <td>@Html.DisplayFor(modelItem => item.SessionId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.SessionDate.ToString("yyyy-MM-dd"))</td>
+                                        <td>@(item.IsAttend ? "حضر" : "لم يحضر")</td>
+                                        <td class="action_td text-end">
+                                            <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
+                                            <form method="post" class="d-inline" onclick="DisplayAlert(event, this)">
+                                                <input type="hidden" name="id" value="@item.GUID" />
+                                                <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    
+                </div>
+            </div>
+        </div>
+    </section><!-- End Page Wrap -->
+    @section Scripts {
+        <script>
+            @if (ViewData["Successful"] != null)
+            {
+                <text>
+                                    var result = '@Html.Raw(ViewData["Successful"])';
+                Swal.fire({
+                    title: "تمت العملية",
+                    text: result,
+                    icon: "success"
+                });
+                </text>
+            }
+            else if (ViewData["Failed"] != null)
+            {
+                <text>
+                                    var result = '@Html.Raw(ViewData["Failed"])';
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result
+                });
+                </text>
+            }
+        </script>
+
+        <script>
+            function DisplayAlert(event, element) {
+                event.preventDefault();
+                const form = element.closest('form');
+                Swal.fire({
+                    title: "حذف سجل الحضور",
+                    text: "هل انت متأكد!؟",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "نعم امسح",
+                    cancelButtonText: "إلغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            }
+        </script>
+    }
+</body>
+</html>
