@@ -3,7 +3,7 @@
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AttendenceController : Controller
+    public class AttendanceController : Controller
     {
 
         public IActionResult Index()

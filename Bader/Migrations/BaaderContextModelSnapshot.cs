@@ -597,7 +597,7 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblCourses", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -608,19 +608,19 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblColleges", "College")
                         .WithMany("Courses")
                         .HasForeignKey("CollegeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblLevels", "Level")
                         .WithMany("Courses")
                         .HasForeignKey("LevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblMajors", "Major")
                         .WithMany("Courses")
                         .HasForeignKey("MajorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("College");
@@ -635,7 +635,7 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblColleges", "College")
                         .WithMany("Majors")
                         .HasForeignKey("CollegeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("College");
@@ -646,13 +646,13 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblColleges", "College")
                         .WithMany("Permissions")
                         .HasForeignKey("CollegeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblRoles", "Role")
                         .WithMany("Permissions")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("College");
@@ -665,13 +665,13 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblRegistrationsState", "RegistrationState")
                         .WithMany("Registrations")
                         .HasForeignKey("RegistrationStateId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblSessions", "Session")
                         .WithMany()
                         .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("RegistrationState");
@@ -684,13 +684,13 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblCourses", "Course")
                         .WithMany("Sessions")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblSessionsState", "SessionState")
                         .WithMany("Sessions")
                         .HasForeignKey("SessionStateId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");

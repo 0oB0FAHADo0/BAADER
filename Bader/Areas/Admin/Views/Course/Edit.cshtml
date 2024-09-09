@@ -21,7 +21,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CourseNameAr" class="mb-1">اسم المقرر بالعربي</label>
+                                        <label asp-for="CourseNameAr" class="mb-1"></label>
                                         <input asp-for="CourseNameAr" type="text" placeholder="رياضيات" class="form-control">
                                         <span asp-validation-for="CourseNameAr" class="text-danger"></span>
                                     </div>
@@ -29,7 +29,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CourseNameEn" class="mb-1">اسم المقرر بالإنجليزي</label>
+                                        <label asp-for="CourseNameEn" class="mb-1"></label>
                                         <input asp-for="CourseNameEn" type="text" placeholder="Math" class="form-control text-start">
                                         <span asp-validation-for="CourseNameEn" class="text-danger"></span>
                                     </div>
@@ -37,7 +37,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CourseNum" class="mb-1">رمز المقرر</label>
+                                        <label asp-for="CourseNum" class="mb-1"></label>
                                         <input asp-for="CourseNum" type="text" placeholder="1234" class="form-control text-start">
                                         <span asp-validation-for="CourseNum" class="text-danger"></span>
                                     </div>
@@ -45,25 +45,17 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="LevelId" class="mb-1">مستوى المقرر</label>
+                                        <label asp-for="LevelId" class="mb-1"></label>
                                         <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList"> </select>
                                     </div>
                                 </div><!-- END ITEM -->
 
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="MajorId" class="mb-1">اسم التخصص</label>
-                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
-                                            <option value="">اختر التخصص</option>
-                                        </select>
-                                    </div>
-                                </div><!-- END ITEM -->
                                 @if (userrole == "SuperAdmin")
                                 {
                                     <!-- START ITEM -->
                                     <div class="col-md-6">
                                         <div class="mb-4">
-                                            <label asp-for="CollegeId" class="mb-1">اسم الكلية</label>
+                                            <label asp-for="CollageNameAr" class="mb-1"></label>
                                             <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList">
                                             <option value="">اختر الكلية</option>
                                             </select>
@@ -72,6 +64,16 @@
 
                                     <!-- END ITEM -->
                                 }
+
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="MajorNameAr" class="mb-1"></label>
+                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
+                                            <option value="">اختر التخصص</option>
+                                        </select>
+                                    </div>
+                                </div><!-- END ITEM -->
+
                                 <div>
                                 <div >
                                     <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
