@@ -15,38 +15,37 @@ namespace Bader.Domain
         }
 
         //Get all attendance records
-        //public async Task<IEnumerable<AttendenceViewModel>> GetAllAttendance()
+        //public async Task<IEnumerable<AttendanceViewModel>> GetAllAttendance()
         //{
         //    try
         //    {
-        //        return await _context.tblAttendence
+        //        return await _context.tblAttendance
         //            .Include(a => a.Session)
-        //            .Select(a => new AttendenceViewModel
+        //            .Select(a => new AttendanceViewModel
         //            {
         //                Id = a.Id,
         //                SessionId = a.SessionId,
         //                SessionDate = a.SessionDate,
         //                UserName = a.UserName,
         //                IsAttend = a.IsAttend,
-        //                SessionNameAr = a.Session.SessionNameAr,
         //                GUID = a.GUID
         //            })
         //            .ToListAsync();
         //    }
         //    catch
         //    {
-        //        return new List<AttendenceViewModel>();
+        //        return new List<AttendanceViewModel>();
         //    }
         //}
 
         // Get attendance by session ID
-        //public async Task<IEnumerable<AttendenceViewModel>> GetAttendanceBySessionId(int sessionId)
+        //public async Task<IEnumerable<AttendanceViewModel>> GetAttendanceBySessionId(int sessionId)
         //{
         //    try
         //    {
-        //        return await _context.tblAttendence
+        //        return await _context.tblAttendance
         //            .Where(a => a.SessionId == sessionId)
-        //            .Select(a => new AttendenceViewModel
+        //            .Select(a => new AttendanceViewModel
         //            {
         //                Id = a.Id,
         //                SessionId = a.SessionId,
@@ -59,7 +58,7 @@ namespace Bader.Domain
         //    }
         //    catch
         //    {
-        //        return new List<AttendenceViewModel>();
+        //        return new List<AttendanceViewModel>();
         //    }
         //}
 

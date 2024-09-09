@@ -1,13 +1,6 @@
-﻿
-using Bader.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace Bader.ViewModels
+﻿namespace Bader.Models
 {
-    public class AttendenceViewModel
+    public class tblAttendance
     {
         public int Id { get; set; }
         public tblSessions Session { get; set; }
@@ -19,6 +12,8 @@ namespace Bader.ViewModels
         public DateTime SessionDate { get; set; }
         public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsAttend { get; set; }
+
+
 
     }
 }
