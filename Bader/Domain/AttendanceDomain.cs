@@ -14,14 +14,14 @@ namespace Bader.Domain
             _context = context;
         }
 
-        // Get all attendance records
-        //public async Task<IEnumerable<AttendanceViewModel>> GetAllAttendance()
+        //Get all attendance records
+        //public async Task<IEnumerable<AttendenceViewModel>> GetAllAttendance()
         //{
         //    try
         //    {
         //        return await _context.tblAttendence
         //            .Include(a => a.Session)
-        //            .Select(a => new AttendanceViewModel
+        //            .Select(a => new AttendenceViewModel
         //            {
         //                Id = a.Id,
         //                SessionId = a.SessionId,
@@ -35,7 +35,7 @@ namespace Bader.Domain
         //    }
         //    catch
         //    {
-        //        return new List<AttendanceViewModel>();
+        //        return new List<AttendenceViewModel>();
         //    }
         //}
 
@@ -63,8 +63,8 @@ namespace Bader.Domain
         //    }
         //}
 
-       
 
-       
+
+
     }
 }
