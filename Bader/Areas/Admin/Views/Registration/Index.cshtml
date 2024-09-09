@@ -102,14 +102,19 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(n => n.StateAr)
+                        @Html.DisplayNameFor(n => n.CourseNameAr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.SessionNameAr)
                     </th>
                     <th>
                         @Html.DisplayNameFor(n => n.NumOfStudents)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(n => n.SessionNameAr)
+                        @Html.DisplayNameFor(n => n.StateAr)
                     </th>
+
+
                     <th>
                         @Html.DisplayNameFor(n => n.Username)
 
@@ -118,14 +123,13 @@
                         @Html.DisplayNameFor(n => n.FullNameAr)
 
                     </th>
-                   
+
                     <th>
                         @Html.DisplayNameFor(n => n.Phone)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(n => n.RegDate)
-                    </th>
-                   
+
+
+
 
                     <th class=""></th>
                 </tr>
@@ -136,29 +140,39 @@
                     <tr class="cursor-pointer">
 
 
+
+
+
                         <td>
-                            @item.StateAr
+                            @item.CourseNameAr
+                        </td>
+                        <td>
+                            @item.SessionNameAr
                         </td>
                         <td>
                             @item.NumOfStudents
                         </td>
                         <td>
-                            @item.SessionNameAr
+                            @item.StateAr
                         </td>
+
+
+
+
+
+
+
                         <td>
                             @item.Username
                         </td>
                         <td>
                             @item.FullNameAr
                         </td>
-                       
+
                         <td>
                             @item.Phone
                         </td>
-                        <td>
-                            @item.RegDate
-                        </td>
-                       
+
 
 
                         <td class="action_td text-end">
