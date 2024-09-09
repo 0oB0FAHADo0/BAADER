@@ -18,14 +18,15 @@
                             <input type="text" class="form-control table__quick_search"
                                    placeholder="البحث السريع ...">
                         </div>
-                        <a asp-action="Create" class="btn btn-primary">إضافة حضور</a>
                     </div>
                 </div>
                 <div class="block-body">
-                   
+                    @if (Model == null || !Model.Any())
+                    {
                         <p>لا توجد سجلات حضور لعرضها.</p>
-                    
-                   
+                    }
+                    else
+                    {
                         <table class="table table-hover js-dataTable">
                             <thead>
                                 <tr>
@@ -55,7 +56,7 @@
                                 }
                             </tbody>
                         </table>
-                    
+                    }
                 </div>
             </div>
         </div>
@@ -65,7 +66,7 @@
             @if (ViewData["Successful"] != null)
             {
                 <text>
-                                    var result = '@Html.Raw(ViewData["Successful"])';
+                                                var result = '@Html.Raw(ViewData["Successful"])';
                 Swal.fire({
                     title: "تمت العملية",
                     text: result,
@@ -76,7 +77,7 @@
             else if (ViewData["Failed"] != null)
             {
                 <text>
-                                    var result = '@Html.Raw(ViewData["Failed"])';
+                                                var result = '@Html.Raw(ViewData["Failed"])';
                 Swal.fire({
                     icon: "error",
                     title: "فشلت العملية",
