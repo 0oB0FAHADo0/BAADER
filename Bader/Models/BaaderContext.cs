@@ -13,6 +13,7 @@ namespace Bader.Models
         {
         }
         public DbSet<tblUsers> tblUsers { get; set; }
+        public DbSet<tblUsers> tblAttendance { get; set; }
         public DbSet<tblRoles> tblRoles { get; set; }
         public DbSet<tblMajors> tblMajors { get; set; }
         public DbSet<tblColleges> tblColleges { get; set; }
