@@ -40,13 +40,13 @@ namespace Bader.Domain
         //}
 
         // Get attendance by session ID
-        //public async Task<IEnumerable<AttendanceViewModel>> GetAttendanceBySessionId(int sessionId)
+        //public async Task<IEnumerable<AttendenceViewModel>> GetAttendanceBySessionId(int sessionId)
         //{
         //    try
         //    {
         //        return await _context.tblAttendence
         //            .Where(a => a.SessionId == sessionId)
-        //            .Select(a => new AttendanceViewModel
+        //            .Select(a => new AttendenceViewModel
         //            {
         //                Id = a.Id,
         //                SessionId = a.SessionId,
@@ -59,7 +59,7 @@ namespace Bader.Domain
         //    }
         //    catch
         //    {
-        //        return new List<AttendanceViewModel>();
+        //        return new List<AttendenceViewModel>();
         //    }
         //}
 
