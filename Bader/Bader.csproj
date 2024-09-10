@@ -6,8 +6,15 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+	
+
 
   <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Attendance\AttendPage.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\Attendance\AttendPage.cshtml" />
     <None Include="wwwroot\Assets\.DS_Store" />
     <None Include="wwwroot\Assets\css\.DS_Store" />
     <None Include="wwwroot\Assets\fonts\.DS_Store" />
@@ -66,6 +73,14 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\Attendance\AttendPage.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Attendance\AttendPage.cshtml" />
   </ItemGroup>
 
 </Project>
