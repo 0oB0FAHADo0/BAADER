@@ -34,6 +34,61 @@ namespace Bader.Domain
             }
 
         }
+        public async Task<IEnumerable<tblColleges>> GetCollages()
+        {
+            try
+            {
+                return await _context.tblColleges.Where(u => u.IsDeleted == false).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return new List<tblColleges>();
+            }
+
+        }
+        public async Task<int> addMajors(MajorViewModel Major)
+        {
+            try
+            {
+                var college = await _context.tblColleges.Where(c =>c.IsDeleted == false).FirstOrDefaultAsync();
+
+                if (college == null)
+                {
+
+                    return 0;
+                }
+
+                tblMajors Majorx = new tblMajors();
+                Majorx.MajorNameAr = Major.MajorNameAr;
+                Majorx.MajorNameEn = Major.MajorNameEn;
+                Majorx.CollegeId = college.Id;
+                Majorx.GUID = Guid.NewGuid();
+
+
+                _context.tblMajors.Add(Majorx);
+
+                _context.SaveChanges();
+
+                //tblCoursesLogs log = new tblCoursesLogs();
+                //log.CourseId = course.Id;
+                //log.OperationType = "Add";
+                //log.DateTime = DateTime.Now;
+                //log.CreatedBy = username;
+                //log.AdditionalInfo = $"تم إضافة مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
+                //_context.tblCoursesLogs.Add(log);
+
+
+                int check = await _context.SaveChangesAsync();
+
+                return check;
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+        }
 
     }
 }

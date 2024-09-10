@@ -30,5 +30,49 @@ namespace Bader.Areas.Admin.Controllers
         {
             return View(await _MajorDomain.GetMajors());
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var Collages = await _MajorDomain.GetCollages();
+            ViewBag.CollagesList = new SelectList(Collages, "Id", "CollegeNameAr");
+
+
+            return View(new MajorViewModel());
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(MajorViewModel major)
+        {
+            try
+            {
+                var Collages = await _MajorDomain.GetCollages();
+                ViewBag.CollagesList = new SelectList(Collages, "Id", "CollegeNameAr");
+
+                if (ModelState.IsValid)
+                {
+
+                    int check = await _MajorDomain.addMajors(major);
+                    if (check == 1)
+                    {
+                        ViewData["Successful"] = "تمت الإضافة بنجاح";
+                    }
+                    else
+                    {
+                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                    }
+                   
+                }
+
+            }
+            catch
+            {
+                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+            }
+
+
+
+            return View(major);
+        }
     }
 }
