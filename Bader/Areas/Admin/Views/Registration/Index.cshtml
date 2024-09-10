@@ -84,7 +84,7 @@
 }
 <div class="block mb-4">
     <div class="block-header border-bottom px-4 py-3">
-        <h5 class="m-0">فهرس التسجيل</h5>
+        <h5 class="m-0">قائمة التسجيل</h5>
         <div class="d-flex gap-2">
             <div class="form-group">
                 <input type="text" class="form-control table__quick_search"
@@ -107,29 +107,20 @@
                     <th>
                         @Html.DisplayNameFor(n => n.SessionNameAr)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(n => n.NumOfStudents)
-                    </th>
+
                     <th>
                         @Html.DisplayNameFor(n => n.StateAr)
                     </th>
 
-
-                    <th>
-                        @Html.DisplayNameFor(n => n.Username)
-
-                    </th>
                     <th>
                         @Html.DisplayNameFor(n => n.FullNameAr)
 
                     </th>
 
                     <th>
-                        @Html.DisplayNameFor(n => n.Phone)
+                        @Html.DisplayNameFor(n => n.Email)
+
                     </th>
-
-
-
 
                     <th class=""></th>
                 </tr>
@@ -139,41 +130,24 @@
                 {
                     <tr class="cursor-pointer">
 
-
-
-
-
                         <td>
                             @item.CourseNameAr
                         </td>
                         <td>
                             @item.SessionNameAr
                         </td>
-                        <td>
-                            @item.NumOfStudents
-                        </td>
+
                         <td>
                             @item.StateAr
                         </td>
 
-
-
-
-
-
-
-                        <td>
-                            @item.Username
-                        </td>
                         <td>
                             @item.FullNameAr
                         </td>
 
                         <td>
-                            @item.Phone
+                            @item.Email
                         </td>
-
-
 
                         <td class="action_td text-end">
                             <form method="post" >

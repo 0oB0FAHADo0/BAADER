@@ -33,9 +33,10 @@
             margin-bottom: 8px;
             background-color: #0F7179;
             color: white;
-            white-space: nowrap; 
+            white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis; 
+            text-overflow: ellipsis;
+            text-align: center; /* Centers the text horizontally */
         }
 
         .card-body {
@@ -88,7 +89,7 @@
                     @foreach (var item in Model)
                     {
                         <div class="card">
-                            <div class="card-header">اسم الجلسة : @item.SessionNameAr</div>
+                            <div class="card-header"> @item.SessionNameAr</div>
                             <div class="card-body">
                                 <div>
                                     المقرر: @item.CourseNameAr

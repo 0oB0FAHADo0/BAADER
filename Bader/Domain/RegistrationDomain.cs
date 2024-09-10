@@ -20,7 +20,7 @@ namespace Bader.Domain
         {
             try
             {
-                return await _context.tblRegistrations
+                var registrations = await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
                     .Include(y => y.Session)
                     .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId==1)
@@ -40,6 +40,13 @@ namespace Bader.Domain
                         CourseNameAr = x.Session.Course.CourseNameAr,
                     })
                     .ToListAsync();
+
+                foreach (var reg in registrations)
+                {
+                    var user = await _context.tblUsers.AsNoTracking().FirstOrDefaultAsync(u => u.Username == reg.Username);
+                    reg.Email = user.Email;
+                }
+                return registrations;
             }
             catch 
             {
@@ -52,7 +59,7 @@ namespace Bader.Domain
         {
             try
             {
-                return await _context.tblRegistrations
+                var registrations = await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
                     .Include(y => y.Session)
                     .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
@@ -71,9 +78,19 @@ namespace Bader.Domain
                         StateAr = x.RegistrationState.StateAr,
                         NumOfStudents = x.Session.NumOfStudents,
                         CourseNameAr = x.Session.Course.CourseNameAr,
-                        
+
                     })
                     .ToListAsync();
+
+
+                foreach (var reg in registrations)
+                {
+                    var user = await _context.tblUsers.AsNoTracking().FirstOrDefaultAsync(u => u.Username == reg.Username);
+                    reg.Email = user.Email;
+                }
+
+
+                return registrations;
             }
             catch
             {
@@ -276,9 +293,12 @@ namespace Bader.Domain
                 regx.FullNameEn = reg.FullNameEn;
                 regx.Phone = reg.Phone;
                 regx.RegDate = reg.RegDate;
-
                 regx.GUID = reg.GUID;
                 regx.RegistrationStateId = reg.RegistrationStateId;
+
+
+                var user = await _context.tblUsers.AsNoTracking().FirstOrDefaultAsync(u => u.Username == reg.Username);
+                regx.Email = user.Email;
 
                 return regx;
             }

@@ -64,6 +64,9 @@ namespace Bader.ViewModels
 		[DisplayName("تاريخ نهاية التسجيل")]
 		public DateTime RegEndDate { get; set; }
 
-	}
+        [DisplayName("البريد الإلكتروني")]
+        public string Email { get; set; }
+
+    }
 
 }

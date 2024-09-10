@@ -4,6 +4,7 @@ using Bader.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bader.Migrations
 {
     [DbContext(typeof(BaaderContext))]
-    partial class BaaderContextModelSnapshot : ModelSnapshot
+    [Migration("20240910083850_attend_add")]
+    partial class attend_add
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,36 +23,6 @@ namespace Bader.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Bader.Models.tblAttendance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<Guid>("GUID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsAttend")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("SessionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SessionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SessionId");
-
-                    b.ToTable("tblAttendance");
-                });
 
             modelBuilder.Entity("Bader.Models.tblColleges", b =>
                 {
@@ -620,17 +592,6 @@ namespace Bader.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tblUsers");
-                });
-
-            modelBuilder.Entity("Bader.Models.tblAttendance", b =>
-                {
-                    b.HasOne("Bader.Models.tblSessions", "Session")
-                        .WithMany()
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("Bader.Models.tblContents", b =>
