@@ -1,0 +1,98 @@
+﻿@model MajorViewModel
+
+@{
+    ViewData["Title"] = "Create";
+
+}
+
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">إضافة تخصص</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="Create">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="MajorNameAr" class="mb-1"></label>
+                                        <input asp-for="MajorNameAr" type="text" placeholder="علوم حاسب" class="form-control">
+                                        <span asp-validation-for="MajorNameAr" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="MajorNameEn" class="mb-1"></label>
+                                        <input asp-for="MajorNameEn" type="text" placeholder="CS" class="form-control text-start">
+                                        <span asp-validation-for="MajorNameEn" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                              
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CollageNameAr" class="mb-1"> </label>
+                                        <select asp-for="CollageNameAr" id="CollageNameAr" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
+                                    </div>
+                                </div><!-- END ITEM -->
+
+                                <div>
+                                    <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
+                                 
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    @{
+
+        <script>
+            @{
+                if (@ViewData["Successful"] != null)
+                {
+
+                    <Text>
+                                        var result = '@Html.Raw(ViewData["Successful"])';
+
+                    Swal.fire({
+                        title: "تمت العملية",
+                        text: result,
+                        icon: "success"
+                    }).then(function () {
+                        window.location.href = '@Url.Action("Index", "Major")';
+                    });
+                    </Text>
+
+                }
+                else if (@ViewData["Falied"] != null)
+                {
+                    <Text>
+                                        var result = '@Html.Raw(ViewData["Falied"])';
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "فشلت العملية",
+                        text: result
+
+                    });
+                    </Text>
+                }
+            }
+        </script>
+
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -87,7 +87,7 @@ namespace Bader.Controllers
                     }
                     else if (user.RoleNameEn == "Student" || user.RoleNameEn == null)
                     {
-                        return RedirectToAction("Index", "UserCourse");
+                        return RedirectToAction("Index", "Home");
                     }
 
 

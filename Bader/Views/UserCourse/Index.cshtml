@@ -80,17 +80,13 @@
                     <div class="card-container" id="courseCards">
                         @foreach (var item in Model)
                         {
-                            <div class="card" >
-
+                            <div class="card" data-level="@item.LevelNameAr">
                                 <div class="card-header">رقم المقرر : @item.CourseNum</div>
                                 <div class="card-body">
-
                                     <div>@item.CourseNameAr</div>
                                     <div>@item.CourseNameEn</div>
-
                                 </div>
                                 <div class="card-footer">@item.LevelNameAr</div>
-
                             </div>
                         }
                     </div>
@@ -138,6 +134,7 @@
                 }
             });
         }
+
     </script>
 </body>
 </html>

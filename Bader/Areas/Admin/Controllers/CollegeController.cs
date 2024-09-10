@@ -24,7 +24,7 @@ namespace Bader.Areas.Admin.Controllers
         {
             var DomainInfo = await _CollegeDomain.GetAllColleges();
 
-
+              
 
             return View(DomainInfo);
         }
