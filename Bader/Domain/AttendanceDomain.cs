@@ -15,28 +15,28 @@ namespace Bader.Domain
         }
 
         //Get all attendance records
-        //public async Task<IEnumerable<AttendanceViewModel>> GetAllAttendance()
-        //{
-        //    try
-        //    {
-        //        return await _context.tblAttendance
-        //            .Include(a => a.Session)
-        //            .Select(a => new AttendanceViewModel
-        //            {
-        //                Id = a.Id,
-        //                SessionId = a.SessionId,
-        //                SessionDate = a.SessionDate,
-        //                UserName = a.UserName,
-        //                IsAttend = a.IsAttend,
-        //                GUID = a.GUID
-        //            })
-        //            .ToListAsync();
-        //    }
-        //    catch
-        //    {
-        //        return new List<AttendanceViewModel>();
-        //    }
-        //}
+        public async Task<IEnumerable<AttendanceViewModel>> GetAllAttendance()
+        {
+            try
+            {
+                return await _context.tblAttendance
+                    .Include(a => a.Session)
+                    .Select(a => new AttendanceViewModel
+                    {
+                        Id = a.Id,
+                        SessionId = a.SessionId,
+                        SessionDate = a.SessionDate,
+                        UserName = a.UserName,
+                        IsAttend = a.IsAttend,
+                        GUID = a.GUID
+                    })
+                    .ToListAsync();
+            }
+            catch
+            {
+                return new List<AttendanceViewModel>();
+            }
+        }
 
         // Get attendance by session ID
         //public async Task<IEnumerable<AttendanceViewModel>> GetAttendanceBySessionId(int sessionId)

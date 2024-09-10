@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bader.Domain;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bader.Areas.Admin.Controllers
 {
@@ -6,9 +7,18 @@ namespace Bader.Areas.Admin.Controllers
     public class AttendanceController : Controller
     {
 
-        public IActionResult Index()
+        private readonly AttendanceDomain _AttendanceDomain;
+
+        public AttendanceController(AttendanceDomain AttendanceDomain)
         {
-            return View();
+            _AttendanceDomain = AttendanceDomain;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+
+            var DomainInfo = await _AttendanceDomain.GetAllAttendance();
+            return View(DomainInfo);
         }
     }
 }
