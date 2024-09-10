@@ -99,15 +99,21 @@
         <table class="table table-hover js-dataTable">
             <thead>
                 <tr>
+
                     <th>
-                        @Html.DisplayNameFor(n => n.StateAr)
+                        @Html.DisplayNameFor(n => n.CourseNameAr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.SessionNameAr)
                     </th>
                     <th>
                         @Html.DisplayNameFor(n => n.NumOfStudents)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(n => n.SessionNameAr)
+                        @Html.DisplayNameFor(n => n.StateAr)
                     </th>
+                    
+                    
                     <th>
                         @Html.DisplayNameFor(n => n.Username)
 
@@ -120,10 +126,7 @@
                     <th>
                         @Html.DisplayNameFor(n => n.Phone)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(n => n.RegDate)
-                    </th>
-
+                    
 
                     <th class=""></th>
                 </tr>
@@ -135,14 +138,24 @@
 
 
                         <td>
-                            @item.StateAr
+                            @item.CourseNameAr
+                        </td>
+                        <td>
+                            @item.SessionNameAr
                         </td>
                         <td>
                             @item.NumOfStudents
                         </td>
                         <td>
-                            @item.SessionNameAr
+                            @item.StateAr
                         </td>
+
+
+
+
+                        
+                        
+                        
                         <td>
                             @item.Username
                         </td>
@@ -153,9 +166,7 @@
                         <td>
                             @item.Phone
                         </td>
-                        <td>
-                            @item.RegDate
-                        </td>
+                        
 
 
 

@@ -105,6 +105,7 @@
                             @if(userrole == "Admin")
                             {
                                 <li><a href="@Url.Action("Index", "Course" ,  new { area = "Admin" })"><span>إدارة المقررات</span></a></li>
+                                <li><a href="@Url.Action("Index", "Major" ,  new { area = "Admin" })"><span>إدارة التخصصات</span></a></li>
                             }
                             @if (userrole == "Admin" || userrole == "Editor")
                                 {
@@ -213,7 +214,7 @@
             <!-- Start Footer -->
             <footer class="d-flex justify-content-center align-items-center">
                 <p class="m-0 d-flex justify-content-center">
-                    جميع الحقوق محفوظة لجامعة الملك فيصل 2024 © | تصميم وتطوير
+                     جميع الحقوق محفوظة لجامعة الملك فيصل <span id="currentYear"></span>  © | تصميم وتطوير
                     عمادة التعلم الإلكتروني وتقنية المعلومات
                 </p>
             </footer><!-- End Footer -->
@@ -228,6 +229,9 @@
 
             <!-- customization -->
             <script src="~/assets/js/app.js"></script>
+            <script>
+                document.getElementById("currentYear").textContent = new Date().getFullYear();
+            </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

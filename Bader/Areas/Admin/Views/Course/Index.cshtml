@@ -29,7 +29,6 @@
                             <tr>
                                 <th>@Html.DisplayNameFor(x => x.CourseNum)</th>
                                 <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.CourseNameEn)</th>
                                 <th>@Html.DisplayNameFor(x => x.LevelNameAr)</th>
                                 <th>@Html.DisplayNameFor(x => x.CollageNameAr)</th>
                                 <th>@Html.DisplayNameFor(x => x.MajorNameAr)</th>
@@ -43,7 +42,6 @@
                                 <tr class="cursor-pointer" goto="order_details.html">
                                     <td>@Html.DisplayFor(modelItem => item.CourseNum)</td>
                                     <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CourseNameEn)</td>
                                     <td>@Html.DisplayFor(modelItem => item.LevelNameAr)</td>
                                     <td>@Html.DisplayFor(modelItem => item.CollageNameAr)</td>
                                     <td>@Html.DisplayFor(modelItem => item.MajorNameAr)</td>
@@ -124,6 +122,31 @@
                 });
 
             }
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Get the search input and table elements
+                const searchInput = document.querySelector('.table__quick_search');
+                const tableRows = document.querySelectorAll('tbody tr');
+
+                // Add event listener to the search input
+                searchInput.addEventListener('input', function () {
+                    const searchTerm = searchInput.value.toLowerCase();
+
+                    // Loop through each table row
+                    tableRows.forEach(row => {
+                        // Get all the text content of the row
+                        const rowText = row.innerText.toLowerCase();
+
+                        // If the search term is found in the row's text, show the row; otherwise, hide it
+                        if (rowText.includes(searchTerm)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
         </script>
 
 

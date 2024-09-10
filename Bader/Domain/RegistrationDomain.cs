@@ -37,6 +37,7 @@ namespace Bader.Domain
                         SessionNameAr = x.Session.SessionNameAr,
                         StateAr = x.RegistrationState.StateAr,
                         NumOfStudents = x.Session.NumOfStudents,
+                        CourseNameAr = x.Session.Course.CourseNameAr,
                     })
                     .ToListAsync();
             }
@@ -69,6 +70,8 @@ namespace Bader.Domain
                         SessionNameAr = x.Session.SessionNameAr,
                         StateAr = x.RegistrationState.StateAr,
                         NumOfStudents = x.Session.NumOfStudents,
+                        CourseNameAr = x.Session.Course.CourseNameAr,
+                        
                     })
                     .ToListAsync();
             }
@@ -353,7 +356,7 @@ namespace Bader.Domain
         public async Task<int> CheckCountReg(int Id)
         {
             try
-            {
+                {
                 int NumOfSutdent = await GetNumOfSutdentById(Id);
                 var sess = _context.tblRegistrationsState.AsNoTracking().FirstOrDefault(tblRegistrationsState => tblRegistrationsState.Id == 1);
                 int currentRegistrationCount = await _context.tblRegistrations.Where(r => r.SessionId == Id && r.RegistrationStateId == sess.Id).CountAsync();

@@ -65,7 +65,7 @@ builder.Services.AddScoped<SessionDomain>();
 
 builder.Services.AddScoped<CourseDomain>();
 builder.Services.AddScoped<RegistrationDomain>();
-
+builder.Services.AddScoped<AttendanceDomain>();
 builder.Services.AddScoped<CollegeDomain>();
 builder.Services.AddScoped<LevelDomain>();
 builder.Services.AddScoped<MajorDomain>();
@@ -95,11 +95,11 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "Admin",
-        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+        pattern: "{area:exists}/{controller=Access}/{action=Login}/{id?}");
 
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Access}/{action=Login}/{id?}");
 
     endpoints.MapRazorPages();
 });

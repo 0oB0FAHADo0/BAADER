@@ -31,14 +31,20 @@ namespace Bader.Areas.Admin.Controllers
         
         public async Task<IActionResult> Index()
         {
-            return View(await _CourseDomain.GetCourses(User.FindFirst("CollegeCode").Value));
+            if (User.FindFirst("Role").Value == "Admin")
+            {
+                return View(await _CourseDomain.GetCourses(User.FindFirst("CollegeCode").Value));
+            }
+            else
+            {
+                return View(await _CourseDomain.GetAllCourses());
+            }
+                
+
+
         }
 
-        [HttpGet]
-        //public async Task<IActionResult> UserIndexold()
-        //{
-        //    return View(await _CourseDomain.GetSomeCourses());
-        //}
+       
 
 
 
@@ -53,8 +59,17 @@ namespace Bader.Areas.Admin.Controllers
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-            var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
-            ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+            if(User.FindFirst("Role").Value == "Admin")
+            {
+                var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
+                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+            }
+            else
+            {
+                var Majors = await _CourseDomain.GetAllMajors();
+                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+            }
+           
 
             return View(new CourseViewModel());
         }
@@ -71,8 +86,16 @@ namespace Bader.Areas.Admin.Controllers
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-            var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
-            ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+            if (User.FindFirst("Role").Value == "Admin")
+            {
+                var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
+                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+            }
+            //else
+            //{
+            //    var Majors = await _CourseDomain.GetAllMajors();
+            //    ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+            //}
 
 
             if (user == null)
@@ -97,8 +120,16 @@ namespace Bader.Areas.Admin.Controllers
                 var Levels = await _CourseDomain.GetLevels();
                 ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-                var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
-                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                if (User.FindFirst("Role").Value == "Admin")
+                {
+                    var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
+                    ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                }
+                else
+                {
+                    var Majors = await _CourseDomain.GetAllMajors();
+                    ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                }
 
                 if (ModelState.IsValid)
                 {
@@ -117,17 +148,32 @@ namespace Bader.Areas.Admin.Controllers
 
                     }
                     
-
-
-                    int check = await _CourseDomain.addCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value , User.FindFirst("CollegeCode").Value); 
-                    if (check == 1)
+                    if(User.FindFirst("Role").Value == "Admin")
                     {
-                        ViewData["Successful"] = "تمت الإضافة بنجاح";
+                        int check = await _CourseDomain.addCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value, User.FindFirst("CollegeCode").Value);
+                        if (check == 1)
+                        {
+                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                        }
+                        else
+                        {
+                            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        }
                     }
                     else
                     {
-                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        int check = await _CourseDomain.addAllCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                        if (check == 1)
+                        {
+                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                        }
+                        else
+                        {
+                            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        }
                     }
+
+                    
                     //return RedirectToAction(nameof(Index));
                 }
 
@@ -154,8 +200,17 @@ namespace Bader.Areas.Admin.Controllers
                 var Levels = await _CourseDomain.GetLevels();
                 ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-                var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
-                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                if (User.FindFirst("Role").Value == "Admin")
+                {
+                    var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
+                    ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                }
+                else
+                {
+                    var Majors = await _CourseDomain.GetAllMajors();
+                    ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                }
+
                 if (ModelState.IsValid)
                 {
                     if (await _CourseDomain.CourseNumEx(model.GUID, model.CourseNum))
@@ -163,24 +218,34 @@ namespace Bader.Areas.Admin.Controllers
                         ModelState.AddModelError("CourseNum", "هذا المقرر موجود مسبقاً");
                         return View(model);
                     }
-                    //if (model.CourseNum <= 0)
-                    //{
 
-                    //    ModelState.AddModelError("CourseNum", "خطأ في رمز المقرر");
-                    //    return View(model);
-
-                    //}
-
-                    int check = await _CourseDomain.UpdateCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value, User.FindFirst("CollegeCode").Value);
-
-                    if (check == 1)
+                    if (User.FindFirst("Role").Value == "Admin")
                     {
-                        ViewData["Successful"] = "تمت الإضافة بنجاح";
+                        int check = await _CourseDomain.UpdateCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value, User.FindFirst("CollegeCode").Value);
+
+                        if (check == 1)
+                        {
+                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                        }
+                        else
+                        {
+                            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        }
                     }
                     else
                     {
-                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        int check = await _CourseDomain.UpdateAllCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+                        if (check == 1)
+                        {
+                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                        }
+                        else
+                        {
+                            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        }
                     }
+                    
 
                 }
             }
@@ -217,11 +282,36 @@ namespace Bader.Areas.Admin.Controllers
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
 
-            var courses = await _CourseDomain.GetCourses(User.FindFirst("CollegeCode").Value);
-            return View(courses);
+            if(User.FindFirst("Role").Value == "Admin")
+            {
+                var courses = await _CourseDomain.GetCourses(User.FindFirst("CollegeCode").Value);
+                return View(courses);
+            }
+            else
+            {
+                var courses = await _CourseDomain.GetAllCourses();
+                return View(courses);
+            }
+            
+            
 
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMajorsByCollege(int collegeId)
+        {
+            var majors = await _CourseDomain.GetMajorsByCollegeId(collegeId);
+
+            var majorList = majors.Select(m => new SelectListItem
+            {
+                Value = m.Id.ToString(),
+                Text = m.MajorNameAr
+            }).ToList();
+
+            return Json(majorList);  // Return the list of majors in JSON format
+        }
+
 
 
 

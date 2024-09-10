@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var userrole = User.FindFirst("Role").Value;
 }
 
 <section class="page_wrap">
@@ -20,7 +21,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CourseNameAr" class="mb-1">اسم المقرر بالعربي</label>
+                                        <label asp-for="CourseNameAr" class="mb-1"></label>
                                         <input asp-for="CourseNameAr" type="text" placeholder="رياضيات" class="form-control">
                                         <span asp-validation-for="CourseNameAr" class="text-danger"></span>
                                     </div>
@@ -28,7 +29,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CourseNameEn" class="mb-1">اسم المقرر بالإنجليزي</label>
+                                        <label asp-for="CourseNameEn" class="mb-1"></label>
                                         <input asp-for="CourseNameEn" type="text" placeholder="Math" class="form-control text-start">
                                         <span asp-validation-for="CourseNameEn" class="text-danger"></span>
                                     </div>
@@ -36,7 +37,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CourseNum" class="mb-1">رمز المقرر</label>
+                                        <label asp-for="CourseNum" class="mb-1"></label>
                                         <input asp-for="CourseNum" type="text" placeholder="1234" class="form-control text-start">
                                         <span asp-validation-for="CourseNum" class="text-danger"></span>
                                     </div>
@@ -44,25 +45,36 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="LevelId" class="mb-1">مستوى المقرر</label>
+                                        <label asp-for="LevelId" class="mb-1"></label>
                                         <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList"> </select>
                                     </div>
                                 </div><!-- END ITEM -->
-                               @*  <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="CollegeId" class="mb-1">اسم الكلية</label>
-                                        <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
 
+                                @if (userrole == "SuperAdmin")
+                                {
+                                    <!-- START ITEM -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="CollageNameAr" class="mb-1"></label>
+                                            <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList">
+                                            <option value="">اختر الكلية</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div><!-- END ITEM --> *@
+
+                                    <!-- END ITEM -->
+                                }
+
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="MajorId" class="mb-1">اسم التخصص</label>
-                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList"> </select>
-
+                                        <label asp-for="MajorNameAr" class="mb-1"></label>
+                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
+                                            <option value="">اختر التخصص</option>
+                                        </select>
                                     </div>
                                 </div><!-- END ITEM -->
+
+                                <div>
                                 <div >
                                     <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
                                     <div></div>
@@ -115,6 +127,67 @@
                 }
             }
         </script>
+
+        <script>
+            $(document).ready(function () {
+                // Initially check if there's a pre-selected college
+                var selectedCollegeId = $('#CollegeId').val();
+
+                // Function to fetch and populate majors based on the college ID
+                function fetchMajors(collegeId, selectedMajorId = null) {
+                    if (collegeId) {
+                        // Enable the major dropdown
+                        $('#MajorId').prop('disabled', false);
+
+                        // Make an AJAX call to fetch the majors
+                        $.ajax({
+                            url: '@Url.Action("GetMajorsByCollege", "Course")', // Ensure this action exists in your controller
+                            type: 'GET',
+                            data: { collegeId: collegeId },
+                            success: function (data) {
+                                // Clear the previous options
+                                $('#MajorId').empty();
+
+                                // Populate the major dropdown with the received data
+                                $.each(data, function (index, major) {
+                                    $('#MajorId').append(new Option(major.text, major.value));
+                                });
+
+                                // If a major is pre-selected (for editing), set it
+                                if (selectedMajorId) {
+                                    $('#MajorId').val(selectedMajorId);
+                                }
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "خطأ",
+                                    text: "حدث خطأ أثناء جلب التخصصات"
+                                });
+                            }
+                        });
+                    } else {
+                        // Disable the major dropdown if no college is selected
+                        $('#MajorId').prop('disabled', true);
+                        $('#MajorId').empty();
+                    }
+                }
+
+                // Fetch majors if there's a pre-selected college (for editing a course)
+                if (selectedCollegeId) {
+                    // Pre-selected major ID (from the course you're editing)
+                    var selectedMajorId = $('#MajorId').data('selected-major-id'); // Store the major ID in the HTML or inject via the backend
+                    fetchMajors(selectedCollegeId, selectedMajorId);
+                }
+
+                // Trigger when the college dropdown changes
+                $('#CollegeId').on('change', function () {
+                    var collegeId = $(this).val();
+                    fetchMajors(collegeId);
+                });
+            });
+        </script>
+
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

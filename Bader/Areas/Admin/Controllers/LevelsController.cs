@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class LevelsController : Controller
     {
         private readonly LevelDomain _LevelDomain;
@@ -26,7 +26,7 @@ namespace Bader.Areas.Admin.Controllers
             _LevelDomain = context;
         }
         //[Authorize(Policy = "CollegeCodePolicy19")]
-        [Authorize(Roles = "Admin")]
+        
         [HttpGet]
         public async Task<IActionResult> Index()
         {

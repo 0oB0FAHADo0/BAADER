@@ -21,7 +21,7 @@ namespace Bader.ViewModels
         [Required(ErrorMessage = "هذا الحقل اجباري")]
         [DisplayName("اسم المستخدم")]
         public string Username { get; set; }
-        [DisplayName("الاسم بالعربي")]
+        [DisplayName("الاسم الكامل")]
         [Required(ErrorMessage = "هذا الحقل اجباري")]
         public string FullNameAr { get; set; }
         [Required(ErrorMessage = "هذا الحقل اجباري")]
@@ -54,7 +54,7 @@ namespace Bader.ViewModels
 		[DisplayName("اسم المقرر")]
 		public string CourseNameAr { get; set; }
 
-		[DisplayName("العنوان بالعربي")]
+		[DisplayName("العنوان")]
 		public string TitleAr { get; set; }
 
 		[DisplayName("تاريخ بداية التسجيل")]

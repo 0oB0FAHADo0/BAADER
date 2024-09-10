@@ -12,19 +12,16 @@ namespace Bader.ViewModels
         
 
         [Required(ErrorMessage = "هذا الحقل اجباري")]
-        [DisplayName("اسم الكلية بالعربي")]
+        [DisplayName("الاسم")]
         [StringLength(100)]
         public string CollegeNameAr { get; set; }
         [Required(ErrorMessage = "هذا الحقل اجباري")]
-        [DisplayName("اسم الكلية بالانجليزي")]
+        [DisplayName("Name")]
         [StringLength(100)]
         public string CollegeNameEn { get; set; }
         [Required(ErrorMessage = "هذا الحقل اجباري")]
-        [DisplayName("رمز الكلية")]
+        [DisplayName("الرمز")]
         public string CollegeCode { get; set; }
-        [Required(ErrorMessage = "هذا الحقل اجباري")]
-        [DisplayName("رقم مبنى الكلية")]
-        public string BuildingNum { get; set; }
 
         public bool IsDeleted { get; set; }
         public Guid GUID { get; set; }
