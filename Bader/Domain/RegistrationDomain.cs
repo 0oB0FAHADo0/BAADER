@@ -38,6 +38,7 @@ namespace Bader.Domain
                         StateAr = x.RegistrationState.StateAr,
                         NumOfStudents = x.Session.NumOfStudents,
                         CourseNameAr = x.Session.Course.CourseNameAr,
+                        MajorNameAr = x.Session.Course.Major.MajorNameAr,
                     })
                     .ToListAsync();
 
@@ -78,6 +79,8 @@ namespace Bader.Domain
                         StateAr = x.RegistrationState.StateAr,
                         NumOfStudents = x.Session.NumOfStudents,
                         CourseNameAr = x.Session.Course.CourseNameAr,
+                        MajorNameAr = x.Session.Course.Major.MajorNameAr,
+
 
                     })
                     .ToListAsync();
@@ -122,7 +125,8 @@ namespace Bader.Domain
             {
                 int collegeId = GetCollegeIdByCollegeCode(CollegeCode);
 
-                return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course).Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode== CollegeCode).Select(x => new SessionsViewModel
+                return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course)
+                    .Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode== CollegeCode).Select(x => new SessionsViewModel
                 {
                     SessionStateId = x.SessionStateId,
                     SessionNameAr = x.SessionNameAr,
@@ -400,7 +404,7 @@ namespace Bader.Domain
             
         }
 
-
+        
 
         public void UpdateSessionStates()
         {

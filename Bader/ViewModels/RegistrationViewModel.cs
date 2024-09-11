@@ -37,7 +37,7 @@ namespace Bader.ViewModels
         public Guid GUID { get; set; }
 
 
-        [DisplayName("اسم الجلسة")]
+        [DisplayName("الاسم")]
         public string SessionNameAr { get; set; }
 
         [DisplayName("حالة التسجيل")]
@@ -66,6 +66,11 @@ namespace Bader.ViewModels
 
         [DisplayName("البريد الإلكتروني")]
         public string Email { get; set; }
+
+        [DisplayName("التخصص")]
+        [StringLength(100)]
+        public String MajorNameAr { get; set; }
+
 
     }
 

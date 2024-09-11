@@ -17,10 +17,13 @@ namespace Bader.Areas.Admin.Controllers
     {
 
         private readonly RegistrationDomain _RegistrationDomain;
+        private readonly UserDomain _UserDomain;
 
-        public RegistrationController(RegistrationDomain registrationDomain)
+
+        public RegistrationController(RegistrationDomain registrationDomain, UserDomain userDomain)
         {
             _RegistrationDomain = registrationDomain;
+            _UserDomain = userDomain;
         }
 
         public async Task<IActionResult> Index()
@@ -30,6 +33,7 @@ namespace Bader.Areas.Admin.Controllers
                 _RegistrationDomain.UpdateSessionStates();
 
                 var domainInfo = await _RegistrationDomain.GetAllRegistrations();
+                
                 return View(domainInfo);
             }
             catch
@@ -211,10 +215,14 @@ namespace Bader.Areas.Admin.Controllers
             {
                 RegistrationViewModel reg = new RegistrationViewModel();
 
+                var userInfo = await _UserDomain.GetUsersByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
                 reg.Username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 reg.FullNameAr = User.FindFirst("FullNameAr").Value;
                 reg.FullNameEn = User.FindFirst("FullNameEn").Value;
                 reg.Phone = User.FindFirst("Phone").Value;
+                reg.Email = userInfo.Email; 
+
 
                 var session = await _RegistrationDomain.GetSessionsById(id);
 
@@ -252,6 +260,9 @@ namespace Bader.Areas.Admin.Controllers
 
             try
             {
+                var userInfo = await _UserDomain.GetUsersByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                reg.Email = userInfo.Email;
+
                 reg.Username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 reg.FullNameAr = User.FindFirst("FullNameAr").Value;
                 reg.FullNameEn = User.FindFirst("FullNameEn").Value;

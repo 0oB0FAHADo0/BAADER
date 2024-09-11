@@ -12,11 +12,11 @@ namespace Bader.Domain
         {
             _context = context;
         }
-        public async Task<IEnumerable<UserViewModel>>  GetUsers()
+        public async Task<IEnumerable<UserViewModel>> GetUsers()
         {
             return await _context.tblUsers.Select(x => new UserViewModel
             {
-                Id = x.Id,  
+                Id = x.Id,
                 Username = x.Username,
                 Email = x.Email,
                 FullNameAr = x.FullNameAr,
@@ -32,7 +32,7 @@ namespace Bader.Domain
         public async Task AddUser(UserViewModel user)
         {
             tblUsers userx = new tblUsers();
-            userx.Id = user.Id; 
+            userx.Id = user.Id;
             userx.Username = user.Username;
             userx.Email = user.Email;
             userx.FullNameAr = user.FullNameAr;
@@ -65,7 +65,7 @@ namespace Bader.Domain
         }
         public async Task<UserViewModel> GetUserById(int id)
         {
-            var user= await _context.tblUsers.FindAsync(id);
+            var user = await _context.tblUsers.FindAsync(id);
             UserViewModel userx = new UserViewModel();
             userx.Id = id;
             userx.Username = user.Username;
@@ -110,7 +110,7 @@ namespace Bader.Domain
                 RoleNameEn = userRole?.RoleNameEn ?? "Regular User"
             };
         }
-        public async Task<bool> EmailExists(int id,string email)
+        public async Task<bool> EmailExists(int id, string email)
         {
             return await _context.tblUsers.Where(u => u.Id != id).AnyAsync(u => u.Email == email);
         }
@@ -125,5 +125,30 @@ namespace Bader.Domain
             }
             return false;
         }
+
+
+        public async Task<UserViewModel> GetUsersByUsername(string username)
+        {
+            var user = await _context.tblUsers
+                .Where(u => u.Username == username)
+                .Select(x => new UserViewModel
+                {
+                    Id = x.Id,
+                    Username = x.Username,
+                    Email = x.Email,
+                    FullNameAr = x.FullNameAr,
+                    FullNameEn = x.FullNameEn,
+                    Password = x.Password,
+                    Usertype = x.Usertype,
+                    Phone = x.Phone,
+                    CollegeNameAr = x.CollegeNameAr,
+                    CollegeNameEn = x.CollegeNameEn,
+                    CollegeCode = x.CollegeCode
+                })
+                .FirstOrDefaultAsync(); 
+
+            return user;
+        }
+
     }
 }
