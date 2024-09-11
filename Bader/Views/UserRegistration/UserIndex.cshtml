@@ -3,7 +3,31 @@
 
 
 @section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the search input and table elements
+            const searchInput = document.querySelector('.table__quick_search');
+            const tableRows = document.querySelectorAll('tbody tr');
 
+            // Add event listener to the search input
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                // Loop through each table row
+                tableRows.forEach(row => {
+                    // Get all the text content of the row
+                    const rowText = row.innerText.toLowerCase();
+
+                    // If the search term is found in the row's text, show the row; otherwise, hide it
+                    if (rowText.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
     <script>
         @{
             if (@ViewData["Successful"] != null)
@@ -48,12 +72,11 @@
 
             Swal.fire({
                 title: "هل تريد إلغاء التسجيل في الجلسة؟",
-                text: "هل انت متأكد!؟",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "نعم الغي التسجيل",
+                confirmButtonText: "نعم",
                 cancelButtonText: "إلغاء"
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -110,7 +133,10 @@
                     <th>
                         @Html.DisplayNameFor(n => n.StateAr)
                     </th>
-                   
+                    <th>
+                        @Html.DisplayNameFor(n => n.MajorNameAr)
+                    </th>
+
                     <th>
                         @Html.DisplayNameFor(n => n.FullNameAr)
 
@@ -141,7 +167,9 @@
                         <td>
                             @item.StateAr
                         </td>
-
+                        <td>
+                            @item.MajorNameAr
+                        </td>
                         <td>
                             @item.FullNameAr
                         </td>

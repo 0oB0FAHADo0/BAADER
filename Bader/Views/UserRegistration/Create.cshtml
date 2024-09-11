@@ -1,15 +1,12 @@
 ﻿@model RegistrationViewModel
 
-
 @section Scripts {
-
     <script>
         @{
             if (@ViewData["Successful"] != null)
             {
-
                 <Text>
-                                    var result = '@Html.Raw(ViewData["Successful"])';
+                                var result = '@Html.Raw(ViewData["Successful"])';
 
                 Swal.fire({
                     title: "تمت العملية بنجاح",
@@ -20,39 +17,37 @@
                     window.location.href = '@Url.Action("UserIndex", "UserRegistration")';
                 });
                 </Text>
-
             }
             else if (@ViewData["Falied"] != null)
             {
                 <Text>
-                                                            var result = '@Html.Raw(ViewData["Falied"])';
+                                var result = '@Html.Raw(ViewData["Falied"])';
 
                 Swal.fire({
                     icon: "error",
                     title: "فشلت العملية",
                     text: result,
                     confirmButtonText: "تم"
-
                 });
                 </Text>
             }
             else if (@ViewData["NoRegForYou"] != null)
             {
                 <Text>
-                                                                                            var result = '@Html.Raw(ViewData["NoRegForYou"])';
+                                var result = '@Html.Raw(ViewData["NoRegForYou"])';
 
                 Swal.fire({
                     icon: "error",
                     title: "فشلت العملية",
                     text: result,
                     confirmButtonText: "تم"
-
                 });
                 </Text>
             }
         }
     </script>
 }
+
 <div class="block mb-4">
     <div class="block-header border-bottom px-4 py-4">
         <h5 class="m-0">التسجيل في الجلسة</h5>
@@ -61,106 +56,110 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <form method="post">
-                    <div class="row">
-                        <h5>معلومات المستخدم:</h5>
 
-                        
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-
-
-                                <label asp-for="Username" class="mb-1"></label>
-                                <input type="text" asp-for="Username" class="form-control" class="form-control text-start"  readonly/>
-                                <span asp-validation-for="Username" class="text-danger"></span>
+                    <!-- User Information Card -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>معلومات المستخدم:</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Email" class="mb-1"></label>
+                                        <input type="text" asp-for="Email" class="form-control" readonly />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="FullNameAr" class="mb-1"></label>
+                                        <input type="text" asp-for="FullNameAr" class="form-control" readonly />
+                                        <span asp-validation-for="FullNameAr" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="Phone" class="mb-1"></label>
+                                        <input type="text" asp-for="Phone" class="form-control" readonly />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+                                </div><!-- END ITEM -->
                             </div>
-                        </div><!-- END ITEM -->
-                        <!-- START ITEM -->
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-
-                                <label asp-for="FullNameAr" class="mb-1"></label>
-                                <input type="text" asp-for="FullNameAr" class="form-control"  readonly />
-                                <span asp-validation-for="FullNameAr" class="text-danger"></span>
-                            </div>
-                        </div><!-- END ITEM -->
-                   
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-
-                                <label asp-for="Phone" class="mb-1"></label>
-                                <input type="text" asp-for="Phone " class="form-control"  readonly />
-                                <span asp-validation-for="Phone " class="text-danger"></span>
-
-
-
-                            </div>
-                        </div><!-- END ITEM -->
-
-                        <h5>معلومات الجلسة:</h5>
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label asp-for="SessionNameAr" class="mb-1"></label>
-                                <input type="text" class="form-control" asp-for="SessionNameAr" readonly />
-                            </div>
-                        </div><!-- END ITEM -->
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label asp-for="CourseNameAr" class="mb-1"></label>
-                                <input type="text" class="form-control" asp-for="CourseNameAr" readonly />
-                            </div>
-                        </div><!-- END ITEM -->
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label asp-for="TitleAr" class="mb-1"></label>
-                                <input type="text" class="form-control" asp-for="TitleAr" readonly />
-                            </div>
-                        </div><!-- END ITEM -->
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label asp-for="NumOfStudents" class="mb-1"></label>
-                                <input type="text" class="form-control" asp-for="NumOfStudents" readonly />
-                            </div>
-                        </div><!-- END ITEM -->
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label asp-for="SessionDate" class="mb-1"></label>
-                                <input type="text" class="form-control" asp-for="SessionDate" readonly />
-                            </div>
-                        </div><!-- END ITEM -->
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label asp-for="RegStartDate" class="mb-1"></label>
-                                <input type="text" class="form-control" asp-for="RegStartDate" readonly />
-                            </div>
-                        </div><!-- END ITEM -->
-                        <!-- START ITEM -->
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label asp-for="RegEndDate" class="mb-1"></label>
-                                <input type="text" class="form-control" asp-for="RegEndDate" readonly />
-                            </div>
-                        </div><!-- END ITEM -->
-
-                        <input asp-for="SessionId"   hidden />
-                        <input asp-for="FullNameEn" hidden/>
-       
-                        <div>
-                            <div><button type="submit" class="btn btn-primary px-5" title="save">التسجيل في الجلسة</button></div>
-
                         </div>
                     </div>
+
+                    <!-- Session Information Card -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>معلومات الجلسة:</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="SessionNameAr" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="SessionNameAr" readonly />
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CourseNameAr" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="CourseNameAr" readonly />
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="TitleAr" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="TitleAr" readonly />
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="NumOfStudents" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="NumOfStudents" readonly />
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="SessionDate" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="SessionDate" readonly />
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="RegStartDate" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="RegStartDate" readonly />
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="RegEndDate" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="RegEndDate" readonly />
+                                    </div>
+                                </div><!-- END ITEM -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <input asp-for="SessionId" hidden />
+                    <input asp-for="FullNameEn" hidden />
+                    <input asp-for="Username" hidden />
+
+                    <div>
+                        <button type="submit" class="btn btn-primary px-5" title="save">التسجيل في الجلسة</button>
+                    </div>
                 </form>
-
-
             </div>
         </div>
     </div>

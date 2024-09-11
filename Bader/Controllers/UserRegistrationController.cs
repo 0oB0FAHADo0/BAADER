@@ -10,10 +10,12 @@ namespace Bader.Controllers
     {
 
         private readonly RegistrationDomain _RegistrationDomain;
+        private readonly UserDomain _UserDomain;
 
-        public UserRegistrationController(RegistrationDomain registrationDomain)
+        public UserRegistrationController(RegistrationDomain registrationDomain, UserDomain userDomain)
         {
             _RegistrationDomain = registrationDomain;
+            _UserDomain = userDomain;
         }
 
         public async Task<IActionResult> UserIndex()
@@ -111,7 +113,8 @@ namespace Bader.Controllers
             try
             {
                 RegistrationViewModel reg = new RegistrationViewModel();
-
+                var userInfo = await _UserDomain.GetUsersByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                reg.Email = userInfo.Email;
                 reg.Username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 reg.FullNameAr = User.FindFirst("FullNameAr").Value;
                 reg.FullNameEn = User.FindFirst("FullNameEn").Value;
@@ -153,6 +156,8 @@ namespace Bader.Controllers
 
             try
             {
+                var userInfo = await _UserDomain.GetUsersByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                reg.Email = userInfo.Email;
                 reg.Username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 reg.FullNameAr = User.FindFirst("FullNameAr").Value;
                 reg.FullNameEn = User.FindFirst("FullNameEn").Value;
