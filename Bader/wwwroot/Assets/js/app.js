@@ -103,12 +103,12 @@ $(document).ready(function () {
 
 /////////////// DATA TABLE Customization /////////////// 
 $(document).ready(function () {
-    let normal_table = $(".js-dataTable").DataTable({
+    $(".js-dataTable").DataTable({
         scroller: true,
         dom: '<"table_wrapper"t><"bottom_bar"ip><"clear">',
         language: {
-            url: "Assets/lib/DataTable/js/dataTable_ar.json",
-        },
+            url: "/assets/lib/DataTable/js/dataTable_AR.json"
+        }
     });
 });
 
