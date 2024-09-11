@@ -48,7 +48,7 @@
             <div class="menu_links">
                 <ul>
                     <li>
-                        <a href="@Url.Action("Index", "UserCourse")" >
+                        <a href="@Url.Action("Index", "Home")" >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
@@ -215,6 +215,6 @@
             <script>
                 document.getElementById("currentYear").textContent = new Date().getFullYear();
             </script>
-    @await RenderSectionAsync("Scripts", required: true)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

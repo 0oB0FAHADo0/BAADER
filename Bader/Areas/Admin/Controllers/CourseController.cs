@@ -17,7 +17,7 @@ using System.Security.Claims;
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "SuperAdmin, Admin")]
+    [Authorize(Roles = "SuperAdmin, Admin, Editor")]
     public class CourseController : Controller
     {
         private readonly CourseDomain _CourseDomain;
@@ -31,7 +31,7 @@ namespace Bader.Areas.Admin.Controllers
         
         public async Task<IActionResult> Index()
         {
-            if (User.FindFirst("Role").Value == "Admin")
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
             {
                 return View(await _CourseDomain.GetCourses(User.FindFirst("CollegeCode").Value));
             }
@@ -59,7 +59,7 @@ namespace Bader.Areas.Admin.Controllers
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-            if(User.FindFirst("Role").Value == "Admin")
+            if(User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
             {
                 var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
                 ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
@@ -86,7 +86,7 @@ namespace Bader.Areas.Admin.Controllers
             var Levels = await _CourseDomain.GetLevels();
             ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-            if (User.FindFirst("Role").Value == "Admin")
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
             {
                 var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
                 ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
@@ -120,7 +120,7 @@ namespace Bader.Areas.Admin.Controllers
                 var Levels = await _CourseDomain.GetLevels();
                 ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-                if (User.FindFirst("Role").Value == "Admin")
+                if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
                 {
                     var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
                     ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
@@ -148,7 +148,7 @@ namespace Bader.Areas.Admin.Controllers
 
                     }
                     
-                    if(User.FindFirst("Role").Value == "Admin")
+                    if(User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
                     {
                         int check = await _CourseDomain.addCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value, User.FindFirst("CollegeCode").Value);
                         if (check == 1)
@@ -200,7 +200,7 @@ namespace Bader.Areas.Admin.Controllers
                 var Levels = await _CourseDomain.GetLevels();
                 ViewBag.LevelsList = new SelectList(Levels, "Id", "LevelNameAr");
 
-                if (User.FindFirst("Role").Value == "Admin")
+                if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
                 {
                     var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
                     ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
@@ -219,7 +219,7 @@ namespace Bader.Areas.Admin.Controllers
                         return View(model);
                     }
 
-                    if (User.FindFirst("Role").Value == "Admin")
+                    if (User.FindFirst("Role").Value == "Admin" )
                     {
                         int check = await _CourseDomain.UpdateCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value, User.FindFirst("CollegeCode").Value);
 
@@ -282,7 +282,7 @@ namespace Bader.Areas.Admin.Controllers
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
 
-            if(User.FindFirst("Role").Value == "Admin")
+            if(User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
             {
                 var courses = await _CourseDomain.GetCourses(User.FindFirst("CollegeCode").Value);
                 return View(courses);

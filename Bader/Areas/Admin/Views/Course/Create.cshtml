@@ -64,7 +64,7 @@
                                     <!-- END ITEM -->
                                 }
 
-                                @if(userrole == "SuperAdmin")
+                                @if (userrole == "SuperAdmin")
                                 {
                                     <div class="col-md-6">
                                         <div class="mb-4">
@@ -80,21 +80,12 @@
                                     <div class="col-md-6">
                                         <div class="mb-4">
                                             <label asp-for="MajorNameAr" class="mb-1"></label>
-                                            <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList" >
+                                            <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
                                                 <option value="">اختر التخصص</option>
                                             </select>
                                         </div>
                                     </div>
                                 }
-
-
-                                <!-- START ITEM -->
-                                @* <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="MajorId" class="mb-1">اسم التخصص</label>
-                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList"> </select>
-                                    </div>
-                                </div> *@<!-- END ITEM -->
                                 
                                 <div >
                                     <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
@@ -150,20 +141,26 @@
 
         <script>
             $(document).ready(function () {
-                // Disable major dropdown initially
-                $('#MajorId').prop('disabled', true);
+                var userrole = '@userrole';  // Fetch user role from the Razor view
+
+                // Disable major dropdown only for SuperAdmin
+                if (userrole === "SuperAdmin") {
+                    $('#MajorId').prop('disabled', true);
+                } else {
+                    $('#MajorId').prop('disabled', false);  // Always enabled for Admins and Editors
+                }
 
                 // Trigger when the college dropdown changes
                 $('#CollegeId').on('change', function () {
                     var collegeId = $(this).val();
 
-                    if (collegeId) {
+                    if (collegeId && collegeId !== "") {
                         // Enable the major dropdown
                         $('#MajorId').prop('disabled', false);
 
                         // Make an AJAX call to fetch the majors
                         $.ajax({
-                            url: '@Url.Action("GetMajorsByCollege", "Course")', 
+                            url: '@Url.Action("GetMajorsByCollege", "Course")',
                             type: 'GET',
                             data: { collegeId: collegeId },
                             success: function (data) {
@@ -171,6 +168,7 @@
                                 $('#MajorId').empty();
 
                                 // Populate the major dropdown with the received data
+                                $('#MajorId').append(new Option('اختر التخصص', '')); // Add default option
                                 $.each(data, function (index, major) {
                                     $('#MajorId').append(new Option(major.text, major.value));
                                 });
@@ -184,12 +182,14 @@
                             }
                         });
                     } else {
-                        // Disable the major dropdown if no college is selected
+                        // If "اختر الكلية" is selected, disable and reset the major dropdown
                         $('#MajorId').prop('disabled', true);
                         $('#MajorId').empty();
+                        $('#MajorId').append(new Option('اختر التخصص', '')); // Reset to default option
                     }
                 });
             });
+
         </script>
 
 

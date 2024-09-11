@@ -81,11 +81,11 @@ namespace Bader.Controllers
                     new ClaimsPrincipal(identity),
                     properties);
 
-                    if (user.RoleNameEn == "Admin" || user.RoleNameEn == "SuperAdmin")
+                    if (user.RoleNameEn == "Admin" || user.RoleNameEn == "SuperAdmin" || user.RoleNameEn == "Editor")
                     {
                         return RedirectToAction("Index", "Home", new { area = "Admin" });
                     }
-                    else if (user.RoleNameEn == "Student" || user.RoleNameEn == null)
+                    else 
                     {
                         return RedirectToAction("Index", "Home");
                     }

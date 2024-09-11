@@ -135,7 +135,7 @@
 
                 // Function to fetch and populate majors based on the college ID
                 function fetchMajors(collegeId, selectedMajorId = null) {
-                    if (collegeId) {
+                    if (collegeId && collegeId !== "") {
                         // Enable the major dropdown
                         $('#MajorId').prop('disabled', false);
 
@@ -147,6 +147,9 @@
                             success: function (data) {
                                 // Clear the previous options
                                 $('#MajorId').empty();
+
+                                // Add default option for majors
+                                $('#MajorId').append(new Option('اختر التخصص', ''));
 
                                 // Populate the major dropdown with the received data
                                 $.each(data, function (index, major) {
@@ -167,14 +170,15 @@
                             }
                         });
                     } else {
-                        // Disable the major dropdown if no college is selected
+                        // Disable and reset the major dropdown if "اختر الكلية" is selected
                         $('#MajorId').prop('disabled', true);
                         $('#MajorId').empty();
+                        $('#MajorId').append(new Option('اختر التخصص', '')); // Reset to default option
                     }
                 }
 
                 // Fetch majors if there's a pre-selected college (for editing a course)
-                if (selectedCollegeId) {
+                if (selectedCollegeId && selectedCollegeId !== "") {
                     // Pre-selected major ID (from the course you're editing)
                     var selectedMajorId = $('#MajorId').data('selected-major-id'); // Store the major ID in the HTML or inject via the backend
                     fetchMajors(selectedCollegeId, selectedMajorId);
@@ -186,6 +190,7 @@
                     fetchMajors(collegeId);
                 });
             });
+
         </script>
 
 
