@@ -16,10 +16,10 @@
                 <div class="block-header border-bottom px-4 py-3">
                     <h5 class="m-0">التخصصات</h5>
                     <div class="d-flex gap-2">
-                        <div class="form-group">
+                       @*  <div class="form-group">
                             <input type="text" class="form-control table__quick_search"
                                    placeholder="البحث السريع ...">
-                        </div>
+                        </div> *@
                         <a asp-action="Create" class="btn btn-primary">إضافة تخصص</a>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                         <thead>
                             <tr>
                                 <th>@Html.DisplayNameFor(x => x.MajorNameAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.MajorNameEn)</th>
+                                <th hidden>@Html.DisplayNameFor(x => x.MajorNameEn)</th>
                                 <th>@Html.DisplayNameFor(x => x.CollageNameAr)</th>
                                
                               
@@ -40,11 +40,10 @@
                             {
                                 <tr class="cursor-pointer" goto="order_details.html">
                                     <td>@Html.DisplayFor(modelItem => item.MajorNameAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.MajorNameEn)</td>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.MajorNameEn)</td>
                                     <td>@Html.DisplayFor(modelItem => item.CollageNameAr)</td>
                                    
                                     <td class="action_td text-end">
-                                        @*  <a  asp-controller=""  class="btn btn-sm btn-primary">عرض</a> *@
                                         <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
                                         <form method="post" class="d-inline" onclick="DisplayAlert(event, this)">
                                             <input type="hidden" name="id" value="@item.GUID" />

@@ -20,9 +20,9 @@ namespace Bader.ViewModels
         //public string CourseNameAr { get; set; }
 
         [DisplayName(" الكلية")]
-        [Required(ErrorMessage = "هذا الحقل اجباري")]
         [StringLength(100)]
         public string CollageNameAr { get; set; }
+        public int CollageId { get; set; }
         public Guid GUID { get; set; }
 
 

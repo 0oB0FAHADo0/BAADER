@@ -24,7 +24,7 @@ namespace Bader.ViewModels
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [StringLength(100)]
-        [DisplayName("إسم الجلسة بالعربي")]
+        [DisplayName("إسم الجلسة")]
         public string SessionNameAr { get; set; }
         //end
 
@@ -32,7 +32,7 @@ namespace Bader.ViewModels
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [StringLength(100)]
-        [DisplayName("إسم الجلسة بالانجليزي")]
+        [DisplayName("Name")]
         public string SessionNameEn { get; set; }
         //end
 
@@ -46,14 +46,14 @@ namespace Bader.ViewModels
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [StringLength(100)]
-        [DisplayName("العنوان بالعربي")]
+        [DisplayName("العنوان ")]
         public string TitleAr { get; set; }
         //end
 
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [StringLength(100)]
-        [DisplayName("العنوان بالانجليزي")]
+        [DisplayName("Title")]
         public string TitleEn { get; set; }
         //end
 

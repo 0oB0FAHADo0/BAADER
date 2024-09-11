@@ -88,7 +88,11 @@ namespace Bader.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("RegEndDate", ".يجب أن يكون تاريخ انتهاء التسجيل بعد تاريخ بداية التسجيل");
             }
-          
+            //if (session.NumOfStudents = "0")
+
+            //{
+            //    ModelState.AddModelError("NumOfStudents", ".يجب أن يكون تاريخ انتهاء التسجيل بعد تاريخ بداية التسجيل");
+            //}
 
             if (!ModelState.IsValid)
             {
