@@ -1,9 +1,11 @@
 ﻿using Bader.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "SuperAdmin, Admin, Editor")]
     public class AttendanceController : Controller
     {
 
