@@ -13,5 +13,7 @@
         public DateTime RegDate { get; set; }
         public string Phone { get; set; }
         public Guid GUID { get; set; } = Guid.NewGuid();
+
+        public string Email { get; set; }
     }
 }

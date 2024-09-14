@@ -39,14 +39,11 @@ namespace Bader.Domain
                         NumOfStudents = x.Session.NumOfStudents,
                         CourseNameAr = x.Session.Course.CourseNameAr,
                         MajorNameAr = x.Session.Course.Major.MajorNameAr,
+                        Email = x.Email,    
                     })
                     .ToListAsync();
 
-                foreach (var reg in registrations)
-                {
-                    var user = await _context.tblUsers.AsNoTracking().FirstOrDefaultAsync(u => u.Username == reg.Username);
-                    reg.Email = user.Email;
-                }
+                
                 return registrations;
             }
             catch 
@@ -80,17 +77,13 @@ namespace Bader.Domain
                         NumOfStudents = x.Session.NumOfStudents,
                         CourseNameAr = x.Session.Course.CourseNameAr,
                         MajorNameAr = x.Session.Course.Major.MajorNameAr,
-
+                        Email = x.Email,
 
                     })
                     .ToListAsync();
 
 
-                foreach (var reg in registrations)
-                {
-                    var user = await _context.tblUsers.AsNoTracking().FirstOrDefaultAsync(u => u.Username == reg.Username);
-                    reg.Email = user.Email;
-                }
+              
 
 
                 return registrations;
@@ -242,7 +235,7 @@ namespace Bader.Domain
                 Regx.FullNameEn = Reg.FullNameEn;
                 Regx.Phone = Reg.Phone;
                 Regx.RegDate = DateTime.Now;
-
+                Regx.Email = Reg.Email;
                 Regx.GUID = Guid.NewGuid();
                 Regx.RegistrationStateId = 1; 
 
@@ -299,10 +292,7 @@ namespace Bader.Domain
                 regx.RegDate = reg.RegDate;
                 regx.GUID = reg.GUID;
                 regx.RegistrationStateId = reg.RegistrationStateId;
-
-
-                var user = await _context.tblUsers.AsNoTracking().FirstOrDefaultAsync(u => u.Username == reg.Username);
-                regx.Email = user.Email;
+                regx.Email = reg.Email;
 
                 return regx;
             }

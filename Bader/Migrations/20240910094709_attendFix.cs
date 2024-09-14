@@ -29,7 +29,7 @@ namespace Bader.Migrations
                         column: x => x.SessionId,
                         principalTable: "tblSessions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
