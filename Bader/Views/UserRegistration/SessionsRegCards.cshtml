@@ -23,9 +23,9 @@
             overflow: hidden; 
         }
 
-            .card:hover {
-                box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
-            }
+        .card:hover {
+            box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+        }
 
         .card-header {
             font-weight: bold;
@@ -36,7 +36,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            text-align: center; /* Centers the text horizontally */
+            text-align: center;
         }
 
         .card-body {
@@ -46,7 +46,7 @@
             font-weight: 500;
             text-align: center;
             overflow: hidden; 
-            text-overflow: ellipsis; 
+            text-overflow: ellipsis;
         }
 
         .card-footer {
@@ -56,6 +56,8 @@
             position: absolute;
             bottom: 0;
             width: 100%;
+            padding: 10px;
+            text-align: center;
         }
 
         .card-button {
@@ -78,40 +80,143 @@
             transform: translate(-50%, 50%);
             opacity: 1;
         }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #0F7179;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination-info {
+            font-size: 18px;
+        }
     </style>
 </head>
-
 <body>
     <div class="block mb-4">
         <div class="block-header border-bottom px-4 py-3">
-            <div class="block-body">
-                <div class="card-container" id="courseCards">
-                    @foreach (var item in Model)
-                    {
-                        <div class="card">
-                            <div class="card-header"> @item.SessionNameAr</div>
-                            <div class="card-body">
-                                <div>
-                                    المقرر: @item.CourseNameAr
-                                    <br />
-                                    <br />
-                                    العنوان: @item.TitleAr
-                                    <br />
-                                    <br />
-                                    التاريخ: @item.SessionDate
-                                </div>
+            <h5 class="m-0">الجلسات المتوفرة</h5>
+            <div class="d-flex gap-2">
+                <div class="form-group">
+                    <input type="text" class="form-control table__quick_search" placeholder="البحث السريع ...">
+                </div>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="card-container" id="courseCards">
+                @foreach (var item in Model)
+                {
+                    <div class="card">
+                        <div class="card-header"> @item.SessionNameAr</div>
+                        <div class="card-body">
+                            <div>
+                                المقرر: @item.CourseNameAr
+                                <br />
+                                <br />
+                                العنوان: @item.TitleAr
+                                <br />
+                                <br />
+                                التاريخ: @item.SessionDate
                             </div>
-                            <div class="card-footer">
-                              
-                            </div>
+                        </div>
+                        <div class="card-footer">
                             <form>
                                 <button class="card-button" asp-route-id="@item.GUID" asp-action="Create">للتفاصيل</button>
                             </form>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
+                
+            </div>
+
+            <div class="pagination">
+                <button id="prevBtn" disabled>السابق</button>
+                <span class="pagination-info" id="paginationInfo">صفحة 1 من 1</span>
+                <button id="nextBtn">التالي</button>
             </div>
         </div>
     </div>
 </body>
-</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector('.table__quick_search');
+        const cards = Array.from(document.querySelectorAll('.card'));
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const paginationInfo = document.getElementById('paginationInfo');
+        const cardsPerPage = 6;
+        let currentPage = 1;
+        let filteredCards = cards;  // Initially, all cards are visible
+
+        // Display cards based on current page and filtered cards
+        function displayCards() {
+            if (filteredCards.length === 0) {
+                // If no cards match the search term, show "لا توجد جلسات متوفرة"
+                paginationInfo.textContent = "لا توجد جلسات متوفرة";
+                prevBtn.style.display = 'none'; // Hide previous button
+                nextBtn.style.display = 'none'; // Hide next button
+                cards.forEach(card => card.style.display = 'none'); // Hide all cards
+            } else {
+                const start = (currentPage - 1) * cardsPerPage;
+                const end = start + cardsPerPage;
+
+                // Show filtered cards for the current page
+                cards.forEach(card => card.style.display = 'none'); // Hide all cards first
+                filteredCards.slice(start, end).forEach(card => card.style.display = ''); // Show current page cards
+
+                // Update the pagination buttons and page info
+                prevBtn.style.display = ''; // Show buttons again
+                nextBtn.style.display = ''; // Show buttons again
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === Math.ceil(filteredCards.length / cardsPerPage);
+                paginationInfo.textContent = `صفحة ${currentPage} من ${Math.ceil(filteredCards.length / cardsPerPage)}`;
+            }
+        }
+
+        // Initial display of cards
+        displayCards();
+
+        // Next button event
+        nextBtn.addEventListener('click', function () {
+            currentPage++;
+            displayCards();
+        });
+
+        // Previous button event
+        prevBtn.addEventListener('click', function () {
+            currentPage--;
+            displayCards();
+        });
+
+        // Search filter logic
+        searchInput.addEventListener('input', function () {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            // Filter the cards based on the search term
+            filteredCards = cards.filter(card => card.innerText.toLowerCase().includes(searchTerm));
+
+            // Reset to first page and display filtered results
+            currentPage = 1;
+            displayCards();
+        });
+    });
+</script>
+
