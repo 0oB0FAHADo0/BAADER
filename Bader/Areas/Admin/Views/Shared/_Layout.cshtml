@@ -259,18 +259,18 @@
                             <li><hr class="dropdown-divider"></li>
 
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <a class="dropdown-item d-flex align-items-center" href="@Url.Action("Profile", "Home" ,  new { area = "Admin" })">
                                     <i class="bi bi-person-circle me-2"></i>
                                     الملف الشخصي
                                 </a>
                             </li>
 
-                            <li>
+                            @* <li>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <i class="bi bi-translate me-2"></i>
                                     English Language
                                 </a>
-                            </li>
+                            </li> *@
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" asp-area="" asp-Controller="Access" asp-action="LogOut">
                                     <i class="bi bi-box-arrow-right me-2"></i>

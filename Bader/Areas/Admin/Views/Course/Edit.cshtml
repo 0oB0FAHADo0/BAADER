@@ -59,6 +59,8 @@
                                             <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList">
                                             <option value="">اختر الكلية</option>
                                             </select>
+                                            <span asp-validation-for="CollegeId" class="text-danger"></span>
+
                                         </div>
                                     </div>
 
@@ -71,6 +73,8 @@
                                         <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
                                             <option value="">اختر التخصص</option>
                                         </select>
+                                        <span asp-validation-for="MajorId" class="text-danger"></span>
+
                                     </div>
                                 </div><!-- END ITEM -->
 

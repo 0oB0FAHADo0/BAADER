@@ -336,7 +336,7 @@ namespace Bader.Domain
             course.CourseNum= user.CourseNum;
             course.CollegeId = user.CollegeId;
             course.LevelId= user.LevelId;
-
+            course.MajorId = user.MajorId;
             course.GUID= user.GUID;
 
             return course;

@@ -2,6 +2,11 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    var fullNameAr = User.FindFirst("FullNameAr")?.Value;
+    var Email = User.FindFirst("Email")?.Value;
+    var Collage = User.FindFirst("CollegeNameAr")?.Value;
+    var Gender = User.FindFirst("Gender")?.Value;
+    var Phone = User.FindFirst("Phone")?.Value;
 }
 <div class="container profile-container p-3 shadow-lg rounded bg-white">
     <div class="d-flex align-items-center mb-3">
@@ -9,28 +14,28 @@
             <i class="bi bi-person-circle fs-1"></i>
         </div>
         <div>
-            <h4 class="mb-0"><strong>علي عباس بن محمد المبارك</strong></h4>
-            <p class="text-muted">بكالوريوس</p>
+            <h4 class="mb-0"><strong>@fullNameAr</strong></h4>
+            @* <p class="text-muted">بكالوريوس</p> *@
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6 mb-2">
-            <p><i class="bi bi-envelope me-2"></i> 219036649@student.kfu.edu.sa</p>
+            <p><i class="bi bi-envelope me-2"></i>@Email</p>
         </div>
         <div class="col-md-6 mb-2 text-md-end">
             <p><i class="bi bi-card-id me-2"></i> 1107271031</p>
         </div>
 
         <div class="col-md-6 mb-2">
-            <p><i class="bi bi-geo-alt me-2"></i> المملكة العربية السعودية</p>
+            <p><i class="bi bi-geo-alt me-2"></i>@Collage</p>
         </div>
         <div class="col-md-6 mb-2 text-md-end">
-            <p><i class="bi bi-gender-male me-2"></i> ذكر</p>
+            <p><i class="bi bi-gender-male me-2"></i>@Gender</p>
         </div>
 
         <div class="col-md-6 mb-2">
-            <p><i class="bi bi-telephone me-2"></i> 0543082004</p>
+            <p><i class="bi bi-telephone me-2"></i>@Phone</p>
         </div>
     </div>
 </div>

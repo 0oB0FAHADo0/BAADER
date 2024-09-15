@@ -91,11 +91,11 @@ namespace Bader.Areas.Admin.Controllers
                 var Majors = await _CourseDomain.GetMajors(User.FindFirst("CollegeCode").Value);
                 ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
             }
-            //else
-            //{
-            //    var Majors = await _CourseDomain.GetAllMajors();
-            //    ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
-            //}
+            else
+            {
+                var Majors = await _CourseDomain.GetAllMajors();
+                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+            }
 
 
             if (user == null)
@@ -225,7 +225,7 @@ namespace Bader.Areas.Admin.Controllers
 
                         if (check == 1)
                         {
-                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                            ViewData["Successful"] = "تم التعديل بنجاح";
                         }
                         else
                         {
@@ -238,7 +238,7 @@ namespace Bader.Areas.Admin.Controllers
 
                         if (check == 1)
                         {
-                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                            ViewData["Successful"] = "تم التعديل بنجاح";
                         }
                         else
                         {
