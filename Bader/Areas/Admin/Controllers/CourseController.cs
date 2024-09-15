@@ -219,7 +219,7 @@ namespace Bader.Areas.Admin.Controllers
                         return View(model);
                     }
 
-                    if (User.FindFirst("Role").Value == "Admin" )
+                    if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
                     {
                         int check = await _CourseDomain.UpdateCourse(model, User.FindFirst(ClaimTypes.NameIdentifier).Value, User.FindFirst("CollegeCode").Value);
 

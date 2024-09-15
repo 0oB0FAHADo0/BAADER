@@ -74,7 +74,7 @@ namespace Bader.Domain
 
 
 
-            return await _context.tblCourses.Include(x => x.Level).Include(x => x.College).Where(x => x.IsDeleted == false).Where(x => x.College.CollegeCode == collagecode ).Select(x => new CourseViewModel
+            return await _context.tblCourses.Include(x => x.Level).Include(x => x.College).Include(x => x.Major).Where(x => x.IsDeleted == false && x.College.IsDeleted == false && x.Major.IsDeleted == false && x.Level.IsDeleted == false).Where(x => x.College.CollegeCode == collagecode ).Select(x => new CourseViewModel
             {
                 CourseNum = x.CourseNum,
                 CourseNameAr = x.CourseNameAr,
@@ -83,6 +83,8 @@ namespace Bader.Domain
                 LevelId = x.LevelId,
                 CollageNameAr = x.College.CollegeNameAr,
                 LevelNameAr = x.Level.LevelNameAr,
+                MajorId = x.MajorId,
+                MajorNameAr = x.Major.MajorNameAr,
                 GUID = x.GUID,
 
             }).ToListAsync();
