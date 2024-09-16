@@ -28,7 +28,15 @@ namespace Bader.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _SessionsDomain.GetSessions());
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                return View(await _SessionsDomain.GetSomeSessions(User.FindFirst("CollegeCode").Value));
+            }
+            else
+            {
+                return View(await _SessionsDomain.GetSessions());
+            }
+            //return View(await _SessionsDomain.GetSessions());
         }
         [HttpPost]
         public async Task<IActionResult> Index(Guid Id)
@@ -50,8 +58,18 @@ namespace Bader.Areas.Admin.Controllers
 
             }
 
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var sessionx = await _SessionsDomain.GetSomeSessions(User.FindFirst("CollegeCode").Value);
+                return View(sessionx);
+            }
+            else
+            {
+                var sessionx = await _SessionsDomain.GetSessions();
+                return View(sessionx);
+            }
 
-            return View(await _SessionsDomain.GetSessions());
+            //return View(await _SessionsDomain.GetSessions());
 
 
         }
@@ -62,8 +80,18 @@ namespace Bader.Areas.Admin.Controllers
             var Session = await _SessionsDomain.getFromSessionsState();
             ViewBag.SessionList = new SelectList(Session, "Id", "StateAr");
 
-            var Course = await _SessionsDomain.getFromtblCourses();
-            ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+            else
+            {
+
+                var Course = await _SessionsDomain.getFromtblCourses();
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+
             return View();
         }
 
@@ -73,7 +101,17 @@ namespace Bader.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SessionsViewModel session)
         {
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+            else
+            {
 
+                var Course = await _SessionsDomain.getFromtblCourses();
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
             if (session.RegStartDate >= session.SessionDate)
             {
                 ModelState.AddModelError("RegStartDate", ".يجب أن يكون تاريخ بداية التسجيل قبل تاريخ الجلسة");
@@ -100,9 +138,7 @@ namespace Bader.Areas.Admin.Controllers
                 var SessionState = await _SessionsDomain.getFromSessionsState();
                 ViewBag.SessionList = new SelectList(SessionState, "Id", "StateAr");
 
-                var Course = await _SessionsDomain.getFromtblCourses();
-                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
-                return View(session);
+               return View(session);
             }
 
             //else
@@ -136,8 +172,17 @@ namespace Bader.Areas.Admin.Controllers
             var Session = await _SessionsDomain.getFromSessionsState();
             ViewBag.SessionList = new SelectList(Session, "Id", "StateAr");
 
-            var Course = await _SessionsDomain.getFromtblCourses();
-            ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+            else
+            {
+
+                var Course = await _SessionsDomain.getFromtblCourses();
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
             return View(session);
 
 
@@ -148,7 +193,17 @@ namespace Bader.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(SessionsViewModel session)
         {
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+            else
+            {
 
+                var Course = await _SessionsDomain.getFromtblCourses();
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
             if (session.RegStartDate >= session.SessionDate)
             {
                 ModelState.AddModelError("RegStartDate", ".يجب أن يكون تاريخ بداية التسجيل قبل تاريخ الجلسة");
@@ -181,9 +236,18 @@ namespace Bader.Areas.Admin.Controllers
 
                 var SessionState = await _SessionsDomain.getFromSessionsState();
                 ViewBag.SessionList = new SelectList(SessionState, "Id", "StateAr");
+                if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+                {
+                    var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                    ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+                }
+                else
+                {
 
-                var Course = await _SessionsDomain.getFromtblCourses();
-                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+                    var Course = await _SessionsDomain.getFromtblCourses();
+                    ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+                }
+
                 return View(session);
             }
 

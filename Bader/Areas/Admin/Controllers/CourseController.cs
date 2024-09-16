@@ -298,22 +298,6 @@ namespace Bader.Areas.Admin.Controllers
 
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMajorsByCollege(int collegeId)
-        {
-            var majors = await _CourseDomain.GetMajorsByCollegeId(collegeId);
-
-            var majorList = majors.Select(m => new SelectListItem
-            {
-                Value = m.Id.ToString(),
-                Text = m.MajorNameAr
-            }).ToList();
-
-            return Json(majorList);  // Return the list of majors in JSON format
-        }
-
-
-
 
     }
 }

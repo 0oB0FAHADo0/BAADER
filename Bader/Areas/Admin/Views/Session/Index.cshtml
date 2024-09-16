@@ -80,10 +80,10 @@
                 <div class="block-header border-bottom px-4 py-3">
                     <h5 class="m-0">الجلسات</h5>
                     <div class="d-flex gap-2">
-                        @*  <div class="form-group">
+                          <div class="form-group">
                         <input type="text" class="form-control table__quick_search"
                         placeholder="البحث السريع ...">
-                        </div> *@
+                        </div> 
                         <a asp-action="Create" class="btn btn-primary"> إضافة جلسة </a>
                     </div>
                 </div>
@@ -92,8 +92,8 @@
                         <thead>
                             <tr>
                                 <th>@Html.DisplayNameFor(x => x.SessionNameAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.StateAr)</th>
                                 <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th>
+                                <th>@Html.DisplayNameFor(x => x.StateAr)</th>
                                 <th hidden>@Html.DisplayNameFor(x => x.TitleAr)</th>
                                 <th hidden>@Html.DisplayNameFor(x => x.Links)</th>
                                 <th>@Html.DisplayNameFor(x => x.NumOfStudents)</th>
@@ -110,8 +110,8 @@
                                 <tr class="cursor-pointer" goto="order_details.html">
 
                                     <td>@Html.DisplayFor(modelItem => item.SessionNameAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.StateAr)</td>
                                     <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.StateAr)</td>
                                     <td hidden>@Html.DisplayFor(modelItem => item.TitleAr)</td>
                                     <td hidden>@Html.DisplayFor(modelItem => item.Links)</td>
                                     <td>@Html.DisplayFor(modelItem => item.NumOfStudents)</td>

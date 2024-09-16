@@ -24,7 +24,7 @@ namespace Bader.ViewModels
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [StringLength(100)]
-        [DisplayName("إسم الجلسة")]
+        [DisplayName("الاسم")]
         public string SessionNameAr { get; set; }
         //end
 
@@ -103,7 +103,7 @@ namespace Bader.ViewModels
 
         //star
 
-        [DisplayName("حالة الجلسة")]
+        [DisplayName("الحالة")]
         public string StateAr { get; set; }
         //end
         [DisplayName("اسم المقرر")]
