@@ -17,7 +17,7 @@ namespace Bader.Domain
         {
             try
             {
-                return await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false && x.College.CollegeCode == CollageCode && x.College.IsDeleted == false && x.Major.IsDeleted == false && x.Level.IsDeleted == false).Select(x => new CourseViewModel
+                return await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false && x.College.CollegeCode == CollageCode && x.College.IsDeleted == false && x.Major.IsDeleted == false && x.Level.IsDeleted == false).Select(x => new CourseViewModel 
                 {
                     CourseNum = x.CourseNum,
                     CourseNameAr = x.CourseNameAr,

@@ -36,6 +36,40 @@ namespace Bader.Domain
                CourseNameAr = x.Course.CourseNameAr,
             }).ToListAsync();
         }
+        public async Task<IEnumerable<SessionsViewModel>> GetSomeSessions(String CollageCode)
+        {
+            try
+            {
+                return await _context.tblSessions.Include(x => x.Course.College).Include(c => c.SessionState).Include(x => x.Course).Where(x => x.IsDeleted == false && x.Course.College.CollegeCode == CollageCode && x.Course.College.IsDeleted == false ).Select(x => new SessionsViewModel
+
+                {
+                    SessionStateId = x.SessionStateId,
+                    SessionNameAr = x.SessionNameAr,
+                    SessionNameEn = x.SessionNameEn,
+                    Gender = x.Gender,
+                    CourseId = x.CourseId,
+                    TitleAr = x.TitleAr,
+                    TitleEn = x.TitleEn,
+                    Links = x.Links,
+                    NumOfStudents = x.NumOfStudents,
+                    SessionDate = x.SessionDate,
+                    RegEndDate = x.RegEndDate,
+                    RegStartDate = x.RegStartDate,
+                    GUID = x.GUID,
+                    IsDeleted = x.IsDeleted,
+                    StateAr = x.SessionState.StateAr,
+                    CourseNameAr = x.Course.CourseNameAr,
+
+                }).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+                return new List<SessionsViewModel>();
+
+            }
+
+        }
         public async Task<IEnumerable<tblSessionsState>> getFromSessionsState()
         {//
             return await _context.tblSessionsState.Where(u => u.IsDeleted == false).ToListAsync();

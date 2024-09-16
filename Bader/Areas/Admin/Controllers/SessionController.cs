@@ -28,7 +28,15 @@ namespace Bader.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _SessionsDomain.GetSessions());
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                return View(await _SessionsDomain.GetSomeSessions(User.FindFirst("CollegeCode").Value));
+            }
+            else
+            {
+                return View(await _SessionsDomain.GetSessions());
+            }
+            //return View(await _SessionsDomain.GetSessions());
         }
         [HttpPost]
         public async Task<IActionResult> Index(Guid Id)
@@ -50,8 +58,18 @@ namespace Bader.Areas.Admin.Controllers
 
             }
 
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var sessionx = await _SessionsDomain.GetSomeSessions(User.FindFirst("CollegeCode").Value);
+                return View(sessionx);
+            }
+            else
+            {
+                var sessionx = await _SessionsDomain.GetSessions();
+                return View(sessionx);
+            }
 
-            return View(await _SessionsDomain.GetSessions());
+            //return View(await _SessionsDomain.GetSessions());
 
 
         }
