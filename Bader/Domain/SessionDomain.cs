@@ -76,7 +76,18 @@ namespace Bader.Domain
         }
         public async Task<IEnumerable<tblCourses>> getFromtblCourses()
         {//
-            return await _context.tblCourses.Where(u => u.IsDeleted == false).ToListAsync();
+            return await _context.tblCourses.Include(u => u.College).Include(u => u.Major).Include(u => u.Level).Where(u => u.IsDeleted == false && u.College.IsDeleted == false && u.Major.IsDeleted == false && u.Level.IsDeleted == false).ToListAsync();
+        }
+        public async Task<IEnumerable<tblCourses>> getSomeFromtblCourses(string collageCode)
+        {
+            try
+            {
+                return await _context.tblCourses.Include(x => x.College).Include(x => x.Major).Include(x => x.Level).Where(x => x.IsDeleted == false && x.College.CollegeCode == collageCode && x.College.IsDeleted == false && x.Major.IsDeleted == false && x.Level.IsDeleted == false).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return new List<tblCourses>();
+            }
         }
         public async Task <int> AddSessions(SessionsViewModel Session , String username)
         {
@@ -110,6 +121,55 @@ namespace Bader.Domain
                     log.AdditionalInfo = $"تم إضافة {Sessionx.SessionNameAr} عن طريق هذا المستخدم";
                     _context.tblSessionsLogs.Add(log);
                 
+
+                int check = await _context.SaveChangesAsync();
+                return check;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+        public async Task<int> AddSomeSessions(SessionsViewModel Session, String username,string CollageCode)
+        {
+            try
+            {
+                var college = await _context.tblColleges.Where(c => c.CollegeCode == CollageCode && c.IsDeleted == false).FirstOrDefaultAsync();
+                if (college == null)
+                {
+
+                    return 0;
+                }
+
+                tblSessions Sessionx = new tblSessions();
+                // Sessionx.Id = Session.Id;
+                Sessionx.SessionStateId = Session.SessionStateId;
+                Sessionx.SessionNameAr = Session.SessionNameAr;
+                Sessionx.SessionNameEn = Session.SessionNameEn;
+                Sessionx.Gender = Session.Gender;
+                Sessionx.CourseId = Session.CourseId;
+                Sessionx.TitleAr = Session.TitleAr;
+                Sessionx.TitleEn = Session.TitleEn;
+                Sessionx.Links = Session.Links;
+                Sessionx.NumOfStudents = Session.NumOfStudents;
+                Sessionx.SessionDate = Session.SessionDate;
+                Sessionx.RegEndDate = Session.RegEndDate;
+                Sessionx.RegStartDate = Session.RegStartDate;
+                Sessionx.GUID = Guid.NewGuid();
+                Sessionx.IsDeleted = Session.IsDeleted;
+                _context.tblSessions.Add(Sessionx);
+
+                _context.SaveChanges();
+
+                tblSessionsLogs log = new tblSessionsLogs();
+                log.SessionId = Sessionx.Id;
+                log.DateTime = DateTime.Now;
+                log.OperationType = "Add";
+                log.CreatedBy = username;
+                log.AdditionalInfo = $"تم إضافة {Sessionx.SessionNameAr} عن طريق هذا المستخدم";
+                _context.tblSessionsLogs.Add(log);
+
 
                 int check = await _context.SaveChangesAsync();
                 return check;

@@ -80,8 +80,18 @@ namespace Bader.Areas.Admin.Controllers
             var Session = await _SessionsDomain.getFromSessionsState();
             ViewBag.SessionList = new SelectList(Session, "Id", "StateAr");
 
-            var Course = await _SessionsDomain.getFromtblCourses();
-            ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+            else
+            {
+
+                var Course = await _SessionsDomain.getFromtblCourses();
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+
             return View();
         }
 
@@ -91,7 +101,17 @@ namespace Bader.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SessionsViewModel session)
         {
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+            else
+            {
 
+                var Course = await _SessionsDomain.getFromtblCourses();
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
             if (session.RegStartDate >= session.SessionDate)
             {
                 ModelState.AddModelError("RegStartDate", ".يجب أن يكون تاريخ بداية التسجيل قبل تاريخ الجلسة");
@@ -118,9 +138,7 @@ namespace Bader.Areas.Admin.Controllers
                 var SessionState = await _SessionsDomain.getFromSessionsState();
                 ViewBag.SessionList = new SelectList(SessionState, "Id", "StateAr");
 
-                var Course = await _SessionsDomain.getFromtblCourses();
-                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
-                return View(session);
+               return View(session);
             }
 
             //else
@@ -154,8 +172,17 @@ namespace Bader.Areas.Admin.Controllers
             var Session = await _SessionsDomain.getFromSessionsState();
             ViewBag.SessionList = new SelectList(Session, "Id", "StateAr");
 
-            var Course = await _SessionsDomain.getFromtblCourses();
-            ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+            else
+            {
+
+                var Course = await _SessionsDomain.getFromtblCourses();
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
             return View(session);
 
 
@@ -166,7 +193,17 @@ namespace Bader.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(SessionsViewModel session)
         {
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
+            else
+            {
 
+                var Course = await _SessionsDomain.getFromtblCourses();
+                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+            }
             if (session.RegStartDate >= session.SessionDate)
             {
                 ModelState.AddModelError("RegStartDate", ".يجب أن يكون تاريخ بداية التسجيل قبل تاريخ الجلسة");
@@ -199,9 +236,18 @@ namespace Bader.Areas.Admin.Controllers
 
                 var SessionState = await _SessionsDomain.getFromSessionsState();
                 ViewBag.SessionList = new SelectList(SessionState, "Id", "StateAr");
+                if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+                {
+                    var Course = await _SessionsDomain.getSomeFromtblCourses(User.FindFirst("CollegeCode").Value);
+                    ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+                }
+                else
+                {
 
-                var Course = await _SessionsDomain.getFromtblCourses();
-                ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+                    var Course = await _SessionsDomain.getFromtblCourses();
+                    ViewBag.CourseList = new SelectList(Course, "Id", "CourseNameAr");
+                }
+
                 return View(session);
             }
 
