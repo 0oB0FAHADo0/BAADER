@@ -32,6 +32,7 @@
                                 <thead>
                                     <tr>
                                         <th>@Html.DisplayNameFor(x => x.UserName)</th>
+                                        <th>@Html.DisplayNameFor(x => x.FullNameAr)</th>
                                         <th>@Html.DisplayNameFor(x => x.SessionDate)</th>
                                         <th>@Html.DisplayNameFor(x => x.IsAttend)</th>
                                     </tr>
@@ -46,9 +47,13 @@
                                                 <input type="hidden" name="attendx[@i].UserName" value="@item.UserName" />
                                             </td>
                                             <td>
+                                                @item.FullNameAr
+                                            </td>
+                                            <td>
                                                 @item.SessionDate
                                                 <input type="hidden" name="attendx[@i].SessionDate" value="@item.SessionDate.ToString("yyyy-MM-dd")" />
                                             </td>
+
                                             <td>
                                                 <input hidden name="attendx[@i].GUID" value="@item.GUID" />
                                                 <input hidden name="attendx[@i].SessionId" value="@item.SessionId" />

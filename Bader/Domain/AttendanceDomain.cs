@@ -23,7 +23,7 @@ namespace Bader.Domain
             {
 
 				var session = _context.tblSessions.AsNoTracking().FirstOrDefault(tblAttendance => tblAttendance.GUID == guid);
-				return await _context.tblAttendance
+				var Attend= await _context.tblAttendance
                     .Include(a => a.Session).Where(a=> a.SessionId == session.Id)
                     .Select(a => new AttendanceViewModel
                     {
@@ -35,6 +35,16 @@ namespace Bader.Domain
                         SessionNameAr = a.Session.SessionNameAr 
                     })
                     .ToListAsync();
+
+
+                foreach (var user in Attend)
+                {
+                    var userinfo = _context.tblUsers.AsNoTracking().FirstOrDefault(tblUsers => tblUsers.Username == user.UserName);
+                    user.FullNameAr = userinfo.FullNameAr;
+                }
+
+
+                return Attend;
             }
             catch
             {

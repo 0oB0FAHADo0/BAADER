@@ -39,6 +39,10 @@ namespace Bader.ViewModels
         [StringLength(100)]
         public string CollegeNameAr { get; set; }
 
+        [DisplayName("الاسم الكامل")]
+        public string FullNameAr { get; set; }
+
+
 
 
 
