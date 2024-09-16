@@ -16,14 +16,16 @@ namespace Bader.Domain
             _context = context;
         }
 
-        public async Task<IEnumerable<RegistrationViewModel>> GetAllRegistrations()
+        public async Task<IEnumerable<RegistrationViewModel>> GetAllRegistrationsByCollegeCode(string CollegeCode)
         {
             try
             {
+                int collegeId = GetCollegeIdByCollegeCode(CollegeCode);
+
                 var registrations = await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
                     .Include(y => y.Session)
-                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId==1)
+                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId==1).Where(W=> W.Session.Course.CollegeId==collegeId)
                     .Select(x => new RegistrationViewModel
                     {
                         RegistrationStateId = x.RegistrationStateId,
@@ -50,6 +52,44 @@ namespace Bader.Domain
             {
                 return new List<RegistrationViewModel>();
            
+            }
+        }
+        public async Task<IEnumerable<RegistrationViewModel>> GetAllRegistrations()
+        {
+            try
+            {
+
+                var registrations = await _context.tblRegistrations
+                    .Include(n => n.RegistrationState)
+                    .Include(y => y.Session)
+                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
+                    .Select(x => new RegistrationViewModel
+                    {
+                        RegistrationStateId = x.RegistrationStateId,
+                        SessionId = x.SessionId,
+                        Username = x.Username,
+                        FullNameAr = x.FullNameAr,
+                        FullNameEn = x.FullNameEn,
+                        Phone = x.Phone,
+                        RegDate = x.RegDate,
+                        GUID = x.GUID,
+                        SessionNameAr = x.Session.SessionNameAr,
+                        StateAr = x.RegistrationState.StateAr,
+                        NumOfStudents = x.Session.NumOfStudents,
+                        CourseNameAr = x.Session.Course.CourseNameAr,
+                        MajorNameAr = x.Session.Course.Major.MajorNameAr,
+                        Email = x.Email,
+                        CollegeNameAr = x.Session.Course.College.CollegeNameAr,
+                    })
+                    .ToListAsync();
+
+
+                return registrations;
+            }
+            catch
+            {
+                return new List<RegistrationViewModel>();
+
             }
         }
 
@@ -95,6 +135,7 @@ namespace Bader.Domain
             }
         }
 
+
         public async Task<IEnumerable<tblSessions>> GetSessionsOld()
         {
             return await _context.tblSessions.Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now).ToListAsync();
@@ -112,14 +153,14 @@ namespace Bader.Domain
                 return 0;
             }
         }
-        public async Task<IEnumerable<SessionsViewModel>> GetSessions(string CollegeCode)
+        public async Task<IEnumerable<SessionsViewModel>> GetSessions(string CollegeCode, bool gender)
         {
             try
             {
                 int collegeId = GetCollegeIdByCollegeCode(CollegeCode);
 
                 return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course)
-                    .Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode== CollegeCode).Select(x => new SessionsViewModel
+                    .Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode== CollegeCode).Where(e=> e.Gender==gender || e.Gender==null).Select(x => new SessionsViewModel
                 {
                     SessionStateId = x.SessionStateId,
                     SessionNameAr = x.SessionNameAr,
@@ -136,7 +177,8 @@ namespace Bader.Domain
                     IsDeleted = x.IsDeleted,
                     StateAr = x.SessionState.StateAr,
                     CourseNameAr = x.Course.CourseNameAr,
-                }).ToListAsync();
+                     MajorNameAr= x.Course.Major.MajorNameAr,
+                    }).ToListAsync();
 
                 
                 

@@ -11,11 +11,13 @@ namespace Bader.Controllers
 
         private readonly RegistrationDomain _RegistrationDomain;
         private readonly UserDomain _UserDomain;
+        private readonly AttendanceDomain _AttendanceDomain;
 
-        public UserRegistrationController(RegistrationDomain registrationDomain, UserDomain userDomain)
+        public UserRegistrationController(RegistrationDomain registrationDomain, UserDomain userDomain, AttendanceDomain attendanceDomain)
         {
             _RegistrationDomain = registrationDomain;
             _UserDomain = userDomain;
+            _AttendanceDomain = attendanceDomain;
         }
 
         public async Task<IActionResult> UserIndex()
@@ -212,7 +214,16 @@ namespace Bader.Controllers
                     int check = await _RegistrationDomain.AddRegistration(reg, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     if (check == 1)
                     {
-                        ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
+						AttendanceViewModel Attend = new AttendanceViewModel();
+
+						Attend.SessionId = reg.SessionId;
+						Attend.UserName = reg.Username;
+						Attend.SessionDate = reg.SessionDate;
+
+
+						int check2 = await _AttendanceDomain.addStudentInAteend(Attend);
+						ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
+
 
                     }
                     else
@@ -244,10 +255,11 @@ namespace Bader.Controllers
         {
             try
             {
+                var userInfo = await _UserDomain.GetUsersByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
 
 
-                var domainInfo = await _RegistrationDomain.GetSessions(User.FindFirst("CollegeCode").Value);
+                var domainInfo = await _RegistrationDomain.GetSessions(User.FindFirst("CollegeCode").Value,userInfo.Gender);
                 return View(domainInfo);
             }
             catch

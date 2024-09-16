@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Bader.Migrations;
 
 namespace Bader.Areas.Admin.Controllers
 {
@@ -18,13 +19,15 @@ namespace Bader.Areas.Admin.Controllers
 
         private readonly RegistrationDomain _RegistrationDomain;
         private readonly UserDomain _UserDomain;
+        private readonly AttendanceDomain _AttendanceDomain;
 
-
-        public RegistrationController(RegistrationDomain registrationDomain, UserDomain userDomain)
+        public RegistrationController(RegistrationDomain registrationDomain, UserDomain userDomain, AttendanceDomain AttendanceDomain)
         {
             _RegistrationDomain = registrationDomain;
             _UserDomain = userDomain;
-        }
+            _AttendanceDomain = AttendanceDomain;
+
+		}
 
         public async Task<IActionResult> Index()
         {
@@ -32,9 +35,24 @@ namespace Bader.Areas.Admin.Controllers
             {
                 _RegistrationDomain.UpdateSessionStates();
 
-                var domainInfo = await _RegistrationDomain.GetAllRegistrations();
-                
-                return View(domainInfo);
+                var UserRole= User.FindFirst(ClaimTypes.Role).Value;
+                if (UserRole== "Admin" || UserRole == "Editor")
+                {
+                    var domainInfo = await _RegistrationDomain.GetAllRegistrationsByCollegeCode(User.FindFirst("CollegeCode").Value);
+
+                    return View(domainInfo);
+                }
+                else
+                {
+
+
+                    var domainInfo = await _RegistrationDomain.GetAllRegistrations();
+
+                    return View(domainInfo);
+
+                }
+
+
             }
             catch
             {
@@ -111,101 +129,24 @@ namespace Bader.Areas.Admin.Controllers
             //}
 
 
-
-            var domainInfo = await _RegistrationDomain.GetAllRegistrations();
-            return View(domainInfo);
-        }
-
-
-
-
-        public async Task<IActionResult> UserIndex()
-        {
-            try
+            var UserRole = User.FindFirst(ClaimTypes.Role).Value;
+            if (UserRole == "Admin" || UserRole == "Editor")
             {
+                var domainInfo = await _RegistrationDomain.GetAllRegistrationsByCollegeCode(User.FindFirst("CollegeCode").Value);
 
-                var domainInfo = await _RegistrationDomain.GetAllRegistrationsByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 return View(domainInfo);
             }
-            catch
+            else
             {
-                return View();
+                var domainInfo = await _RegistrationDomain.GetAllRegistrations();
+
+                return View(domainInfo);
+
             }
         }
-        [HttpPost]
-        public async Task<IActionResult> UserIndex(Guid id, string CheckWhichFunction)
-        {
-            if (CheckWhichFunction == "cancel")
-            {
-                try
-                {
-                    RegistrationViewModel Reg = await _RegistrationDomain.GetRegByGuid(id);
-
-                    Reg.RegistrationStateId = 2;
-                    int check = await _RegistrationDomain.UpdateRegistration(Reg, User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-                    if (check == 1)
-                    {
-                        ViewData["Successful"] = "تم إلغاء التسجيل بنجاح.";
-
-                    }
-                    else
-                    {
-
-                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-                    }
-
-                }
-                catch
-                {
-                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-                }
-            }
-            //else if(CheckWhichFunction == "ReActive")
-            //{
-            //    try
-            //    {
-            //        RegistrationViewModel Reg = await _RegistrationDomain.GetRegByGuid(id);
-
-            //        int checkNumOfStudent = await _RegistrationDomain.CheckCountReg(Reg.SessionId);
-            //        if (checkNumOfStudent == 1)
-            //        {
-            //            Reg.RegistrationStateId = 1;
-            //            int check = await _RegistrationDomain.UpdateRegistration(Reg);
-
-            //            if (check == 1)
-            //            {
-            //                ViewData["Successful"] = " .تم إعادة التسجيل بنجاح";
-
-            //            }
-            //            else
-            //            {
-
-            //                ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-            //            }
-            //        }
-            //        else
-            //        {
-
-            //            ViewData["Falied"] = "الجلسة ممتلئة.";
-
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-            //    }
-            //}
 
 
 
-            var domainInfo = await _RegistrationDomain.GetAllRegistrationsByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            return View(domainInfo);
-        }
 
 
         [HttpGet]
@@ -317,7 +258,16 @@ namespace Bader.Areas.Admin.Controllers
                     int check = await _RegistrationDomain.AddRegistration(reg, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     if (check == 1)
                     {
-                        ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
+
+                    AttendanceViewModel Attend = new AttendanceViewModel();
+
+                        Attend.SessionId = reg.SessionId;
+                        Attend.UserName = reg.Username;
+                        Attend.SessionDate = reg.SessionDate;
+
+
+						int check2 =  await _AttendanceDomain.addStudentInAteend(Attend);
+						ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
 
                     }
                     else
@@ -345,21 +295,6 @@ namespace Bader.Areas.Admin.Controllers
 
 
 
-        public async Task<IActionResult> SessionsRegCards()
-        {
-            try
-            {
-
-
-
-                var domainInfo = await _RegistrationDomain.GetSessions(User.FindFirst("CollegeCode").Value);
-                return View(domainInfo);
-            }
-            catch
-            {
-                return View();
-            }
-        }
         public async Task<IActionResult> RegDetails(Guid id)
         {
             try

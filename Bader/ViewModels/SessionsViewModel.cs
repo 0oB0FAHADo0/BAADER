@@ -118,6 +118,14 @@ namespace Bader.ViewModels
 
         public bool IsDeleted { get; set; }
 
-        
+        [DisplayName("التخصص")]
+        [StringLength(100)]
+        public String MajorNameAr { get; set; }
+
+
+        [DisplayName("الكلية")]
+        [StringLength(100)]
+        public string CollegeNameAr { get; set; }
+
     }
 }
