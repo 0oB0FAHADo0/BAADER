@@ -132,70 +132,7 @@
             }
         </script>
 
-        <script>
-            $(document).ready(function () {
-                // Initially check if there's a pre-selected college
-                var selectedCollegeId = $('#CollegeId').val();
-
-                // Function to fetch and populate majors based on the college ID
-                function fetchMajors(collegeId, selectedMajorId = null) {
-                    if (collegeId && collegeId !== "") {
-                        // Enable the major dropdown
-                        $('#MajorId').prop('disabled', false);
-
-                        // Make an AJAX call to fetch the majors
-                        $.ajax({
-                            url: '@Url.Action("GetMajorsByCollege", "Course")', // Ensure this action exists in your controller
-                            type: 'GET',
-                            data: { collegeId: collegeId },
-                            success: function (data) {
-                                // Clear the previous options
-                                $('#MajorId').empty();
-
-                                // Add default option for majors
-                                $('#MajorId').append(new Option('اختر التخصص', ''));
-
-                                // Populate the major dropdown with the received data
-                                $.each(data, function (index, major) {
-                                    $('#MajorId').append(new Option(major.text, major.value));
-                                });
-
-                                // If a major is pre-selected (for editing), set it
-                                if (selectedMajorId) {
-                                    $('#MajorId').val(selectedMajorId);
-                                }
-                            },
-                            error: function () {
-                                Swal.fire({
-                                    icon: "error",
-                                    title: "خطأ",
-                                    text: "حدث خطأ أثناء جلب التخصصات"
-                                });
-                            }
-                        });
-                    } else {
-                        // Disable and reset the major dropdown if "اختر الكلية" is selected
-                        $('#MajorId').prop('disabled', true);
-                        $('#MajorId').empty();
-                        $('#MajorId').append(new Option('اختر التخصص', '')); // Reset to default option
-                    }
-                }
-
-                // Fetch majors if there's a pre-selected college (for editing a course)
-                if (selectedCollegeId && selectedCollegeId !== "") {
-                    // Pre-selected major ID (from the course you're editing)
-                    var selectedMajorId = $('#MajorId').data('selected-major-id'); // Store the major ID in the HTML or inject via the backend
-                    fetchMajors(selectedCollegeId, selectedMajorId);
-                }
-
-                // Trigger when the college dropdown changes
-                $('#CollegeId').on('change', function () {
-                    var collegeId = $(this).val();
-                    fetchMajors(collegeId);
-                });
-            });
-
-        </script>
+       
 
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
