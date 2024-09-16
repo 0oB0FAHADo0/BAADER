@@ -22,5 +22,16 @@ namespace Bader.Areas.Admin.Controllers
             var DomainInfo = await _AttendanceDomain.GetAllAttendance();
             return View(DomainInfo);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var attendance = await _AttendanceDomain.GetAttendanceById(id);
+            if (attendance == null)
+            {
+                return NotFound();
+            }
+            return View(attendance); 
+        }
+
     }
 }
