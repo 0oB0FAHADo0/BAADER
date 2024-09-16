@@ -57,6 +57,8 @@ namespace Bader.Domain
             await _context.SaveChangesAsync();
         }
 
+
+
         //public async Task<PermissionViewModel> GetPermissionByGUID(Guid id)
         //{
         //    var permission = await _context.tblPermissions.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == id);
@@ -87,7 +89,20 @@ namespace Bader.Domain
             return permissions;
         }
 
-            public tblPermissions GetPermissionIdByGUID(Guid id)
+
+        public async Task<IEnumerable<tblUsers>> GetAllUsers()
+        {
+            try
+            {
+                return await _context.tblUsers.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return new List<tblUsers>();
+            }
+        }
+
+        public tblPermissions GetPermissionIdByGUID(Guid id)
         {
 
             var permission = _context.tblPermissions.AsNoTracking().FirstOrDefault(tblPermissions => tblPermissions.GUID == id);

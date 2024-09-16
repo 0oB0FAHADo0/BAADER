@@ -177,8 +177,10 @@ namespace Bader.Domain
 
             sessionsx.SessionNameAr = session.SessionNameAr;
             sessionsx.SessionNameEn = session.SessionNameEn;
+            sessionsx.SessionStateId = session.SessionStateId;
             sessionsx.StateAr = session.SessionState.StateAr;
             sessionsx.CourseNameAr = session.Course.CourseNameAr;
+            sessionsx.CourseId = session.CourseId; 
             sessionsx.TitleAr = session.TitleAr;
             sessionsx.TitleEn = session.TitleEn;
             sessionsx.Links = session.Links;
