@@ -23,8 +23,9 @@ namespace Bader.Domain
             {
 
 				var session = _context.tblSessions.AsNoTracking().FirstOrDefault(tblAttendance => tblAttendance.GUID == guid);
-				var Attend= await _context.tblAttendance
-                    .Include(a => a.Session).Where(a=> a.SessionId == session.Id)
+				var Attend= await _context.tblAttendance.Where(t=> t.Session.IsDeleted==false )
+                    .Include(a => a.Session).Where(a=> a.SessionId == session.Id).Include(e=> e.Registration)
+                    .Where(i => i.Registration.RegistrationStateId == 1)
                     .Select(a => new AttendanceViewModel
                     {
                         SessionId = a.SessionId,
@@ -32,7 +33,8 @@ namespace Bader.Domain
                         UserName = a.UserName,
                         IsAttend = a.IsAttend,
                         GUID = a.GUID,
-                        SessionNameAr = a.Session.SessionNameAr 
+                        SessionNameAr = a.Session.SessionNameAr,
+                        RegistrationId= a.RegistrationId,
                     })
                     .ToListAsync();
 
@@ -54,7 +56,8 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<SessionsViewModel>> GetSessions()
         {
-            return await _context.tblSessions.Where(u => u.IsDeleted == false).Include(c => c.SessionState).Include(x => x.Course).Select(x => new SessionsViewModel
+            return await _context.tblSessions.Where(u => u.IsDeleted == false).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+                .Select(x => new SessionsViewModel
             {
                 SessionStateId = x.SessionStateId,
                 SessionNameAr = x.SessionNameAr,
@@ -77,7 +80,8 @@ namespace Bader.Domain
         }
         public async Task<IEnumerable<SessionsViewModel>> GetSessionsByCollegeCode(string CollegeCode)
         {
-            return await _context.tblSessions.Where(u => u.IsDeleted == false).Where(x=> x.Course.College.CollegeCode==CollegeCode).Include(c => c.SessionState).Include(x => x.Course).Select(x => new SessionsViewModel
+            return await _context.tblSessions.Where(u => u.IsDeleted == false).Where(x=> x.Course.College.CollegeCode==CollegeCode).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+                .Select(x => new SessionsViewModel
             {
                 SessionStateId = x.SessionStateId,
                 SessionNameAr = x.SessionNameAr,
@@ -106,7 +110,8 @@ namespace Bader.Domain
             {
 
                 return await _context.tblAttendance
-                    .Include(a => a.Session).Where(a => a.SessionId == id)
+                    .Include(a => a.Session).Where(a => a.SessionId == id).Where(i => i.Registration.RegistrationStateId == 1)
+                    .Where(e=> e.Session.IsDeleted==false)
                     .Select(a => new AttendanceViewModel
                     {
                         SessionId = a.SessionId,
@@ -114,7 +119,8 @@ namespace Bader.Domain
                         UserName = a.UserName,
                         IsAttend = a.IsAttend,
                         GUID = a.GUID,
-                        SessionNameAr = a.Session.SessionNameAr
+                        SessionNameAr = a.Session.SessionNameAr,
+                        RegistrationId = a.RegistrationId,
                     })
                     .ToListAsync();
             }
@@ -163,8 +169,10 @@ namespace Bader.Domain
                 attendx.UserName = attend.UserName;
                 attend.SessionDate = attend.SessionDate;
 				attendx.IsAttend = false;
+                attendx.RegistrationId = attend.RegistrationId;
 
-				_context.tblAttendance.Add(attendx);
+
+                _context.tblAttendance.Add(attendx);
                 int check = await _context.SaveChangesAsync();
                 return check;
             }
@@ -197,6 +205,7 @@ namespace Bader.Domain
             IsAttend = attendEntity.IsAttend,
             GUID = attendEntity.GUID,
             SessionId = attendEntity.SessionId,
+            RegistrationId=attendEntity.RegistrationId,
 
            }).FirstOrDefaultAsync();
 
@@ -226,6 +235,7 @@ namespace Bader.Domain
                 attendx.SessionDate = attend.SessionDate;
                 attendx.SessionId = attend.SessionId;
                 attendx.UserName = attend.UserName;
+                attendx.RegistrationId = attend.RegistrationId;
                 
 
 

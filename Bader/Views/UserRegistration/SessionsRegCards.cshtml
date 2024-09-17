@@ -14,7 +14,7 @@
             border-radius: 8px;
             padding: 16px;
             width: 315px;
-            height: 370px;
+            height: 350px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: box-shadow 0.3s;
             background-color: #e9f1f0;
@@ -129,14 +129,16 @@
                                 
                                 المقرر: @item.CourseNameAr
                                 <br />
-                         
+                                <br />
+                                <div>
+
+                                    @item.MajorNameAr
+                                </div>
+                                
                                 <br />
                                 التاريخ: @item.SessionDate
                             </div>
-                            <div hidden>
-
-                                @item.MajorNameAr
-                            </div>
+                            
                         </div>
                             <form>
                                 <button class="card-button" asp-route-id="@item.GUID" asp-action="Create">للتفاصيل</button>

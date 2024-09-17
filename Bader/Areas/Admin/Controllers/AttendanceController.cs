@@ -85,7 +85,7 @@ namespace Bader.Areas.Admin.Controllers
             
            var domaininfo = await _AttendanceDomain.GetAllAttendanceBySeesionId(attendT.SessionId);
 
-
+            
             return View(domaininfo);
 
 

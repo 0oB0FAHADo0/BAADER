@@ -42,6 +42,7 @@ namespace Bader.ViewModels
         [DisplayName("الاسم الكامل")]
         public string FullNameAr { get; set; }
 
+        public int RegistrationId { get; set; }
 
 
 

@@ -24,7 +24,7 @@ namespace Bader.Domain
 
                 var registrations = await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
-                    .Include(y => y.Session)
+                    .Include(y => y.Session).Where(t=> t.Session.IsDeleted==false && t.RegistrationState.IsDeleted==false)
                     .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId==1).Where(W=> W.Session.Course.CollegeId==collegeId)
                     .Select(x => new RegistrationViewModel
                     {
@@ -61,7 +61,7 @@ namespace Bader.Domain
 
                 var registrations = await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
-                    .Include(y => y.Session)
+                    .Include(y => y.Session).Where(t => t.Session.IsDeleted == false && t.RegistrationState.IsDeleted == false)
                     .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
                     .Select(x => new RegistrationViewModel
                     {
@@ -99,7 +99,7 @@ namespace Bader.Domain
             {
                 var registrations = await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
-                    .Include(y => y.Session)
+                    .Include(y => y.Session).Where(t => t.Session.IsDeleted == false && t.RegistrationState.IsDeleted == false)
                     .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
                     .Where(u=> u.Username == username)
                     .Select(x => new RegistrationViewModel
@@ -159,7 +159,7 @@ namespace Bader.Domain
             {
                 int collegeId = GetCollegeIdByCollegeCode(CollegeCode);
 
-                return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course)
+                return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course).Where(t=> t.SessionState.IsDeleted==false && t.Course.IsDeleted==false)
                     .Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode== CollegeCode).Where(e=> e.Gender==gender || e.Gender==null).Select(x => new SessionsViewModel
                 {
                     SessionStateId = x.SessionStateId,
@@ -194,7 +194,8 @@ namespace Bader.Domain
         {
             try
             {
-                tblSessions session = _context.tblSessions.Where(u => u.IsDeleted == false).Include(e => e.Course).AsNoTracking().FirstOrDefault(tblSessions => tblSessions.GUID == guid);
+                tblSessions session = _context.tblSessions.Where(u => u.IsDeleted == false).Include(e => e.Course).Include(c => c.SessionState).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+                    .AsNoTracking().FirstOrDefault(tblSessions => tblSessions.GUID == guid);
                 SessionsViewModel sessionsx = new SessionsViewModel();
                 sessionsx.GUID = session.GUID;
 
@@ -223,7 +224,8 @@ namespace Bader.Domain
         {
             try
             {
-                tblSessions session = await _context.tblSessions.Include(e => e.Course).FirstOrDefaultAsync(e => e.Id == id);
+                tblSessions session = await _context.tblSessions.Include(e => e.Course).Include(c => c.SessionState).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+                    .FirstOrDefaultAsync(e => e.Id == id);
 
                 SessionsViewModel sessionsx = new SessionsViewModel();
                 sessionsx.GUID = session.GUID;
@@ -255,7 +257,8 @@ namespace Bader.Domain
         {
             try
             {
-                var seesion = _context.tblSessions.Where(u => u.IsDeleted == false).AsNoTracking().FirstOrDefault(tblSessions => tblSessions.GUID == guid);
+                var seesion = _context.tblSessions.Where(u => u.IsDeleted == false).Include(e => e.Course).Include(c => c.SessionState).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+                    .AsNoTracking().FirstOrDefault(tblSessions => tblSessions.GUID == guid);
                 return seesion.Id;
             }
             catch
@@ -455,6 +458,14 @@ namespace Bader.Domain
 
             // Save changes to the database
             _context.SaveChanges();
+        }
+
+        public async Task<int> GetIdByUsernameForReg(string username, int sessionId)
+        {
+
+            var Reg = _context.tblRegistrations.AsNoTracking().Where(R=> R.SessionId==sessionId).Where(a=>a.RegistrationStateId==1).FirstOrDefault(tblRegistrations => tblRegistrations.Username == username);
+
+            return Reg.Id;
         }
 
 

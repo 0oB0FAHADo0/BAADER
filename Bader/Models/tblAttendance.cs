@@ -13,6 +13,8 @@
         public Guid GUID { get; set; } = Guid.NewGuid();
         public bool IsAttend { get; set; }
 
+        public tblRegistrations Registration { get; set; }
+        public int RegistrationId { get; set; }
 
 
     }

@@ -165,11 +165,13 @@ namespace Bader.Controllers
                 reg.FullNameEn = User.FindFirst("FullNameEn").Value;
                 reg.Phone = User.FindFirst("Phone").Value;
                 var session = await _RegistrationDomain.GetSessionByIdNotGuid(reg.SessionId);
+                
 
                 reg.SessionId = _RegistrationDomain.GetSessionsIdByGUId(session.GUID);
 
                 if (ModelState.IsValid)
                 {
+
 
                     if (await _RegistrationDomain.DidUserRegBefore(reg.Username, reg.SessionId))
                     {
@@ -190,35 +192,19 @@ namespace Bader.Controllers
                         return View(reg);
                     }
 
-                    //if (await _RegistrationDomain.CheckForreActiveInCreate(Reg.Username, Reg.SessionId))
-                    //{
-                    //    var guid = _RegistrationDomain.GetGuidByUsername(Reg.Username);
-                    //    Reg.GUID = guid;
-                    //    Reg.RegistrationStateId = 1;
-                    //    Reg.RegDate = DateTime.Now;
-                    //    int check = await _RegistrationDomain.UpdateRegistration(Reg);
-
-                    //    if (check == 1)
-                    //    {
-                    //        ViewData["Successful"] = "تم التسجيل في الجلسة بنجاح.";
-
-                    //    }
-                    //    else
-                    //    {
-
-                    //        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-                    //    }
-                    //}
 
                     int check = await _RegistrationDomain.AddRegistration(reg, User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+
                     if (check == 1)
                     {
-						AttendanceViewModel Attend = new AttendanceViewModel();
+                        int regId = await _RegistrationDomain.GetIdByUsernameForReg(reg.Username, reg.SessionId);
 
+                        AttendanceViewModel Attend = new AttendanceViewModel();
 						Attend.SessionId = reg.SessionId;
 						Attend.UserName = reg.Username;
 						Attend.SessionDate = reg.SessionDate;
+                        Attend.RegistrationId = regId;
 
 
 						int check2 = await _AttendanceDomain.addStudentInAteend(Attend);
