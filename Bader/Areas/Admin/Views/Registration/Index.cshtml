@@ -2,6 +2,8 @@
 
     @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var userrole = User.FindFirst("Role").Value;
+
     }
 
 @section Scripts {
@@ -109,7 +111,10 @@
     <div class="block-header border-bottom px-4 py-3">
         <h5 class="m-0">قائمة التسجيل</h5>
         <div class="d-flex gap-2">
+            
+
             <div class="form-group">
+
                 <input type="text" class="form-control table__quick_search"
                        placeholder="البحث السريع ...">
             </div>
@@ -130,6 +135,14 @@
                     <th>
                         @Html.DisplayNameFor(n => n.SessionNameAr)
                     </th>
+                    @if (userrole == "SuperAdmin")
+                    {
+                        <th>
+                            @Html.DisplayNameFor(n => n.CollegeNameAr)
+
+                        </th>
+                    }
+                    
                     <th>
                         @Html.DisplayNameFor(n => n.MajorNameAr)
                     </th>
@@ -137,7 +150,7 @@
                     <th>
                         @Html.DisplayNameFor(n => n.StateAr)
                     </th>
-                   
+                  
                     <th>
                         @Html.DisplayNameFor(n => n.FullNameAr)
 
@@ -162,13 +175,19 @@
                         <td>
                             @item.SessionNameAr
                         </td>
+                        @if (userrole == "SuperAdmin")
+                        {
+                        <td>
+                            @item.CollegeNameAr
+                        </td>
+                        }
                         <td>
                             @item.MajorNameAr
                         </td>
                         <td>
                             @item.StateAr
                         </td>
-                        
+                      
                         <td>
                             @item.FullNameAr
                         </td>

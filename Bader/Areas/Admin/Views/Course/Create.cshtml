@@ -45,7 +45,10 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="LevelNameAr" class="mb-1"></label>
-                                        <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList"> </select>
+                                        <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList"> 
+                                        <option value="">اختر المستوى</option>
+                                        </select>
+                                        <span asp-validation-for="LevelId" class="text-danger"></span>
                                     </div>
                                 </div><!-- END ITEM -->
                                 @if (userrole == "SuperAdmin")
@@ -69,7 +72,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-4">
                                             <label asp-for="MajorNameAr" class="mb-1"></label>
-                                            <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList" disabled>
+                                            <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList" >
                                                 <option value="">اختر التخصص</option>
                                             </select>
                                             <span asp-validation-for="MajorId" class="text-danger"></span>

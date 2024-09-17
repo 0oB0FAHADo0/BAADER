@@ -17,7 +17,7 @@ namespace Bader.Domain
         {
             try
             {
-                return await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false && x.College.CollegeCode == CollageCode && x.College.IsDeleted == false && x.Major.IsDeleted == false && x.Level.IsDeleted == false).Select(x => new CourseViewModel
+                return await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false && x.College.CollegeCode == CollageCode && x.College.IsDeleted == false && x.Major.IsDeleted == false && x.Level.IsDeleted == false).Select(x => new CourseViewModel 
                 {
                     CourseNum = x.CourseNum,
                     CourseNameAr = x.CourseNameAr,
@@ -150,9 +150,9 @@ namespace Bader.Domain
                 course.CourseNameAr = cou.CourseNameAr;
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
-                course.CollegeId = cou.CollegeId;
-                course.LevelId = cou.LevelId;
-                course.MajorId = cou.MajorId;
+                course.CollegeId = cou.CollegeId??0;
+                course.LevelId = cou.LevelId ?? 0;
+                course.MajorId = cou.MajorId ?? 0;
                 course.GUID = Guid.NewGuid();
 
 
@@ -198,8 +198,8 @@ namespace Bader.Domain
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
                 course.CollegeId = college.Id;
-                course.LevelId = cou.LevelId;
-                course.MajorId = cou.MajorId;
+                course.LevelId = cou.LevelId ?? 0;
+                course.MajorId = cou.MajorId ?? 0;
                 course.GUID = Guid.NewGuid();
                 
 
@@ -233,7 +233,7 @@ namespace Bader.Domain
         public async Task<bool> CourseNumEx(Guid id  , string CourseNum)
         {
 
-            return await _context.tblCourses.Where(u => u.GUID != id).AnyAsync(u => u.CourseNum == CourseNum);
+            return await _context.tblCourses.Where(u => u.GUID != id).AnyAsync(u => u.CourseNum == CourseNum && u.IsDeleted == false);
         }
 
         public async Task<int> UpdateAllCourse(CourseViewModel cou, String username)
@@ -250,9 +250,9 @@ namespace Bader.Domain
                 course.CourseNameAr = cou.CourseNameAr;
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
-                course.CollegeId = cou.CollegeId;
-                course.LevelId = cou.LevelId;
-                course.MajorId = cou.MajorId;
+                course.CollegeId = cou.CollegeId ?? 0;
+                course.LevelId = cou.LevelId ?? 0;
+                course.MajorId = cou.MajorId ?? 0;
                 course.GUID = cou.GUID;
                 course.IsDeleted = cou.IsDeleted;
 
@@ -296,8 +296,8 @@ namespace Bader.Domain
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
                 course.CollegeId = college.Id ;
-                course.LevelId = cou.LevelId;
-                course.MajorId = cou.MajorId;
+                course.LevelId = cou.LevelId ?? 0;
+                course.MajorId = cou.MajorId ?? 0;
                 course.GUID = cou.GUID;
                 course.IsDeleted = cou.IsDeleted;
 

@@ -1,87 +1,80 @@
-﻿@model PermissionViewModel
-
-@section Scripts {
-
-    <script>
-        @{
-            if (@ViewData["Successful"] != null)
-            {
-
-                <Text>
-                 var result = '@Html.Raw(ViewData["Successful"])';
-
-                Swal.fire({
-                    title: "تمت العملية",
-                    text: result,
-                    icon: "success"
-                }).then(function () {
-                    window.location.href = '@Url.Action("Index", "Permission")';
-                });
-                </Text>
-
-            }
-            else if (@ViewData["Falied"] != null)
-            {
-                <Text>
-                 var result = '@Html.Raw(ViewData["Falied"])';
-
-                Swal.fire({
-                    icon: "error",
-                    title: "فشلت العملية",
-                    text: result
-
-                });
-                </Text>
-            }
-        }
-    </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+﻿@model Bader.ViewModels.PermissionViewModel 
+@{
+    ViewData["Title"] = "Create User";
+    var userrole = User.FindFirst("Role").Value;
 }
+
+
+<h2>اضافة صلاحية للمستخدم </h2>
 
 <section class="page_wrap">
     <div class="page_content">
 
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0"> صفحة الصلاحيات </h5>
+                <h5 class="m-0">إضافة صلاحية</h5>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="Add">
+                        <label id="lblError" d style="color:red; display:none">هذا المستخدم غير موجود في قاعدة البيانات</label>
+                        <form asp-action="Create" method="post">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="Username" class="mb-1">اسم المستخدم</label>
-                                        <input asp-for="Username" type="text" placeholder="Username" class="form-control">
+                                        <label for="" class="mb-1">اسم المستخدم</label>
+                                        <input asp-for="Username" type="text" placeholder="اسم المستخدم" class="form-control" id="UserName">
                                         <span asp-validation-for="Username" class="text-danger"></span>
+
                                     </div>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="RoleId" class="mb-1"></label>
-                                        <select asp-for="RoleId" id="RoleId" class="form-control text-start" asp-items="ViewBag.RolesList"></select>
+                                        <label for="" class="mb-1">الاسم كامل</label>
+                                        <input id="FullNameAr" readonly asp-for="FullNameAr" type="text" placeholder="الاسم " class="form-control">
+                                        <span asp-validation-for="FullNameAr" class="text-danger"></span>
                                     </div>
-                                </div>
-                                <!-- END ITEM -->
+                                </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CollegeId" class="mb-1">رمز الكلية </label>
-                                        <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollegesList"></select>
-                                        <span asp-validation-for="CollegeId" class="text-danger"></span>
+                                        <label for="" class="mb-1">Full Name</label>
+                                        <input id="FullNameEn" readonly asp-for="FullNameEn" type="text" placeholder="Name" class="form-control">
+                                        <span asp-validation-for="FullNameEn" class="text-danger"></span>
                                     </div>
-                                </div>
-                                <!-- END ITEM -->
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="RoleId" class="mb-1"> الصلاحية</label>
+                                        <select asp-for="RoleId"
+                                                class="form-control"
+                                                asp-items="@ViewBag.RolesList">
+                                        </select>
+                                        <span asp-validation-for="RoleId" class="text-danger"></span>
 
-                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
-                                    <div><button type="submit" class="btn btn-primary px-5" title="save">إضافة</button></div>
-                                </div>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="CollegeId" class="mb-1">الكلية</label>
+                                        <select asp-for="CollegeId"
+                                                class="form-control"
+                                                asp-items="@ViewBag.CollegesList">
+                                        </select>
+                                        <span asp-validation-for="RoleId" class="text-danger"></span>
+
+                                    </div>
+                                </div><!-- END ITEM -->
+
                             </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" value="Create" class="btn btn-primary px-5" title="save">حفظ</button>
+                            </div>
+
                         </form>
 
 
@@ -93,10 +86,135 @@
 
 
     </div>
-</section>
-@* 
-@section valid {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+</section><!-- End Page Wrap -->
+<div>
+    <a asp-action="Index">Back to List</a>
+
+</div>
+@section Scripts {
+<script>
+
+        $("#UserName").on("change", function () {
+            showValue($(this).val());
+        });
+
+    function showValue(val) {
+        $.getJSON('@Url.Action("GetUserInfo", "Permission")/' + val, function (result) {
+            console.log(result);
+            $("#FullNameAr").val("");
+            $("#FullNameEn").val("");
+            if (result != null) {
+                $("#FullNameAr").val(result.fullNameAr);
+                $("#FullNameEn").val(result.fullNameEn);
+                $("#lblError").toggle(false);
+            }
+            else {
+                $("#FullNameAr").val("");
+                $("#FullNameEn").val("");
+                $("#lblError").toggle(true);
+            }
+        });
     }
-} *@
+</script>
+
+    <script>
+        @{
+            if (@ViewData["Successful"] != null)
+            {
+                <Text>
+                                                                                var result = '@Html.Raw(ViewData["Successful"])';
+                Swal.fire(result, '', 'success')
+                    .then(
+                        function () {
+                            window.location.href = '@Url.Action("Index", "Permissions")';
+                        }
+                    );
+                </Text>
+            }
+            else if (@ViewData["Falied"] != null)
+            {
+                <Text>
+                                                                                var result = '@Html.Raw(ViewData["Falied"])';
+                Swal.fire(result, '', 'error');
+                </Text>
+            }
+        }
+    </script>
+    <script>
+            // Function to populate the major dropdown based on the selected college
+            function populateMajors(collegeId, selectedMajorId) {
+                if (collegeId && collegeId !== "") {
+                    // Make an AJAX call to fetch the majors for the selected college
+                    $.ajax({
+                        url: '@Url.Action("GetMajorsByCollege", "Course")',
+                        type: 'GET',
+                        data: { collegeId: collegeId },
+                        success: function (data) {
+                            // Clear the previous options
+                            $('#MajorId').empty();
+
+                            // Populate the major dropdown with the received data
+                            $('#MajorId').append(new Option('اختر التخصص', '')); // Add default option
+                            $.each(data, function (index, major) {
+                                $('#MajorId').append(new Option(major.text, major.value));
+                            });
+
+                            // Re-select the previously selected major if any
+                            if (selectedMajorId) {
+                                $('#MajorId').val(selectedMajorId);
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: "error",
+                                title: "خطأ",
+                                text: "حدث خطأ أثناء جلب التخصصات"
+                            });
+                        }
+                    });
+                } else {
+                    // If no college is selected, disable and reset the major dropdown
+                    $('#MajorId').prop('disabled', true);
+                    $('#MajorId').empty();
+                    $('#MajorId').append(new Option('اختر التخصص', '')); // Reset to default option
+                }
+            }
+        $(document).ready(function () {
+            var userrole = '@userrole';  // Fetch user role from the Razor view
+            var collegeId = $('#CollegeId').val(); // Current selected CollegeId
+            var majorId = $('#MajorId').val(); // Current selected MajorId
+
+
+
+            // Check if a college is already selected on page load (important for validation errors)
+            if (collegeId && collegeId !== "") {
+                $('#MajorId').prop('disabled', false);  // Ensure Major dropdown is enabled
+                populateMajors(collegeId, majorId); // Populate the majors based on selected college
+            } else {
+                $('#MajorId').prop('disabled', true);  // Disable if no college is selected
+            }
+
+            // Trigger when the college dropdown changes
+            $('#CollegeId').on('change', function () {
+                collegeId = $(this).val();
+                majorId = '';  // Reset major selection when college changes
+
+                // Enable the major dropdown when a college is selected
+                $('#MajorId').prop('disabled', false);
+                populateMajors(collegeId, null); // Fetch majors for the new college
+            });
+
+            // Logic for user roles (Admin and Editor)
+            if (userrole === "SuperAdmin") {
+                // For SuperAdmin, disable the major dropdown until a college is selected
+                if (!collegeId) {
+                    $('#MajorId').prop('disabled', true);
+                }
+            } else {
+                // For Admin and Editor, always enable the major dropdown
+                $('#MajorId').prop('disabled', false);
+            }
+        });
+
+    </script>
+}

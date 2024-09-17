@@ -143,7 +143,8 @@ namespace Bader.Domain
                     Phone = x.Phone,
                     CollegeNameAr = x.CollegeNameAr,
                     CollegeNameEn = x.CollegeNameEn,
-                    CollegeCode = x.CollegeCode
+                    CollegeCode = x.CollegeCode,
+                    Gender=x.Gender,
                 })
                 .FirstOrDefaultAsync(); 
 

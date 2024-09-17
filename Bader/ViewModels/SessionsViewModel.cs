@@ -24,7 +24,7 @@ namespace Bader.ViewModels
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [StringLength(100)]
-        [DisplayName("إسم الجلسة")]
+        [DisplayName("الاسم")]
         public string SessionNameAr { get; set; }
         //end
 
@@ -103,7 +103,7 @@ namespace Bader.ViewModels
 
         //star
 
-        [DisplayName("حالة الجلسة")]
+        [DisplayName("الحالة")]
         public string StateAr { get; set; }
         //end
         [DisplayName("اسم المقرر")]
@@ -118,6 +118,14 @@ namespace Bader.ViewModels
 
         public bool IsDeleted { get; set; }
 
-        
+        [DisplayName("التخصص")]
+        [StringLength(100)]
+        public String MajorNameAr { get; set; }
+
+
+        [DisplayName("الكلية")]
+        [StringLength(100)]
+        public string CollegeNameAr { get; set; }
+
     }
 }

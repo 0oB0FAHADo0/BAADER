@@ -1,119 +1,86 @@
-﻿@model IEnumerable<AttendanceViewModel>
+﻿@model IEnumerable<SessionsViewModel>
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Index";
+
+    var userrole = User.FindFirst("Role").Value;
+
 }
 
-<!DOCTYPE html>
-<html lang="en" dir="rtl" data-theme="light">
-<head>
-    <style>
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-        }
-
-        .card {
-            border: 1px solid #454343;
-            border-radius: 8px;
-            padding: 16px;
-            width: 315px;
-            height: 350px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s;
-            background-color: #e9f1f0;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-            .card:hover {
-                box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
-            }
-
-        .card-header {
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 8px;
-            background-color: #0F7179;
-            color: white;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card-body {
-            margin-bottom: 8px;
-            background-color: #c6e2dd;
-            font-size: 25px;
-            font-weight: 500;
-            text-align: center;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card-footer {
-            color: white;
-            background-color: #0F7179;
-            font-size: 20px;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .card-button {
-            transform: translate(-50%, 125%);
-            width: 60%;
-            border-radius: 1rem;
-            border: none;
-            background-color: #0F7179;
-            color: white;
-            font-size: 1rem;
-            padding: .5rem 1rem;
-            position: absolute;
-            left: 50%;
-            bottom: 20px;
-            opacity: 0;
-            transition: 0.3s ease-out;
-        }
-
-        .card:hover .card-button {
-            transform: translate(-50%, 50%);
-            opacity: 1;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="block mb-4">
-        <div class="block-header border-bottom px-4 py-3">
-            <div class="block-body">
-                <div class="card-container" id="courseCards">
-                    @foreach (var item in Model)
-                    {
-                        <div class="card">
-                            <div class="card-header">اسم الجلسة : @item.SessionNameAr</div>
-                            <div class="card-body">
-                                <div>
-                                    المقرر: @item.CourseNameAr
-                                    <br />
-                                    <br />
-                                    تاريخ الجلسة: @item.SessionDate
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                            </div>
-                            <form>
-                                <button class="card-button" asp-route-id="@item.GUID" asp-action="AttendPage">تحضير</button>
-                            </form>
-                        </div>
-                    }
-                </div>
+<div class="block mb-4">
+    <div class="block-header border-bottom px-4 py-3">
+        <h5 class="m-0">قائمة الحضور</h5>
+        <div class="d-flex gap-2">
+            <div class="form-group">
+                <input type="text" class="form-control table__quick_search" placeholder="البحث السريع ...">
             </div>
         </div>
     </div>
-</body>
-</html>
+    <div class="block-body">
+        <table class="table table-hover js-dataTable">
+            <thead>
+                <tr>
+                    @if (userrole == "SuperAdmin")
+                        {
+                    <th>
+                        @Html.DisplayNameFor(n => n.CollegeNameAr)
+
+                    </th>
+                        }
+                    <th>
+                        @Html.DisplayNameFor(n => n.SessionNameAr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.CourseNameAr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.SessionDate)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="cursor-pointer">
+                        @if (userrole == "SuperAdmin")
+                        {
+                            <td>
+                                @item.CollegeNameAr
+
+                            </td>
+                        }
+                        <td>@item.SessionNameAr</td>
+                        <td>@item.CourseNameAr</td> 
+                        <td>@item.SessionDate</td>
+                        <td class="text-end">
+                            <form >
+                                <button class="btn btn-sm btn-primary" asp-route-id="@item.GUID" asp-action="Attend" >تحضير</button>
+
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.querySelector('.table__quick_search');
+            const tableRows = document.querySelectorAll('tbody tr');
+
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const rowText = row.innerText.toLowerCase();
+                    row.style.display = rowText.includes(searchTerm) ? '' : 'none';
+                });
+            });
+        });
+    </script>
+}

@@ -4,7 +4,7 @@
     var fullNameAr = User.FindFirst("FullNameAr")?.Value;
     var Email = User.FindFirst("Email")?.Value;
     var userrole = User.FindFirst("Role").Value;
-    
+     
 }
 <!DOCTYPE html>
 <html lang="en" dir="rtl" data-theme="light">
@@ -27,9 +27,6 @@
     <link rel="stylesheet" href="~/Assets/css/bootstrap.rtl.min.css">
     <link rel="stylesheet" href="~/Assets/css/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/Assets/css/root.css">
-
-
-    
 
 
 
@@ -259,18 +256,18 @@
                             <li><hr class="dropdown-divider"></li>
 
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="@Url.Action("Profile", "Home" ,  new { area = "Admin" })">
+                                <a class="dropdown-item d-flex align-items-center" href="#">
                                     <i class="bi bi-person-circle me-2"></i>
                                     الملف الشخصي
                                 </a>
                             </li>
 
-                            @* <li>
+                            <li>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <i class="bi bi-translate me-2"></i>
                                     English Language
                                 </a>
-                            </li> *@
+                            </li>
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" asp-area="" asp-Controller="Access" asp-action="LogOut">
                                     <i class="bi bi-box-arrow-right me-2"></i>
@@ -308,12 +305,17 @@
             <script src="~/Assets/js/popper.min.js"></script>
             <script src="~/Assets/js/bootstrap.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="~/assets/js/charts_conf.js"></script>
+            <script src="~/assets/js/chart.js"></script>
+
 
             <!--------- JS Liberaries ---------->
             <script src="~/Assets/lib/DataTable/js/dataTables.min.js"></script>
+            <script src="~/assets/lib/chartjs/chart.js"></script>
 
             <!-- customization -->
             <script src="~/Assets/js/app.js"></script>
+			<script src="~/assets/lib/quicksearch/jquery.quicksearch.js"></script>
 
             <script>
                 document.getElementById("currentYear").textContent = new Date().getFullYear();

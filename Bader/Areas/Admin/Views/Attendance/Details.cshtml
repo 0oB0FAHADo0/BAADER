@@ -1,0 +1,48 @@
+﻿@model AttendanceViewModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; // Use the shared layout
+    ViewData["Title"] = "Attendance Details"; // Set page title
+}
+
+@* <div class="container mt-4">
+    <h2 class="mb-3">Attendance Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3">Session</dt>
+                <dd class="col-sm-9">@Model.Session.SessionNameAr</dd>
+
+                <dt class="col-sm-3">Session ID</dt>
+                <dd class="col-sm-9">@Model.SessionId</dd>
+
+                <dt class="col-sm-3">User Name</dt>
+                <dd class="col-sm-9">@Model.UserName</dd>
+
+                <dt class="col-sm-3">Is Attend</dt>
+                <dd class="col-sm-9">
+                    @if (Model.IsAttend)
+                    {
+                        <span class="badge bg-success">Attended</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Not Attended</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-3">Session Name (Arabic)</dt>
+                <dd class="col-sm-9">@Model.SessionNameAr</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="@Url.Action("Index", "Attendance", new { area = "Admin" })" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+ *@

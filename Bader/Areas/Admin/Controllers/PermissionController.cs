@@ -18,10 +18,12 @@ namespace Bader.Areas.Admin.Controllers
     public class PermissionController : Controller
     {
         private readonly PermissionDomain _PermissionDomain;
+        private readonly UserDomain _UserDomain;
 
-        public PermissionController(PermissionDomain context)
+        public PermissionController(PermissionDomain context, UserDomain userDomain)
         {
             _PermissionDomain = context;
+            _UserDomain = userDomain;
         }
 
         [HttpGet]
@@ -80,6 +82,7 @@ namespace Bader.Areas.Admin.Controllers
             }
             var roles = await _PermissionDomain.GetRoles();
             var colleges = await _PermissionDomain.GetColleges();
+            
             ViewBag.CollegesList = new SelectList(colleges, "Id", "CollegeNameAr");
             ViewBag.RolesList = new SelectList(roles, "Id", "RoleNameAr");
             return View(permission);
@@ -140,6 +143,12 @@ namespace Bader.Areas.Admin.Controllers
             return View(permission);
 
         }
+
+        public async Task<UserViewModel> GetUserInfo(string id)
+        {
+            return await _UserDomain.GetUsersByUsername(id);
+        }
+
 
 
 

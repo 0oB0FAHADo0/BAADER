@@ -16,16 +16,22 @@ namespace Bader.ViewModels
         [StringLength(100)]
         [DisplayName("إسم المستخدم")]
         public string Username { get; set; }
+        public string FullNameAr { get; set; }
+        public string FullNameEn { get; set; }
 
 
 
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [DisplayName("رقم الدور أو الصلاحية")]
+        [DisplayName("الصلاحية")]
         public int RoleId { get; set; }
 
+        public string RoleName { get; set; }
+
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [DisplayName("رقم الكلية")]
+        [DisplayName("الكلية")]
         public int CollegeId { get; set; }
+
+        public string CollegeName { get;set; }
 
 
         [DisplayName("Guid")]
