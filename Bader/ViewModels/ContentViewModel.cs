@@ -29,5 +29,16 @@ namespace Bader.ViewModels
         [DisplayName("معرف(GUID) ")]
         public Guid GUID { get; set; }
         public bool IsDeleted { get; set; }
+        [DisplayName("الكلية")]
+        public string CollageNameAr { get; set; }
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [DisplayName("معرف المقرر")]
+        public int CollegeId { get; set; }
+        [DisplayName("التخصص")]
+        public string MajorNameAr { get; set; }
+
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [DisplayName("معرف التخصص")]
+        public int MajorId { get; set; }
     }
 }

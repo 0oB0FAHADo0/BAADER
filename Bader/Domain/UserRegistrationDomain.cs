@@ -19,7 +19,7 @@ namespace Bader.Domain
             {
                 return await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
-                    .Include(y => y.Session)
+                    .Include(y => y.Session).Where(e=> e.Session.IsDeleted==false && e.RegistrationState.IsDeleted == false)
                     .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
                     .Select(x => new RegistrationViewModel
                     {
@@ -50,7 +50,7 @@ namespace Bader.Domain
             {
                 return await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
-                    .Include(y => y.Session)
+                    .Include(y => y.Session).Where(e => e.Session.IsDeleted == false && e.RegistrationState.IsDeleted == false)
                     .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
                     .Where(u => u.Username == username)
                     .Select(x => new RegistrationViewModel
@@ -78,7 +78,8 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<tblSessions>> GetSessionsOld()
         {
-            return await _context.tblSessions.Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now).ToListAsync();
+            return await _context.tblSessions.Include(e=> e.Course).Include(r=> r.SessionState).Where(w => w.SessionState.IsDeleted == false && w.Course.IsDeleted==false)
+                .Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now).ToListAsync();
         }
 
         public int GetCollegeIdByCollegeCode(string CollegeCode)
@@ -99,7 +100,8 @@ namespace Bader.Domain
             {
                 int collegeId = GetCollegeIdByCollegeCode(CollegeCode);
 
-                return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course).Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode == CollegeCode).Select(x => new SessionsViewModel
+                return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course).Where(w => w.SessionState.IsDeleted == false && w.Course.IsDeleted == false)
+                    .Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode == CollegeCode).Select(x => new SessionsViewModel
                 {
                     SessionStateId = x.SessionStateId,
                     SessionNameAr = x.SessionNameAr,

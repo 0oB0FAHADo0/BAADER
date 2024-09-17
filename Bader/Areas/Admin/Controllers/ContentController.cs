@@ -1,8 +1,10 @@
 ﻿using Bader.Domain;
+using Bader.Models;
 using Bader.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Bader.Areas.Admin.Controllers
@@ -21,7 +23,14 @@ namespace Bader.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _ContentDomain.GetContents());
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                return View(await _ContentDomain.GetContentsByCollegeCode(User.FindFirst("CollegeCode").Value));
+            }
+            else
+            {
+                return View(await _ContentDomain.GetContents());
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Index(Guid id)
@@ -45,13 +54,38 @@ namespace Bader.Areas.Admin.Controllers
                 Console.WriteLine(ex.Message);
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
             }
-            return View(await _ContentDomain.GetContents());
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                return View(await _ContentDomain.GetContentsByCollegeCode(User.FindFirst("CollegeCode").Value));
+            }
+            else
+            {
+                return View(await _ContentDomain.GetContents());
+            }
         }
         public async Task<IActionResult> Create()
         {
-            var Courses = await _ContentDomain.GetCourses();
-            ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
-            return View();
+            if (User.FindFirst("Role").Value == "SuperAdmin")
+            {
+                var Collages = await _ContentDomain.GetColleges();
+                ViewBag.CollagesList = new SelectList(Collages, "Id", "CollegeNameAr");
+                var Majors = await _ContentDomain.GetMajorsByCollegeCode(User.FindFirst("CollegeCode").Value);
+                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                var Courses = await _ContentDomain.GetCoursesByMajorId(15);
+                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                return View();
+            }
+            else
+            {
+                var Majors = await _ContentDomain.GetMajorsByCollegeCode(User.FindFirst("CollegeCode").Value);
+                ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                var Courses = await _ContentDomain.GetCoursesByMajorId(15);
+                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                //var Courses = await _ContentDomain.GetCoursesByCollegeCode(User.FindFirst("CollegeCode").Value);
+                //ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                return View();
+            }
+            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -75,8 +109,26 @@ namespace Bader.Areas.Admin.Controllers
                 else
                 {
                     ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-                    var Courses = await _ContentDomain.GetCourses();
-                    ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                    if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+                    {
+                        //var Courses = await _ContentDomain.GetCoursesByCollegeCode(User.FindFirst("CollegeCode").Value);
+                        //ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                        var Majors = await _ContentDomain.GetMajorsByCollegeCode(User.FindFirst("CollegeCode").Value);
+                        ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                        var Courses = await _ContentDomain.GetCoursesByMajorId(15);
+                        ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                    }
+                    else
+                    {
+                        //var Courses = await _ContentDomain.GetCourses();
+                        //ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                        var Collages = await _ContentDomain.GetColleges();
+                        ViewBag.CollagesList = new SelectList(Collages, "Id", "CollegeNameAr");
+                        var Majors = await _ContentDomain.GetMajorsByCollegeCode(User.FindFirst("CollegeCode").Value);
+                        ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                        var Courses = await _ContentDomain.GetCoursesByMajorId(15);
+                        ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                    }
                 }
             }
             catch (Exception ex)
@@ -94,8 +146,16 @@ namespace Bader.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var Courses = await _ContentDomain.GetCourses();
-            ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                var Courses = await _ContentDomain.GetCoursesByCollegeCode(User.FindFirst("CollegeCode").Value);
+                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+            }
+            else
+            {
+                var Courses = await _ContentDomain.GetCourses();
+                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+            }
             return View(content);
         }
         [HttpPost]
@@ -121,8 +181,16 @@ namespace Bader.Areas.Admin.Controllers
                 else
                 {
                     ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-                    var Courses = await _ContentDomain.GetCourses();
-                    ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                    if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+                    {
+                        var Courses = await _ContentDomain.GetCoursesByCollegeCode(User.FindFirst("CollegeCode").Value);
+                        ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                    }
+                    else
+                    {
+                        var Courses = await _ContentDomain.GetCourses();
+                        ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                    }
                 }
 
             }
@@ -150,6 +218,34 @@ namespace Bader.Areas.Admin.Controllers
 
             await _ContentDomain.DeleteContent(content, User.FindFirst(ClaimTypes.NameIdentifier).Value);
             return RedirectToAction(nameof(Index));
+
+        }
+        public async Task<IActionResult> GetMajorsByCollegeId(int collegeId)
+        {
+         
+                var majors= await _ContentDomain.GetMajorsByCollegeId(collegeId);
+                var majorList = majors.Select(m => new SelectListItem
+                {
+                    Value = m.Id.ToString(),
+                    Text = m.MajorNameAr
+                }).ToList();
+
+                return Json(majorList);  // Return the list of majors in JSON format
+
+
+        }
+        public async Task<IActionResult> GetCoursesByMajorId(int majorId)
+        {
+
+            var courses = await _ContentDomain.GetCoursesByMajorId(majorId);
+            var courseList = courses.Select(m => new SelectListItem
+            {
+                Value = m.Id.ToString(),
+                Text = m.CourseNameAr
+            }).ToList();
+
+            return Json(courseList);  // Return the list of majors in JSON format
+
 
         }
 

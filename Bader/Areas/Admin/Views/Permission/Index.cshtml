@@ -87,8 +87,8 @@
                                 <tr class="cursor-pointer" goto="order_details.html">
 @*                                     <td>@Html.DisplayFor(modelItem => item.Id)</td>
  *@                                    <td>@Html.DisplayFor(modelItem => item.Username)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.RoleId)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CollegeId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CollegeName)</td>
                                     <td class="action_td text-end">
                                         <form method="post">
                                             <a asp-controller="permission" asp-action="Update" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>

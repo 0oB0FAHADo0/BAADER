@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
-   
+    var userrole = User.FindFirst("Role").Value;
 }
 
 <section class="page_wrap">
@@ -18,10 +18,52 @@
                         <form asp-action="Create" method="post">
                             <div class="row">
                                 <!-- START ITEM -->
+                                @if (userrole == "SuperAdmin")
+                                {
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="CollageNameAr" class="mb-1"></label>
+                                            <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList">
+                                                <option value="">اختر الكلية</option>
+                                            </select>
+                                            <span asp-validation-for="CollegeId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                }
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
+                                @if (userrole == "SuperAdmin")
+                                {
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="MajorNameAr" class="mb-1"></label>
+                                            <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList" disabled>
+                                                <option value="">اختر التخصص</option>
+                                            </select>
+                                            <span asp-validation-for="MajorId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="MajorNameAr" class="mb-1"></label>
+                                            <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
+                                                <option value="">اختر التخصص</option>
+                                            </select>
+                                            <span asp-validation-for="MajorId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                }
+                                <!-- END ITEM -->
+                                <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="CourseId" class="mb-1">إختر المقرر</label>
-                                        <select asp-for="CourseId" id="CoursesId" class="form-control text-start" asp-items="ViewBag.CoursesList"></select>
+                                        <select asp-for="CourseId" id="CourseId" class="form-control text-start" asp-items="ViewBag.CoursesList">
+                                            <option value="">إختر المقرر</option>
+                                        </select>
                                     </div>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
@@ -48,8 +90,8 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="ContentsAr" class="mb-1">@Html.DisplayNameFor(x => x.ContentsAr)</label>
-                                        <input asp-for="ContentsAr" type="text" placeholder="اسم المحتوى"
-                                               class="form-control text-start">
+                                        <textarea asp-for="ContentsAr" id="ContentsAr" type="text" placeholder="اسم المحتوى"
+                                                  class="form-control text-start"></textarea>
                                         <span asp-validation-for="ContentsAr" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -58,8 +100,8 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="ContentsEn" class="mb-1">@Html.DisplayNameFor(x => x.ContentsEn)</label>
-                                        <input asp-for="ContentsEn" type="text" placeholder="Name Of Contents"
-                                               class="form-control text-start">
+                                        <textarea asp-for="ContentsEn" id="ContentsEn" type="text" placeholder="Name Of Contents"
+                                                  class="form-control text-start"></textarea>
                                         <span asp-validation-for="ContentsEn" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -70,7 +112,7 @@
                                         <label asp-for="Links" class="mb-1">@Html.DisplayNameFor(x => x.Links)</label>
                                         <textarea asp-for="Links" id="Links" name="Links" rows="4" cols="50" class="form-control text-start" placeholder="الروابط"></textarea>
                                         <span asp-validation-for="Links" class="text-danger"></span>
-                               
+
                                     </div>
                                 </div>
                                 <!-- END ITEM -->
@@ -94,28 +136,265 @@
         @{
             if (@ViewData["Successful"] != null)
             {
-                <Text>
-                var result = '@Html.Raw(ViewData["Successful"])';
-                Swal.fire({
-                    title: "تمت العملية",
-                    text: result,
-                    icon: "success"
-                }).then(function () {
-                    window.location.href = '@Url.Action("Index", "Content")';
-                });
-                </Text>
+                            <Text>
+                            var result = '@Html.Raw(ViewData["Successful"])';
+                            Swal.fire({
+                                title: "تمت العملية",
+                                text: result,
+                                icon: "success"
+                            }).then(function () {
+                                window.location.href = '@Url.Action("Index", "Content")';
+                            });
+                            </Text>
             }
             else if (@ViewData["Falied"] != null)
             {
-                <Text>
-                var result = '@Html.Raw(ViewData["Falied"])';
-                Swal.fire({
-                    icon: "error",
-                    title: "فشلت العملية",
-                    text: result
-                });
-                </Text>
+                            <Text>
+                            var result = '@Html.Raw(ViewData["Falied"])';
+                            Swal.fire({
+                                icon: "error",
+                                title: "فشلت العملية",
+                                text: result
+                            });
+                            </Text>
             }
         }
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            var userrole = '@userrole';  // Fetch user role from the Razor view
+            var collegeId = $('#CollegeId').val(); // Current selected CollegeId
+            var majorId = $('#MajorId').val(); // Current selected MajorId
+            var courseId = $('#CourseId').val(); // Current selected CourseId
+
+            // Function to populate the major dropdown based on the selected college
+            function populateMajors(collegeId, selectedMajorId) {
+                if (collegeId && collegeId !== "") {
+                    // Make an AJAX call to fetch the majors for the selected college
+                    $.ajax({
+                        url: '@Url.Action("GetMajorsByCollegeId", "Content")',
+                        type: 'GET',
+                        data: { collegeId: collegeId },
+                        success: function (data) {
+                            // Clear the previous options
+                            $('#MajorId').empty();
+
+                            // Populate the major dropdown with the received data
+                            $('#MajorId').append(new Option('اختر التخصص', '')); // Add default option
+                            $.each(data, function (index, major) {
+                                $('#MajorId').append(new Option(major.text, major.value));
+                            });
+
+                            // Re-select the previously selected major if any
+                            if (selectedMajorId) {
+                                $('#MajorId').val(selectedMajorId);
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: "error",
+                                title: "خطأ",
+                                text: "حدث خطأ أثناء جلب التخصصات"
+                            });
+                        }
+                    });
+                } else {
+                    // If no college is selected, disable and reset the major dropdown
+                    $('#MajorId').prop('disabled', true);
+                    $('#MajorId').empty();
+                    $('#MajorId').append(new Option('اختر التخصص', '')); // Reset to default option
+                }
+            }
+
+            // Check if a college is already selected on page load (important for validation errors)
+            if (collegeId && collegeId !== "") {
+                $('#MajorId').prop('disabled', false);  // Ensure Major dropdown is enabled
+                populateMajors(collegeId, majorId); // Populate the majors based on selected college
+            } else {
+                $('#MajorId').prop('disabled', true);  // Disable if no college is selected
+            }
+
+            // Trigger when the college dropdown changes
+            $('#CollegeId').on('change', function () {
+                collegeId = $(this).val();
+                majorId = '';  // Reset major selection when college changes
+
+                // Enable the major dropdown when a college is selected
+                $('#MajorId').prop('disabled', false);
+                populateMajors(collegeId, null); // Fetch majors for the new college
+            });
+
+            // Logic for user roles (Admin and Editor)
+            if (userrole === "SuperAdmin") {
+                // For SuperAdmin, disable the major dropdown until a college is selected
+                if (!collegeId) {
+                    $('#MajorId').prop('disabled', true);
+                }
+            } else {
+                // For Admin and Editor, always enable the major dropdown
+                $('#MajorId').prop('disabled', false);
+            }
+           
+        });
+
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#CollegeId").on("change", function () {
+                $('#CourseId').empty();
+            });
+            $('#MajorId').on('change', function () {
+                var majorId = $('#MajorId').val(); // Current selected MajorId
+                $('#CourseId').empty();
+
+                console.log(majorId);
+                $.ajax({
+                    url: '@Url.Action("GetCoursesByMajorId", "Content")',
+                    type: 'GET',
+                    data: { majorId: majorId },
+                    success: function(courses) {
+                        $("#CourseId").append(new Option('اختر المقرر', ''));
+                        $.each(courses, function (index, course) {
+                            $('#CourseId').append(new Option(course.text, course.value));
+                        });
+                    },
+                    error: function () {
+
+                    }
+                });
+            });
+        });
+    </script>
+    @* <script>
+        $(document).ready(function () {
+            var userrole = '@userrole';  // Fetch user role from the Razor view
+            var collegeId = $('#CollegeId').val(); // Current selected CollegeId
+            var majorId = $('#MajorId').val(); // Current selected MajorId
+            var courseId = $('#CourseId').val(); // Current selected CourseId
+        //Function to populate the course dropdown based on the selected college
+        function populateCourses(majorId, selectedCourseId) {
+            if (majorId && majorId !== "") {
+                // Make an AJAX call to fetch the courses for the selected college
+                $.ajax({
+                    url: '@Url.Action("GetCoursesByMajorId", "Content")',
+                    type: 'GET',
+                    data: { majorId: majorId },
+                    success: function (data) {
+                        console.log(
+                            "test"
+                        );
+                        // Clear the previous options
+                        $('#CourseId').empty();
+
+                        // Populate the course dropdown with the received data
+                        $('#CourseId').append(new Option('اختر المقرر', '')); // Add default option
+                        $.each(data, function (index, course) {
+                            $('#CourseId').append(new Option(course.text, course.value));
+                        });
+
+                        // Re-select the previously selected course if any
+                        if (selectedCourseId) {
+                            $('#CourseId').val(selectedCourseId;
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: "error",
+                            title: "خطأ",
+                            text: "حدث خطأ أثناء جلب المقررات"
+                        });
+                    }
+                });
+            } else {
+                // If no college is selected, disable and reset the major dropdown
+                $('#CourseId').prop('disabled', true);
+                $('#CourseId').empty();
+                $('#CourseId').append(new Option('اختر المقرر', '')); // Reset to default option
+            }
+        }
+
+            // Check if a college is already selected on page load (important for validation errors)
+            if (majorId && majorId !== "") {
+                $('#CourseId').prop('disabled', false);  // Ensure Major dropdown is enabled
+                populateCourses(majorId, courseId); // Populate the majors based on selected college
+            } else {
+                $('#CourseId').prop('disabled', true);  // Disable if no college is selected
+            }
+
+            // Trigger when the college dropdown changes
+            $('#MajorId').on('change', function () {
+                majorId = $(this).val();
+                courseId = '';  // Reset major selection when college changes
+
+                // Enable the major dropdown when a college is selected
+                $('#CourseId').prop('disabled', false);
+                populateCourses(majorId, null); // Fetch majors for the new college
+            });
+
+            // Logic for user roles (Admin and Editor)
+            if (userrole === "SuperAdmin") {
+                // For SuperAdmin, disable the major dropdown until a college is selected
+                if (!majorId) {
+                    $('#CourseId').prop('disabled', true);
+                }
+            } else {
+                // For Admin and Editor, always enable the major dropdown
+                $('#CourseId').prop('disabled', false);
+            }
+        });
+    </script> *@
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.css" />
+    <script type="importmap">
+        {
+            "imports": {
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.1.0/"
+            }
+        }
+    </script>
+    <script type="module">
+        import {
+            ClassicEditor,
+            Essentials,
+            Bold,
+            Italic,
+            Font,
+            Paragraph
+        } from 'ckeditor5';
+
+        ClassicEditor
+            .create(document.querySelector('#ContentsAr'), {
+                plugins: [Essentials, Bold, Italic, Font, Paragraph],
+                toolbar: [
+                    'undo', 'redo', '|', 'bold', 'italic', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                ]
+            })
+            .then( /* ... */)
+            .catch( /* ... */);
+
+        ClassicEditor
+            .create(document.querySelector('#ContentsEn'), {
+                plugins: [Essentials, Bold, Italic, Font, Paragraph],
+                toolbar: [
+                    'undo', 'redo', '|', 'bold', 'italic', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                ]
+            })
+            .then( /* ... */)
+            .catch( /* ... */);
+
+        ClassicEditor
+            .create(document.querySelector('#Links'), {
+                plugins: [Essentials, Bold, Italic, Font, Paragraph],
+                toolbar: [
+                    'undo', 'redo', '|', 'bold', 'italic', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                ]
+            })
+            .then( /* ... */)
+            .catch( /* ... */);
     </script>
     }

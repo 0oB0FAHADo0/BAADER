@@ -28,7 +28,7 @@ namespace Bader.ViewModels
         public DateTime SessionDate { get; set; }
         public Guid GUID { get; set; } = Guid.NewGuid();
 
-        [DisplayName("حاضر؟")]
+        [DisplayName("حالة الحضور")]
 
         public bool IsAttend { get; set; }
 

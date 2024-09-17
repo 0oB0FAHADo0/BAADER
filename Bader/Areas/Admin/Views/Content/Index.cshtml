@@ -18,7 +18,6 @@
                             <input type="text" class="form-control table__quick_search"
                                    placeholder="البحث السريع ...">
                         </div>
-                        <a asp-action="Create" class="btn btn-primary">إضافة محتوى</a>
                     </div>
                 </div>
                 <div class="block-body">
@@ -27,9 +26,7 @@
                             <tr>
                                 <th>@Html.DisplayNameFor(x => x.CourseId)</th>
                                 <th>@Html.DisplayNameFor(x => x.TitleAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.ContentsAr)</th>
                                 <th>@Html.DisplayNameFor(x => x.Links)</th>
-                                <th>@Html.DisplayNameFor(x => x.GUID)</th>
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
@@ -39,9 +36,7 @@
                                 <tr class="cursor-pointer" goto="order_details.html">
                                     <td>@Html.DisplayFor(modelItem => item.CourseId)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TitleAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.ContentsAr)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Links)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.GUID)</td>
                                     <td class="action_td text-end">
                                         <form method="post">
                                         <a asp-controller="Content" asp-action=" " class="btn btn-sm btn-primary">عرض</a>

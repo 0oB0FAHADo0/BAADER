@@ -63,13 +63,17 @@ namespace Bader.Areas.Admin.Controllers
         {
             int check = 0;
             foreach (var attend in attendx) {
-              check =  await  _AttendanceDomain.updateAttend(attend.GUID, attend.IsAttend);
+              int iscount =  await  _AttendanceDomain.updateAttend(attend.GUID, attend.IsAttend);
+                check = check + iscount;
 
             }
-            
-            if (check == 1)
+            if (check == attendx.Count())
             {
                 ViewData["Successful"] = "تم التحضير بنجاح.";
+
+            }else if (check < attendx.Count() && check !=0)
+            {
+                ViewData["Falied"] = "حدث خطأ في تحضير بعض الحضور. ";
 
             }
             else
