@@ -1,8 +1,11 @@
-﻿@model IEnumerable<AttendanceViewModel>
+﻿@model IEnumerable<SessionsViewModel>
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Index";
+
+    var userrole = User.FindFirst("Role").Value;
+
 }
 
 <div class="block mb-4">
@@ -18,9 +21,22 @@
         <table class="table table-hover js-dataTable">
             <thead>
                 <tr>
-                    <th>اسم الجلسة</th>
-                    <th>المقرر</th>
-                    <th>تاريخ الجلسة</th>
+                    @if (userrole == "SuperAdmin")
+                        {
+                    <th>
+                        @Html.DisplayNameFor(n => n.CollegeNameAr)
+
+                    </th>
+                        }
+                    <th>
+                        @Html.DisplayNameFor(n => n.SessionNameAr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.CourseNameAr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(n => n.SessionDate)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -28,13 +44,19 @@
                 @foreach (var item in Model)
                 {
                     <tr class="cursor-pointer">
-                        <td>@item.CourseNameAr</td>
-                        <td>@item.CourseNameAr</td> <!-- This seems to be repeated, but left as is based on the original structure -->
+                        @if (userrole == "SuperAdmin")
+                        {
+                            <td>
+                                @item.CollegeNameAr
+
+                            </td>
+                        }
+                        <td>@item.SessionNameAr</td>
+                        <td>@item.CourseNameAr</td> 
                         <td>@item.SessionDate</td>
                         <td class="text-end">
-                            <form>
-                                <button class="btn btn-sm btn-primary" asp-route-id="@item.GUID" asp-action="AttendPage">تحضير</button>
-                                <button class="btn btn-sm btn-primary" asp-route-id="@item.GUID" asp-action="Details">تفاصيل الحضور</button>
+                            <form >
+                                <button class="btn btn-sm btn-primary" asp-route-id="@item.GUID" asp-action="Attend" >تحضير</button>
 
                             </form>
                         </td>

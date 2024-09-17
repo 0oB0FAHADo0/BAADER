@@ -28,5 +28,6 @@ namespace Bader.ViewModels
 
         public bool? Gender { get; set; }
 
+
     }
 }

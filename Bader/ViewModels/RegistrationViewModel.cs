@@ -72,6 +72,12 @@ namespace Bader.ViewModels
         public String MajorNameAr { get; set; }
 
 
+
+        [DisplayName("الكلية")]
+        [StringLength(100)]
+        public string CollegeNameAr { get; set; }
+
+
     }
 
 }

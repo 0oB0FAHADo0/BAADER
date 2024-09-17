@@ -1,0 +1,107 @@
+﻿@model IEnumerable<AttendanceViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl" data-theme="light">
+<body>
+    <section class="page_wrap">
+        <div class="page_content">
+            <div class="block mb-4">
+                <div class="block-header border-bottom px-4 py-3">
+                    <h5 class="m-0">الحضور</h5>
+                    <div class="d-flex gap-2">
+                        <div class="form-group">
+                            <input type="text" class="form-control table__quick_search"
+                                   placeholder="البحث السريع ...">
+                        </div>
+                    </div>
+                </div>
+                <div class="block-body">
+                    @if (Model == null || !Model.Any())
+                    {
+                        <p>لا توجد سجلات حضور لعرضها.</p>
+                    }
+                    else
+                    {
+                        <form asp-action="Attend" method="post">
+                            <table class="table table-hover js-dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>@Html.DisplayNameFor(x => x.UserName)</th>
+                                        <th>@Html.DisplayNameFor(x => x.FullNameAr)</th>
+                                        <th>@Html.DisplayNameFor(x => x.SessionDate)</th>
+                                        <th>@Html.DisplayNameFor(x => x.IsAttend)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.Count(); i++)
+                                    {
+                                        var item = Model.ElementAt(i);
+                                        <tr class="cursor-pointer">
+                                            <td>
+                                                @item.UserName
+                                                <input type="hidden" name="attendx[@i].UserName" value="@item.UserName" />
+                                            </td>
+                                            <td>
+                                                @item.FullNameAr
+                                            </td>
+                                            <td>
+                                                @item.SessionDate
+                                                <input type="hidden" name="attendx[@i].SessionDate" value="@item.SessionDate.ToString("yyyy-MM-dd")" />
+                                            </td>
+
+                                            <td>
+                                                <input hidden name="attendx[@i].GUID" value="@item.GUID" />
+                                                <input hidden name="attendx[@i].SessionId" value="@item.SessionId" />
+
+                                                <input type="checkbox" class="form-check-input" name="attendx[@i].IsAttend" value="true" @(item.IsAttend ? "checked" : "") />
+                                                <input type="hidden" name="attendx[@i].IsAttend" value="false" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            <!-- Button placed outside the table -->
+                            <div cclass="text-end mt-3">
+                                <button class="btn btn-primary btn-lg" type="submit">حفظ</button>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </section><!-- End Page Wrap -->
+    @section Scripts {
+        <script>
+            @if (ViewData["Successful"] != null)
+            {
+                <text>
+                                  var result = '@Html.Raw(ViewData["Successful"])';
+                Swal.fire({
+                    title: "تمت العملية",
+                    text: result,
+                    icon: "success"
+                }).then(function () {
+                    window.location.href = '@Url.Action("Index", "Attendance")';
+                }); </text>
+            }
+            else if (ViewData["Failed"] != null)
+            {
+                <text>
+                                                    var result = '@Html.Raw(ViewData["Failed"])';
+                Swal.fire({
+                    icon: "error",
+                    title: "فشلت العملية",
+                    text: result
+                });
+                </text>
+            }
+        </script>
+    }
+</body>
+</html>
