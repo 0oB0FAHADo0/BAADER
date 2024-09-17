@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="rtl" data-theme="light">
 <body>
+                            <form asp-action="Attend" method="post">
+
     <section class="page_wrap">
         <div class="page_content">
             <div class="block mb-4">
@@ -27,13 +29,11 @@
                     }
                     else
                     {
-                        <form asp-action="Attend" method="post">
                             <table class="table table-hover js-dataTable">
                                 <thead>
                                     <tr>
                                         <th>@Html.DisplayNameFor(x => x.UserName)</th>
                                         <th>@Html.DisplayNameFor(x => x.FullNameAr)</th>
-                                        <th>@Html.DisplayNameFor(x => x.SessionDate)</th>
                                         <th>@Html.DisplayNameFor(x => x.IsAttend)</th>
                                     </tr>
                                 </thead>
@@ -49,10 +49,9 @@
                                             <td>
                                                 @item.FullNameAr
                                             </td>
-                                            <td>
-                                                @item.SessionDate
+                                            
                                                 <input type="hidden" name="attendx[@i].SessionDate" value="@item.SessionDate.ToString("yyyy-MM-dd")" />
-                                            </td>
+                                            
 
                                             <td>
                                                 <input hidden name="attendx[@i].GUID" value="@item.GUID" />
@@ -67,39 +66,50 @@
                             </table>
 
                             <!-- Button placed outside the table -->
-                            <div cclass="text-end mt-3">
-                                <button class="btn btn-primary btn-lg" type="submit">حفظ</button>
-                            </div>
-                        </form>
+                            
                     }
                 </div>
+               
+            </div>
+            <div cclass="text-end mt-3">
+                <button class="btn btn-primary btn-lg" type="submit">حفظ</button>
             </div>
         </div>
     </section><!-- End Page Wrap -->
+    </form>
+
     @section Scripts {
         <script>
-            @if (ViewData["Successful"] != null)
-            {
-                <text>
-                                  var result = '@Html.Raw(ViewData["Successful"])';
-                Swal.fire({
-                    title: "تمت العملية",
-                    text: result,
-                    icon: "success"
-                }).then(function () {
-                    window.location.href = '@Url.Action("Index", "Attendance")';
-                }); </text>
-            }
-            else if (ViewData["Failed"] != null)
-            {
-                <text>
-                                                    var result = '@Html.Raw(ViewData["Failed"])';
-                Swal.fire({
-                    icon: "error",
-                    title: "فشلت العملية",
-                    text: result
-                });
-                </text>
+            @{
+                if (@ViewData["Successful"] != null)
+                {
+
+                    <Text>
+                                                        var result = '@Html.Raw(ViewData["Successful"])';
+
+                    Swal.fire({
+                        title: "تمت العملية بنجاح",
+                        text: result,
+                        icon: "success",
+                        confirmButtonText: "تم"
+                    });
+
+                    </Text>
+                }
+                else if (@ViewData["Falied"] != null)
+                {
+                    <Text>
+                                                                var result = '@Html.Raw(ViewData["Falied"])';
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "فشلت العملية",
+                        text: result,
+                        confirmButtonText: "تم"
+
+                    });
+                    </Text>
+                }
             }
         </script>
     }
