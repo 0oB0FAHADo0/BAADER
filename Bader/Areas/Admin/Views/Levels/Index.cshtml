@@ -8,6 +8,9 @@
 
 @section Scripts {
 
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script>
         @{
@@ -91,15 +94,8 @@
                         @Html.DisplayNameFor(n => n.LevelNameAr)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(n => n.LevelNameEn)
-
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(n => n.LevelNum)
-
                     </th>
-
-
                     <th class=""></th>
                 </tr>
             </thead>
@@ -113,20 +109,11 @@
                             @item.LevelNameAr
                         </td>
                         <td>
-                            @item.LevelNameEn
-                        </td>
-                        <td>
                             @item.LevelNum
                         </td>
 
-
-
-
                         <td class="action_td text-end">
                             <form method="post">
-
-
-                                @* <a href="" class="btn btn-sm btn-primary">عرض</a> *@
 
                                 <a class="btn btn-sm btn-success" asp-controller="Levels" asp-action="Edit" asp-route-id="@item.GUID">
                                     تعديل
@@ -134,9 +121,6 @@
 
                                 <input type="hidden" name="id" value="@item.GUID" />
                                 <a class="btn btn-sm btn-danger" onclick="DisplayAlert(event, this)">حذف</a>
-
-
-
                             </form>
                         </td>
 

@@ -21,12 +21,10 @@ namespace Bader.Domain
 
             return await _context.tblLevels.Where(u => u.IsDeleted == false).Select(x => new LevelViewModel
             {
-
                 LevelNameAr = x.LevelNameAr,
                 LevelNameEn = x.LevelNameEn,
                 LevelNum = x.LevelNum,
                 GUID = x.GUID,
-
             }).ToListAsync();
 
         }
@@ -36,14 +34,11 @@ namespace Bader.Domain
             try
             {
                 tblLevels Levelx = new tblLevels();
-
-
                 Levelx.LevelNameAr = Level.LevelNameAr;
                 Levelx.LevelNameEn = Level.LevelNameEn;
                 Levelx.LevelNum = Level.LevelNum;
                 Levelx.GUID = Guid.NewGuid();
                 Levelx.IsDeleted = false;
-
                 _context.tblLevels.Add(Levelx);
                 int check = await _context.SaveChangesAsync();
                 return check;
@@ -52,30 +47,22 @@ namespace Bader.Domain
             {
                 return 0;
             }
-
-
         }
 
         public async Task<LevelViewModel> GetLevelbyId(Guid gudi)
         {
-            var Level = _context.tblLevels.AsNoTracking().FirstOrDefault(tblLevels => tblLevels.GUID == gudi);
-
-
+            var Level = await _context.tblLevels.AsNoTracking().FirstOrDefaultAsync(tblLevels => tblLevels.GUID == gudi);
             LevelViewModel Levelx = new LevelViewModel();
             Levelx.LevelNameAr = Level.LevelNameAr;
             Levelx.LevelNameEn = Level.LevelNameEn;
             Levelx.LevelNum = Level.LevelNum;
             Levelx.GUID = Level.GUID;
-
             return Levelx;
         }
         public int GetLevelIdByGuid(Guid gudi)
         {
-
             var Level = _context.tblLevels.AsNoTracking().FirstOrDefault(tblLevels => tblLevels.GUID == gudi);
-
             return Level.Id;
-
         }
 
         public async Task<int> UpdateLevel(LevelViewModel Level)
@@ -84,18 +71,12 @@ namespace Bader.Domain
             try
             {
                 tblLevels Levelx = new tblLevels();
-
-
                 Levelx.Id = GetLevelIdByGuid(Level.GUID);
-
                 Levelx.GUID = Level.GUID;
-
-
                 Levelx.LevelNameAr = Level.LevelNameAr;
                 Levelx.LevelNameEn = Level.LevelNameEn;
                 Levelx.LevelNum = Level.LevelNum;
                 Levelx.IsDeleted = Level.IsDeleted;
-
                 _context.tblLevels.Update(Levelx);
                 int check = await _context.SaveChangesAsync();
                 return check;
@@ -108,10 +89,7 @@ namespace Bader.Domain
         }
         public async Task<bool> LevelNumExists(int LevelNum, Guid guid)
         {
-
-            //var CheckExist = _context.tblLevels.SingleOrDefault(n => n.BuildingNum == BuildingNum);
             return await _context.tblLevels.Where(u => u.GUID != guid).Where(u => u.IsDeleted == false).AnyAsync(u => u.LevelNum == LevelNum);
-
         }
 
     }

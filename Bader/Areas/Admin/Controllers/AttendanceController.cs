@@ -3,8 +3,10 @@ using Bader.Migrations;
 using Bader.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using System;
 using System.Security.Claims;
+using System.IO;
 
 namespace Bader.Areas.Admin.Controllers
 {
@@ -25,7 +27,7 @@ namespace Bader.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
 
-            
+
 
 
 
@@ -48,13 +50,13 @@ namespace Bader.Areas.Admin.Controllers
         }
 
 
-		public async Task<IActionResult> Attend(Guid? id)
+        public async Task<IActionResult> Attend(Guid? id)
         {
 
             var domaininfo = await _AttendanceDomain.GetAllAttendanceBySeesionGuid(id);
 
 
-			return View(domaininfo);
+            return View(domaininfo);
         }
 
 
@@ -63,7 +65,7 @@ namespace Bader.Areas.Admin.Controllers
         {
             int check = 0;
             foreach (var attend in attendx) {
-              int iscount =  await  _AttendanceDomain.updateAttend(attend.GUID, attend.IsAttend);
+                int iscount = await _AttendanceDomain.updateAttend(attend.GUID, attend.IsAttend);
                 check = check + iscount;
 
             }
@@ -71,7 +73,7 @@ namespace Bader.Areas.Admin.Controllers
             {
                 ViewData["Successful"] = "تم التحضير بنجاح.";
 
-            }else if (check < attendx.Count() && check !=0)
+            } else if (check < attendx.Count() && check != 0)
             {
                 ViewData["Falied"] = "حدث خطأ في تحضير بعض الحضور. ";
 
@@ -86,15 +88,46 @@ namespace Bader.Areas.Admin.Controllers
 
 
             var attendT = attendx.FirstOrDefault();
-            
-           var domaininfo = await _AttendanceDomain.GetAllAttendanceBySeesionId(attendT.SessionId);
 
-            
+            var domaininfo = await _AttendanceDomain.GetAllAttendanceBySeesionId(attendT.SessionId);
+
+
             return View(domaininfo);
 
 
         }
+        
+        public async Task<IActionResult> ExportAttendanceToExcel(Guid? id)
+        {
+            var attendanceList = await _AttendanceDomain.GetAllAttendanceBySeesionGuid(id);
 
+            if (attendanceList == null || !attendanceList.Any())
+            {
+                return NotFound();
+            }
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("الحضور");
+                worksheet.Cells["A1"].Value = "اسم الطالب";
+                worksheet.Cells["B1"].Value = "حالة الحضور";
+
+                int row = 2;
+                foreach (var attendance in attendanceList)
+                {
+                    worksheet.Cells[$"A{row}"].Value = attendance.UserName;
+                    worksheet.Cells[$"B{row}"].Value = attendance.IsAttend ? "حاضر" : "غايب";
+                    row++;
+                }
+
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+                stream.Position = 0;
+
+                string fileName = $"سجل الحضور{id}.xlsx";
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            }
+        }
         //public async Task<IActionResult> Details(int id)
         //{
         //    var attendance = await _AttendanceDomain.GetAttendanceById(id);

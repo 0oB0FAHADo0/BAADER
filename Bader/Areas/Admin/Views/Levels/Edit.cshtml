@@ -5,6 +5,10 @@
 
 @section Scripts {
 
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
     <script>
         @{
             if (@ViewData["Successful"] != null)
@@ -54,25 +58,28 @@
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
+
                                 <input type="hidden" asp-for="GUID" />
-
-
                                 <label asp-for="LevelNameAr" class="mb-1"></label>
                                 <input type="text" asp-for="LevelNameAr" class="form-control" />
                                 <span asp-validation-for="LevelNameAr" class="text-danger"></span>
+
                             </div>
-                        </div><!-- END ITEM -->
+                        </div>
+                        <!-- END ITEM -->
+
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
 
-
                                 <label asp-for="LevelNameEn" class="mb-1"></label>
-                                <input type="text" asp-for="LevelNameEn" class="form-control" class="form-control text-start" />
+                                <input type="text" asp-for="LevelNameEn" class="form-control" />
                                 <span asp-validation-for="LevelNameEn" class="text-danger"></span>
+
                             </div>
-                        </div><!-- END ITEM -->
-                        <!-- START ITEM -->
+                        </div>
+                        <!-- END ITEM -->
+                       
                         <!-- START ITEM -->
                         <div class="col-md-6">
                             <div class="mb-4">
@@ -81,13 +88,11 @@
                                 <input type="text" asp-for="LevelNum" class="form-control" />
                                 <span asp-validation-for="LevelNum" class="text-danger"></span>
 
-
-
                             </div>
-                        </div><!-- END ITEM -->
+                        </div>
+                        <!-- END ITEM -->
                         <div>
                             <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
-
                         </div>
                     </div>
                 </form>
