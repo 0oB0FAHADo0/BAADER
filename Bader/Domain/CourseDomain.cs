@@ -150,9 +150,9 @@ namespace Bader.Domain
                 course.CourseNameAr = cou.CourseNameAr;
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
-                course.CollegeId = cou.CollegeId;
-                course.LevelId = cou.LevelId;
-                course.MajorId = cou.MajorId;
+                course.CollegeId = cou.CollegeId??0;
+                course.LevelId = cou.LevelId ?? 0;
+                course.MajorId = cou.MajorId ?? 0;
                 course.GUID = Guid.NewGuid();
 
 
@@ -198,8 +198,8 @@ namespace Bader.Domain
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
                 course.CollegeId = college.Id;
-                course.LevelId = cou.LevelId;
-                course.MajorId = cou.MajorId;
+                course.LevelId = cou.LevelId ?? 0;
+                course.MajorId = cou.MajorId ?? 0;
                 course.GUID = Guid.NewGuid();
                 
 
@@ -250,9 +250,9 @@ namespace Bader.Domain
                 course.CourseNameAr = cou.CourseNameAr;
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
-                course.CollegeId = cou.CollegeId;
-                course.LevelId = cou.LevelId;
-                course.MajorId = cou.MajorId;
+                course.CollegeId = cou.CollegeId ?? 0;
+                course.LevelId = cou.LevelId ?? 0;
+                course.MajorId = cou.MajorId ?? 0;
                 course.GUID = cou.GUID;
                 course.IsDeleted = cou.IsDeleted;
 
@@ -296,8 +296,8 @@ namespace Bader.Domain
                 course.CourseNameEn = cou.CourseNameEn;
                 course.CourseNum = cou.CourseNum;
                 course.CollegeId = college.Id ;
-                course.LevelId = cou.LevelId;
-                course.MajorId = cou.MajorId;
+                course.LevelId = cou.LevelId ?? 0;
+                course.MajorId = cou.MajorId ?? 0;
                 course.GUID = cou.GUID;
                 course.IsDeleted = cou.IsDeleted;
 
