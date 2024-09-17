@@ -3,22 +3,148 @@
     var fullNameAr = User.FindFirst("FullNameAr")?.Value;
     var userrole = User.FindFirst("Role").Value;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var Coursecount = ViewBag.Coursecount;
+
 }
 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
 
 <div class="row justify-content-md-center mb-3">
     <div class="col">
         <!-- icons -->
         <div class="row">
-            
 
-            <div>
-                <canvas id="products_chart"></canvas>
+
+            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+
+        </div>
+
+    </div>
+    <div class="col">
+        <div class="row">
+
+
+            <canvas id="myChart1" style="width:100%;max-width:700px"></canvas>
+
+        </div>
+    </div>
+   
+</div>
+
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">عدد المقررات</h5>
+                    <p class="card-text">@ViewBag.Coursecount</p>
+                </div>
             </div>
-           
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Students</h5>
+                    <p class="card-text">44</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Professors</h5>
+                    <p class="card-text">76</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Departments</h5>
+                    <p class="card-text">67</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Active Sessions</h5>
+                    <p class="card-text">76</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<style>
+    .card {
+        margin: 15px 0;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+    }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+    .card-body {
+        text-align: center;
+    }
+</style>
+
+
+@section Scripts {
+    @{
+        <script>
+            const xValues = ["كلية علوم الحاسب", "France", "Spain", "USA", "Argentina"];
+            const yValues = [@Coursecount, 2, 5, 8, 12];
+            const barColors = ["red", "green", "blue", "orange", "brown"];
+
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: "World Wine Production 2018"
+                    }
+                }
+            });
+            const xValues1 = ["Italy", "France", "Spain", "USA", "Argentina"];
+            const yValues1 = [55, 49, 44, 24, 15];
+            const barColors1 = [
+                "#b91d47",
+                "#00aba9",
+                "#2b5797",
+                "#e8c3b9",
+                "#1e7145"
+            ];
+
+            new Chart("myChart1", {
+                type: "pie",
+                data: {
+                    labels: xValues1,
+                    datasets: [{
+                        backgroundColor: barColors1,
+                        data: yValues1
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "World Wide Wine Production 2018"
+                    }
+                }
+            });
+        </script>
+    }}

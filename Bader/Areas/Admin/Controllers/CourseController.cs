@@ -37,10 +37,11 @@ namespace Bader.Areas.Admin.Controllers
             }
             else
             {
+                
                 return View(await _CourseDomain.GetAllCourses());
             }
                 
-
+            
 
         }
 
