@@ -16,16 +16,18 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<PermissionViewModel>> GetPermissions()
         {
-            return await _context.tblPermissions.Where(x => x.IsDeleted == false).Select(x => new PermissionViewModel
+            return await _context.tblPermissions.Where(x => x.IsDeleted == false).Include(x => x.Role).Include(x => x.College).Select(x => new PermissionViewModel
             {
                 //Id = x.Id,
 
                 Username = x.Username,
 
                 RoleId = x.RoleId,
-
+                RoleName = x.Role.RoleNameAr,
 
                 CollegeId = x.CollegeId,
+
+                CollegeName = x.College.CollegeNameAr,
 
                 GUID = x.GUID,
 
