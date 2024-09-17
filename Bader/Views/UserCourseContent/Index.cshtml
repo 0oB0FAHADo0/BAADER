@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CourseViewModel>
+﻿@model IEnumerable<ContentViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -90,29 +90,18 @@
                         <div class="form-group">
                             <input type="text" id="searchInput" class="form-control table__quick_search" placeholder="البحث السريع ...">
                         </div>
-                        <div class="form-group">
-                            <select id="levelFilter" class="form-control">
-                                <option value="">اختر المستوى</option>
-                                @foreach (var level in Model.Select(x => x.LevelNameAr).Distinct())
-                                {
-                                    <option value="@level">@level</option>
-                                }
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <div class="block-body">
-                    <div class="card-container" id="courseCards">
+                    <div class="card-container" id="contentCards">
                         @foreach (var item in Model)
                         {
-                            <div class="card" data-course-id="@item.GUID" data-level="@item.LevelNameAr" onclick="viewContents('@item.GUID')">
-                                <div class="card-header">رمز المقرر : @item.CourseNum</div>
+                            <div class="card" data-content-id="@item.GUID" onclick="viewContents('@item.GUID')">
+                                <div class="card-header">رقم المقرر : @item.CourseId</div>
                                 <div class="card-body">
-                                    <div>@item.CourseNameAr</div>
-                                    <div>@item.MajorNameAr</div>
-                                    
-                                </div>
-                                <div class="card-footer">@item.LevelNameAr</div>
+                                    <div>@item.TitleAr</div>
+                                    </div>
+                                <div class="card-footer">@Html.Raw(item.Links)</div>
                             </div>
                         }
                     </div>
@@ -130,7 +119,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const searchInput = document.getElementById('searchInput');
-            const levelFilter = document.getElementById('levelFilter');
             const cards = Array.from(document.querySelectorAll('.card'));
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
@@ -141,7 +129,7 @@
 
             function displayCards() {
                 if (filteredCards.length === 0) {
-                    paginationInfo.textContent = "لا توجد مقررات متوفرة";
+                    paginationInfo.textContent = "لا توجد محتويات متوفرة";
                     prevBtn.style.display = 'none';
                     nextBtn.style.display = 'none';
                     cards.forEach(card => card.style.display = 'none');
@@ -161,18 +149,14 @@
 
             function filterCards() {
                 const searchInputValue = searchInput.value.toLowerCase();
-                const selectedLevel = levelFilter.value.toLowerCase();
 
                 filteredCards = cards.filter(card => {
-                    const courseNum = card.querySelector('.card-header').innerText.toLowerCase();
-                    const courseNameAr = card.querySelector('.card-body').children[0].innerText.toLowerCase();
-                    const courseNameEn = card.querySelector('.card-body').children[1].innerText.toLowerCase();
-                    const level = card.getAttribute('data-level').toLowerCase();
+                    const TitleAr = card.querySelector('.card-body').children[0].innerText.toLowerCase();
+                    const Links = card.querySelector('.card-footer').innerText.toLowerCase();
 
-                    const matchesSearch = courseNum.includes(searchInputValue) || courseNameAr.includes(searchInputValue) || courseNameEn.includes(searchInputValue);
-                    const matchesLevel = selectedLevel === "" || level === selectedLevel;
-
-                    return matchesSearch && matchesLevel;
+                    const matchesSearch = TitleAr.includes(searchInputValue) || Links.includes(searchInputValue);
+        
+                    return matchesSearch;
                 });
 
                 currentPage = 1;
@@ -192,12 +176,11 @@
             });
 
             searchInput.addEventListener('input', filterCards);
-            levelFilter.addEventListener('change', filterCards);
         });
 
-        function viewContents(courseId) {
+        function viewContents(contentId) {
             // Redirect to ViewContents action with the courseId (GUID)
-            window.location.href = '/UserCourseContent/Index/' + courseId;
+            window.location.href = '/UserCourseContent/ViewContent/' + contentId;
         }
     </script>
 </body>
