@@ -17,7 +17,7 @@ namespace Bader.Domain
         {
             try
             {
-                return await _context.tblContents.Where(u => u.IsDeleted == false).Select(x => new ContentViewModel
+                return await _context.tblContents.Include(u =>u.Course).Where(u => u.IsDeleted == false).Where(u =>u.Course.IsDeleted == false).Select(x => new ContentViewModel
             {
                 Id = x.Id,
                 CourseId = x.CourseId,
@@ -183,6 +183,112 @@ namespace Bader.Domain
                 return 0;
             }
             
+        }
+        public async Task<IEnumerable<ContentViewModel>> GetContentsByCollegeCode(string collegecode)
+        {
+            try
+            {
+                return await _context.tblContents.Include(x =>x.Course).Where(u => u.IsDeleted == false).Where(u => u.Course.College.CollegeCode == collegecode).Where(u =>u.Course.IsDeleted == false).Select(x => new ContentViewModel
+                {
+                    Id = x.Id,
+                    CourseId = x.CourseId,
+                    ContentsAr = x.ContentsAr,
+                    ContentsEn = x.ContentsEn,
+                    GUID = x.GUID,
+                    Links = x.Links,
+                    TitleAr = x.TitleAr,
+                    TitleEn = x.TitleEn,
+                }).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Enumerable.Empty<ContentViewModel>();
+            }
+        }
+        public async Task<IEnumerable<tblCourses>> GetCoursesByCollegeCode(string collegecode)
+        {
+            try
+            {
+                return await _context.tblCourses.Include(u =>u.College).Where(u => u.IsDeleted == false).Where(x=> x.College.CollegeCode == collegecode).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Enumerable.Empty<tblCourses>();
+            }
+
+
+        }
+        public async Task<IEnumerable<tblColleges>> GetColleges()
+        {
+            try
+            {
+                return await _context.tblColleges.Where(u => u.IsDeleted == false).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Enumerable.Empty<tblColleges>();
+            }
+
+
+        }
+        public async Task<IEnumerable<tblMajors>> GetMajorsByCollegeCode(string collegeCode)
+        {
+            try
+            {
+                return await _context.tblMajors.Include(u=> u.College).Where(u => u.IsDeleted == false).Where(u=> u.College.CollegeCode == collegeCode).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Enumerable.Empty<tblMajors>();
+            }
+
+
+        }
+        public async Task<IEnumerable<tblCourses>> GetCoursesByMajorId(int majorId)
+        {
+            try
+            {
+                return await _context.tblCourses.Where(u => u.IsDeleted == false).Where(u=> u.MajorId == majorId).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Enumerable.Empty<tblCourses>();
+            }
+
+
+        }
+        public async Task<IEnumerable<tblMajors>> GetMajorsByCollegeId(int collegeId)
+        {
+            try
+            {
+                return await _context.tblMajors.Where(u => u.IsDeleted == false).Where(u => u.CollegeId == collegeId).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Enumerable.Empty<tblMajors>();
+            }
+
+
+        }
+        public async Task<IEnumerable<ContentViewModel>> GetSomeContents(Guid id)
+        {
+            // int UserId = 1;
+            return await _context.tblContents.Include(x => x.Course).Where(x => x.IsDeleted == false).Where(x => x.Course.GUID == id).Select(x => new ContentViewModel
+            {
+                TitleAr = x.TitleAr,
+                TitleEn = x.TitleEn,
+                ContentsAr = x.ContentsAr,
+                ContentsEn = x.ContentsEn,
+                Links = x.Links,
+                GUID = x.GUID,
+
+            }).ToListAsync();
         }
     }
 
