@@ -56,13 +56,15 @@ namespace Bader.Areas.Admin.Controllers
                     ViewBag.Close = ViewBag.Close + 1;
                 }
             }
+            var SessionDate = await _sessionDomain.GetSessionsdate();
+            ViewBag.SessionDate = SessionDate.Count();
 
             ViewBag.Session2022 = 0;
             ViewBag.Session2024 = 0;
             ViewBag.Session2026 = 0;
             ViewBag.Session2028 = 0;
             ViewBag.Session2030 = 0;
-            foreach ( var sessiondate in SessionCount)
+            foreach ( var sessiondate in SessionDate)
             {
                 if ( sessiondate.SessionDate.Year == 2022 || sessiondate.SessionDate.Year == 2023)
                 {
