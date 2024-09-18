@@ -104,8 +104,8 @@ namespace Bader.Domain
                 Sessionx.TitleEn = Session.TitleEn;
                 Sessionx.Links = Session.Links;
                 Sessionx.NumOfStudents = Session.NumOfStudents;
-                Sessionx.SessionDate = Session.SessionDate;
-                Sessionx.RegEndDate = Session.RegEndDate;
+                Sessionx.SessionDate = Session.SessionDate/* ?? default(DateTime)*/;
+                Sessionx.RegEndDate = Session.RegEndDate /*?? default(DateTime)*/;
                 Sessionx.RegStartDate = Session.RegStartDate;
                 Sessionx.GUID = Guid.NewGuid();
                 Sessionx.IsDeleted = Session.IsDeleted;
@@ -153,8 +153,8 @@ namespace Bader.Domain
                 Sessionx.TitleEn = Session.TitleEn;
                 Sessionx.Links = Session.Links;
                 Sessionx.NumOfStudents = Session.NumOfStudents;
-                Sessionx.SessionDate = Session.SessionDate;
-                Sessionx.RegEndDate = Session.RegEndDate;
+                Sessionx.SessionDate = Session.SessionDate/*?? default(DateTime)*/;
+                Sessionx.RegEndDate = Session.RegEndDate/*?? default(DateTime)*/;
                 Sessionx.RegStartDate = Session.RegStartDate;
                 Sessionx.GUID = Guid.NewGuid();
                 Sessionx.IsDeleted = Session.IsDeleted;
@@ -201,7 +201,7 @@ namespace Bader.Domain
                 sessionsx.TitleAr = session.TitleAr;
                 sessionsx.TitleEn = session.TitleEn;
                 sessionsx.Links = session.Links;
-                sessionsx.NumOfStudents = session.NumOfStudents;
+                sessionsx.NumOfStudents = session.NumOfStudents ;
                 sessionsx.SessionDate = session.SessionDate;
                 sessionsx.RegEndDate = session.RegEndDate;
                 sessionsx.RegStartDate = session.RegStartDate;

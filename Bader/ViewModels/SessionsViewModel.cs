@@ -106,7 +106,7 @@ namespace Bader.ViewModels
         [DisplayName("الحالة")]
         public string StateAr { get; set; }
         //end
-        [DisplayName("اسم المقرر")]
+        [DisplayName("المادة")]
         public string CourseNameAr { get; set; }
         //end
 
