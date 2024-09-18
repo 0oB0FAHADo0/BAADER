@@ -87,7 +87,7 @@ namespace Bader.Domain
         {
             try
             {
-            var content = await _context.tblContents.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == id);
+            var content = await _context.tblContents.Include(x=>x.Course).AsNoTracking().FirstOrDefaultAsync(x => x.GUID == id);
             ContentViewModel Content = new ContentViewModel();
             Content.Id = content.Id;
             Content.TitleEn = content.TitleEn;
@@ -97,6 +97,8 @@ namespace Bader.Domain
             Content.ContentsEn = content.ContentsEn;
             Content.CourseId = content.CourseId;
             Content.GUID = content.GUID;
+            Content.CollegeId= content.Course.CollegeId;
+            Content.MajorId = content.Course.MajorId;
             return Content;   
             }
             catch (Exception e)
@@ -289,6 +291,30 @@ namespace Bader.Domain
                 GUID = x.GUID,
 
             }).ToListAsync();
+        }
+        public async Task<ContentViewModel> GetContentById(int id)
+        {
+            try
+            {
+                var content = await _context.tblContents.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+                ContentViewModel Content = new ContentViewModel();
+                Content.Id = content.Id;
+                Content.TitleEn = content.TitleEn;
+                Content.TitleAr = content.TitleAr;
+                Content.ContentsAr = content.ContentsAr;
+                Content.Links = content.Links;
+                Content.ContentsEn = content.ContentsEn;
+                Content.CourseId = content.CourseId;
+                Content.GUID = content.GUID;
+                return Content;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
+
         }
     }
 

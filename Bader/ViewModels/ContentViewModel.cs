@@ -7,7 +7,7 @@ namespace Bader.ViewModels
     public class ContentViewModel
     {
         public int? Id { get; set; }
-        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("معرف المادة")]
         public int CourseId { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
@@ -31,13 +31,13 @@ namespace Bader.ViewModels
         public bool IsDeleted { get; set; }
         [DisplayName("الكلية")]
         public string CollageNameAr { get; set; }
-        [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [DisplayName("معرف المقرر")]
+        [Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
+        [DisplayName("معرف الكلية")]
         public int CollegeId { get; set; }
         [DisplayName("التخصص")]
         public string MajorNameAr { get; set; }
 
-        [Required(ErrorMessage = "هذا الحقل إجباري")]
+        [Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("معرف التخصص")]
         public int MajorId { get; set; }
     }
