@@ -94,7 +94,7 @@ namespace Bader.Domain
             try
             {
 
-                var maj = await _context.tblCourses.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == major.GUID);
+                var maj = await _context.tblMajors.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == major.GUID);
                 tblMajors majorx = new tblMajors();
 
                 majorx.Id = maj.Id;
