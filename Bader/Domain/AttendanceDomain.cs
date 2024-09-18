@@ -2,6 +2,7 @@
 using Bader.Models;
 using Bader.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -217,7 +218,7 @@ namespace Bader.Domain
 
         }
 
-        public async Task<int> updateAttend(Guid guid,bool IsAttend)
+        public async Task<int> updateAttend(Guid guid,bool IsAttend, string usernameOfStudent, string usernameOfEditor)
         {
             
             try
@@ -243,7 +244,37 @@ namespace Bader.Domain
 
 
                 _context.tblAttendance.Update(attendx);
+                 await _context.SaveChangesAsync();
+
+
+
+
+
+                tblAttendanceLogs log = new tblAttendanceLogs();
+                log.AttendanceId = attendx.Id;
+                log.OperationDateTime = DateTime.Now;
+                log.OperationType = "Update";
+                log.CreatedBy = usernameOfEditor;
+                log.Createdto = usernameOfStudent;
+
+                if(IsAttend ==true)
+                {
+                    log.AdditionalInfo = $"تم تحديث حالة المستخدم إلى حاضر ";
+
+                }
+                else
+                {
+                    log.AdditionalInfo = $"تم تحديث حالة المستخدم إلى غائب ";
+
+                }
+
+                _context.tblAttendanceLogs.Add(log);
+
                 int check = await _context.SaveChangesAsync();
+
+
+
+
                 return check;
             }
             catch
