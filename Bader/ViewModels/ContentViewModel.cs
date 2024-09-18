@@ -31,13 +31,13 @@ namespace Bader.ViewModels
         public bool IsDeleted { get; set; }
         [DisplayName("الكلية")]
         public string CollageNameAr { get; set; }
-        //[Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
+        [Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("معرف الكلية")]
         public int CollegeId { get; set; }
         [DisplayName("التخصص")]
         public string MajorNameAr { get; set; }
 
-        //[Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
+        [Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("معرف التخصص")]
         public int MajorId { get; set; }
     }
