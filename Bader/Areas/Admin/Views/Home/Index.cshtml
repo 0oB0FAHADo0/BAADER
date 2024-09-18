@@ -35,19 +35,51 @@
 
 <div class="container row">
     
-    <div class="d-flex gap-2">
+    <div class="d-flex gap-5">
        
         <div class="row col-md-3">
  
-                    @for (int i = 0; i < ViewBag.CourseList.Count; i++)
-                    {
                         <div class="card ">
                             <div class="card-body">
-                        <h5 class="card-title">@ViewBag.CollegeName[i]</h5>
-                        <p class="card-text">@ViewBag.CourseList[i]</p>
+                        <h5 class="card-title">عدد المستخدمين</h5>
+                    <p class="card-text">@ViewBag.UsersCount</p>
                             </div>
                         </div>
-                    }
+
+        </div>
+
+        <div class="row col-md-3">
+
+            <div class="card ">
+                <div class="card-body">
+                    <h5 class="card-title">عدد الكليات المستفادة من النظام</h5>
+                    <p class="card-text">@ViewBag.AdminCount</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="row col-md-3">
+
+            <div class="card ">
+                <div class="card-body">
+                    <h5 class="card-title">عدد المقررات</h5>
+                    <p class="card-text">@ViewBag.CourseCount</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="row col-md-3">
+
+            <div class="card ">
+                <div class="card-body">
+                    <h5 class="card-title">اجمالي الجلسات</h5>
+                    <p class="card-text">@ViewBag.SessionCount</p>
+                    <h5 class="card-title">الجلسات المتاحة</h5>
+                    <p class="card-text">@ViewBag.Open</p>
+                    <h5 class="card-title">الجلسات الغير متاحة</h5>
+                    <p class="card-text">@ViewBag.Close</p>
+                </div>
+            </div>
 
         </div>
         
@@ -74,8 +106,8 @@
 @section Scripts {
     @{
         <script>
-            const xValues = ["كلية علوم الحاسب", "France", "Spain", "USA", "Argentina"];
-            const yValues = [@Coursecount, 2, 5, 8, 12];
+            const xValues = ["2022", "2024", "2026", "2028", "2030"];
+            const yValues = [@ViewBag.Session2022, @ViewBag.Session2024, @ViewBag.Session2026, @ViewBag.Session2028, @ViewBag.Session2030];
             const barColors = ["red", "green", "blue", "orange", "brown"];
 
             new Chart("myChart", {
@@ -91,7 +123,7 @@
                     legend: { display: false },
                     title: {
                         display: true,
-                        text: "World Wine Production 2018"
+                        text: "عدد الجلسات على مر السنوات"
                     }
                 }
             });
