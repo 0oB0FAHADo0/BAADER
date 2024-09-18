@@ -3,141 +3,148 @@
     var fullNameAr = User.FindFirst("FullNameAr")?.Value;
     var userrole = User.FindFirst("Role").Value;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var Coursecount = ViewBag.Coursecount;
+
 }
 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
 
 <div class="row justify-content-md-center mb-3">
     <div class="col">
         <!-- icons -->
         <div class="row">
-            @* @if (userrole == "SuperAdmin")
-            {
-                <div class="col-md-4">
-                    <a href="@Url.Action("Details", "College" ,  new { area = "Admin" })" class="block layout_icons d-block mb-4">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 2L3 6V8H21V6L14 2L10 2Z" fill="#0a626a" />
-                            <path d="M5 10H7V18H5V10Z" fill="#0a626a" />
-                            <path d="M17 10H19V18H17V10Z" fill="#0a626a" />
-                            <path d="M9 10H11V18H9V10Z" fill="#0a626a" />
-                            <path d="M13 10H15V18H13V10Z" fill="#0a626a" />
-                            <path d="M4 20V22H20V20H4Z" fill="0a626a" />
-                        </svg>
-                        <h5 class="text-dark">إدراة الكليات</h5>
 
-                    </a>
+
+            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+
+        </div>
+
+    </div>
+    <div class="col">
+        <div class="row">
+
+
+            <canvas id="myChart1" style="width:100%;max-width:700px"></canvas>
+
+        </div>
+    </div>
+   
+</div>
+
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">عدد المقررات</h5>
+                    <p class="card-text">@ViewBag.Coursecount</p>
                 </div>
-            }
-            @if (userrole == "Admin" || userrole == "SuperAdmin")
-            {
-                <div class="col-md-4">
-                    <a href="@Url.Action("Index", "Course" ,  new { area = "Admin" })" class="block layout_icons d-block mb-4">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 4H13C11.9 4 11 4.9 11 6V18C11 19.1 11.9 20 13 20H21V4Z" fill="#0a626a" />
-                            <path d="M3 20H11V6C11 4.9 10.1 4 9 4H3V20Z" fill="#0a626a" />
-                        </svg>
-                        <h5 class="text-dark">إدراة المقررات</h5>
-
-                    </a>
-                </div>
-            }
-            @if ( userrole == "SuperAdmin")
-            {
-                <div class="col-md-4">
-                    <a href="@Url.Action("Index", "Permission" ,  new { area = "Admin" })" class="block layout_icons d-block mb-4">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="#0a626a" />
-                            <path d="M12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="#0a626a" />
-                            <path d="M18.94 15.58C19.15 15.58 19.36 15.65 19.53 15.78L20.49 16.42C20.74 16.6 20.83 16.93 20.71 17.22L20.15 18.49C20.5 18.95 20.82 19.43 21.08 19.94L22.38 20.18C22.68 20.23 22.92 20.5 22.92 20.81V22.19C22.92 22.5 22.68 22.77 22.38 22.82L21.08 23.06C20.82 23.57 20.5 24.05 20.15 24.51L20.71 25.78C20.83 26.07 20.74 26.4 20.49 26.58L19.53 27.22C19.36 27.35 19.15 27.42 18.94 27.42C18.74 27.42 18.53 27.35 18.36 27.22L17.4 26.58C17.15 26.4 17.06 26.07 17.18 25.78L17.74 24.51C17.39 24.05 17.07 23.57 16.81 23.06L15.51 22.82C15.22 22.77 14.97 22.5 14.97 22.19V20.81C14.97 20.5 15.22 20.23 15.51 20.18L16.81 19.94C17.07 19.43 17.39 18.95 17.74 18.49L17.18 17.22C17.06 16.93 17.15 16.6 17.4 16.42L18.36 15.78C18.53 15.65 18.74 15.58 18.94 15.58ZM18 22C18.83 22 19.5 21.33 19.5 20.5C19.5 19.67 18.83 19 18 19C17.17 19 16.5 19.67 16.5 20.5C16.5 21.33 17.17 22 18 22Z" fill="#0a626a" />
-                        </svg>
-                        <h5 class="text-dark">إدارة المستخدمين</h5>
-                    </a>
-                </div>
-            }
-            
-                <div class="col-md-4">
-                    <a href="@Url.Action("Index", "Session" ,  new { area = "Admin" })" class="block layout_icons d-block mb-4">
-
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 3H21V13H3V3Z" fill="#0a626a" />
-                        <path d="M9 16H15V18H9V16Z" fill="#0a626a" />
-                        <path d="M12 13V21" stroke="#0a626a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M7 21H17" stroke="#0a626a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                        <h5 class="text-dark">إدارة الجلسات</h5>
-                    </a>
-                </div>
-            
-            
-                <div class="col-md-4">
-                    <a href="@Url.Action("Index", "Registration" ,  new { area = "Admin" })" class="block layout_icons d-block mb-4">
-
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19 4H18V2H16V4H8V2H6V4H5C3.9 4 3 4.9 3 6V20C3 21.1 3.9 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V9H19V20ZM7 11H17V13H7V11Z" fill="#0a626a" />
-                        <path d="M10 16L12.29 18.29L16.29 14.29L17.71 15.71L12.29 21.12L8.88 17.71L10 16Z" fill="#0a626a" />
-                    </svg>
-
-                        <h5 class="text-dark">إدارة التسجيل</h5>
-                    </a>
-                </div>
-            
-            @if (userrole == "Admin" || userrole == "SuperAdmin")
-            {
-                <div class="col-md-4">
-                    <a href="@Url.Action("Index", "Major" ,  new { area = "Admin" })" class="block layout_icons d-block mb-4">
-
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3L2 9L12 15L22 9L12 3Z" fill="#0a626a" />
-                            <path d="M12 15V21" stroke="#0a626a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M8 9.98L8 17L12 19L16 17V9.98" fill="#0a626a" />
-                        </svg>
-                        <h5 class="text-dark">إدارة التخصصات</h5>
-                    </a>
-                </div>
-            }
-            <div class="col-md-4">
-                <a href="@Url.Action("Index", "Content" ,  new { area = "Admin" })" class="block layout_icons d-block mb-4">
-
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 19V5C4 4.44772 4.44772 4 5 4H14.5858C14.851 4 15.1054 4.10536 15.2929 4.29289L19.7071 8.70711C19.8946 8.89464 20 9.149 20 9.41421V19C20 19.5523 19.5523 20 19 20H5C4.44772 20 4 19.5523 4 19Z" fill="#0a626a" />
-                        <path d="M12 3V9C12 9.55228 12.4477 10 13 10H19" fill="#0a626a" />
-                        <path d="M13 15L16.5 11.5L18 13L14.5 16.5H13V15Z" fill="#0a626a" />
-                        <path d="M12 17H10V19H12V17Z" fill="#0a626a" />
-                    </svg>
-                    <h5 class="text-dark">إدارة محتوى المقررات</h5>
-                </a>
             </div>
-
-            <div class="col-md-4">
-                <a href="@Url.Action("Index", "Levels" ,  new { area = "Admin" })" class="block layout_icons d-block mb-4">
-
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 20V12H7V16H11V8H15V12H19V4H21V20H3Z" fill="#0a626a" />
-                    </svg>
-                    <h5 class="text-dark">إدارة مستوى المقررات</h5>
-                </a>
-            </div> *@
-
-
-            
-
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Students</h5>
+                    <p class="card-text">44</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Professors</h5>
+                    <p class="card-text">76</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Departments</h5>
+                    <p class="card-text">67</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Active Sessions</h5>
+                    <p class="card-text">76</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <style>
-
-    .block {
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        justify-content: center;
-        border: 1px solid #454343;
-        border-radius: 8px;
+    .card {
+        margin: 15px 0;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
     }
 
-        .block:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         }
 
+    .card-body {
+        text-align: center;
+    }
 </style>
+
+
+@section Scripts {
+    @{
+        <script>
+            const xValues = ["كلية علوم الحاسب", "France", "Spain", "USA", "Argentina"];
+            const yValues = [@Coursecount, 2, 5, 8, 12];
+            const barColors = ["red", "green", "blue", "orange", "brown"];
+
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: "World Wine Production 2018"
+                    }
+                }
+            });
+            const xValues1 = ["Italy", "France", "Spain", "USA", "Argentina"];
+            const yValues1 = [55, 49, 44, 24, 15];
+            const barColors1 = [
+                "#b91d47",
+                "#00aba9",
+                "#2b5797",
+                "#e8c3b9",
+                "#1e7145"
+            ];
+
+            new Chart("myChart1", {
+                type: "pie",
+                data: {
+                    labels: xValues1,
+                    datasets: [{
+                        backgroundColor: barColors1,
+                        data: yValues1
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "World Wide Wine Production 2018"
+                    }
+                }
+            });
+        </script>
+    }}

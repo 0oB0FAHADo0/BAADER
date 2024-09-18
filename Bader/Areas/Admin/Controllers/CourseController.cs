@@ -37,10 +37,11 @@ namespace Bader.Areas.Admin.Controllers
             }
             else
             {
+                
                 return View(await _CourseDomain.GetAllCourses());
             }
                 
-
+            
 
         }
 
@@ -311,8 +312,6 @@ namespace Bader.Areas.Admin.Controllers
 
             return Json(majorList);  // Return the list of majors in JSON format
         }
-
-
 
 
     }

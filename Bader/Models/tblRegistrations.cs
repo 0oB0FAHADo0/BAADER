@@ -15,5 +15,8 @@
         public Guid GUID { get; set; } = Guid.NewGuid();
 
         public string Email { get; set; }
+
+        public ICollection<tblAttendance> Attendances { get; set; }
+
     }
 }

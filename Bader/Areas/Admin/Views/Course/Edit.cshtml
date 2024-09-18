@@ -46,7 +46,10 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="LevelId" class="mb-1"></label>
-                                        <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList"> </select>
+                                        <select asp-for="LevelId" id="LevelId" class="form-control text-start" asp-items="ViewBag.LevelsList">
+                                        <option value="0">اختر المستوى</option>
+                                        </select>
+                                        <span asp-validation-for="LevelId" class="text-danger"></span>
                                     </div>
                                 </div><!-- END ITEM -->
 
@@ -57,7 +60,7 @@
                                         <div class="mb-4">
                                             <label asp-for="CollageNameAr" class="mb-1"></label>
                                             <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList">
-                                            <option value="">اختر الكلية</option>
+                                            <option value="0">اختر الكلية</option>
                                             </select>
                                             <span asp-validation-for="CollegeId" class="text-danger"></span>
 
@@ -70,8 +73,8 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="MajorNameAr" class="mb-1"></label>
-                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
-                                            <option value="">اختر التخصص</option>
+                                        <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList" >
+                                            <option value="0">اختر التخصص</option>
                                         </select>
                                         <span asp-validation-for="MajorId" class="text-danger"></span>
 
@@ -139,7 +142,7 @@
 
                 // Function to fetch and populate majors based on the college ID
                 function fetchMajors(collegeId, selectedMajorId = null) {
-                    if (collegeId && collegeId !== "") {
+                    if (collegeId && collegeId !== "0") {
                         // Enable the major dropdown
                         $('#MajorId').prop('disabled', false);
 
@@ -153,7 +156,7 @@
                                 $('#MajorId').empty();
 
                                 // Add default option for majors
-                                $('#MajorId').append(new Option('اختر التخصص', ''));
+                                $('#MajorId').append(new Option('اختر التخصص', '0'));
 
                                 // Populate the major dropdown with the received data
                                 $.each(data, function (index, major) {
@@ -182,7 +185,7 @@
                 }
 
                 // Fetch majors if there's a pre-selected college (for editing a course)
-                if (selectedCollegeId && selectedCollegeId !== "") {
+                if (selectedCollegeId && selectedCollegeId !== "0") {
                     // Pre-selected major ID (from the course you're editing)
                     var selectedMajorId = $('#MajorId').data('selected-major-id'); // Store the major ID in the HTML or inject via the backend
                     fetchMajors(selectedCollegeId, selectedMajorId);

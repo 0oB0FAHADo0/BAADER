@@ -101,13 +101,12 @@ namespace Bader.Domain
                 Email = user.Email,
                 FullNameAr = user.FullNameAr,
                 FullNameEn = user.FullNameEn,
-                Password = user.Password,
                 Usertype = user.Usertype,
                 Phone = user.Phone,
                 CollegeNameAr = user.CollegeNameAr,
                 CollegeNameEn = user.CollegeNameEn,
                 CollegeCode = user.CollegeCode,
-                RoleNameEn = userRole?.RoleNameEn ?? "Regular User"
+                RoleNameEn = userRole?.RoleNameEn ?? "RegularUser"
             };
         }
         public async Task<bool> EmailExists(int id, string email)
@@ -143,7 +142,8 @@ namespace Bader.Domain
                     Phone = x.Phone,
                     CollegeNameAr = x.CollegeNameAr,
                     CollegeNameEn = x.CollegeNameEn,
-                    CollegeCode = x.CollegeCode
+                    CollegeCode = x.CollegeCode,
+                    Gender=x.Gender,
                 })
                 .FirstOrDefaultAsync(); 
 

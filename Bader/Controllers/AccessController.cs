@@ -29,10 +29,22 @@ namespace Bader.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            //ClaimsPrincipal principal = HttpContext.User;
-            //if (principal.Identity.IsAuthenticated)
-            //    return RedirectToAction("Index", "Home");
-            return View();
+            ClaimsPrincipal principal = HttpContext.User;
+
+            if (principal.Identity.IsAuthenticated)
+            {
+                var role = HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
+
+                if (role == "Admin" || role == "SuperAdmin" || role == "Editor")
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+                return View();
         }
 
         [HttpPost]
@@ -46,7 +58,6 @@ namespace Bader.Controllers
 
                 if (user == null)
                 {
-
                     ViewData["ErrorMessage"] = "خطأ: اسم المستخدم أو كلمة المرور غير صحيحة";
                     return View(userlogin);
                 }
@@ -62,24 +73,16 @@ namespace Bader.Controllers
                 new Claim("Usertype", user.Usertype),
                 new Claim("CollegeNameAr", user.CollegeNameAr),
                 new Claim("CollegeNameEn", user.CollegeNameEn),
-                new Claim("CollegeCode", user.CollegeCode.ToString()),
+                new Claim("CollegeCode", user.CollegeCode),
                 new Claim("Role",  user.RoleNameEn),
                 new Claim(ClaimTypes.Role, user.RoleNameEn)
 
             };
 
                     ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    AuthenticationProperties properties = new AuthenticationProperties()
-                    {
-                        AllowRefresh = true,
-                        IsPersistent = true
-                        //ExpiresUtc = DateTime.UtcNow.AddMinutes(60)
-                    };
-
                     await HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(identity),
-                    properties);
+                    new ClaimsPrincipal(identity));
 
                     if (user.RoleNameEn == "Admin" || user.RoleNameEn == "SuperAdmin" || user.RoleNameEn == "Editor")
                     {
@@ -90,13 +93,9 @@ namespace Bader.Controllers
                         return RedirectToAction("Index", "Home");
                     }
 
-
-                    //HttpContext.Session.SetString("ClaimsPrincipal", JsonConvert.SerializeObject(User));
-
-                    return RedirectToAction("Index", "Home");
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 ViewData["ErrorMessage"] = "خطأ: اسم المستخدم أو كلمة المرور غير صحيحة";
                 return View(userlogin);

@@ -25,16 +25,12 @@ namespace Bader.Areas.Admin.Controllers
         {
             _LevelDomain = context;
         }
-        //[Authorize(Policy = "CollegeCodePolicy19")]
         
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var DomainInfo = await _LevelDomain.GetLevels();
-
-
-
-            return View(DomainInfo);
+            var Levels = await _LevelDomain.GetLevels();
+            return View(Levels);
         }
 
         [HttpPost]
@@ -44,33 +40,25 @@ namespace Bader.Areas.Admin.Controllers
             try
             {
                 LevelViewModel Level = await _LevelDomain.GetLevelbyId(id);
-
                 Level.IsDeleted = true;
                 int check = await _LevelDomain.UpdateLevel(Level);
-
                 if (check == 1)
                 {
                     ViewData["Successful"] = "تم الحذف بنجاح";
-
                 }
                 else
                 {
-
                     ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
                 }
 
             }
             catch
             {
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
             }
 
-
-
-            var DomainInfo = await _LevelDomain.GetLevels();
-            return View(DomainInfo);
+            var Levels = await _LevelDomain.GetLevels();
+            return View(Levels);
         }
 
 
@@ -99,49 +87,27 @@ namespace Bader.Areas.Admin.Controllers
                     if (check == 1)
                     {
                         ViewData["Successful"] = "تم الإضافة بنجاح";
-
                     }
                     else
                     {
                         ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
                     }
-
-
 
                 }
             }
             catch
             {
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
             }
 
-
             return View(Level);
-
-
-
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-
-            try
-            {
-                LevelViewModel Level = await _LevelDomain.GetLevelbyId(id);
-                return View(Level);
-            }
-            catch
-            {
-
-            }
-
-
-
-
-            return View();
+             LevelViewModel Level = await _LevelDomain.GetLevelbyId(id);
+             return View(Level);
         }
 
 
@@ -153,33 +119,32 @@ namespace Bader.Areas.Admin.Controllers
         {
             try
             {
-
-                int check = await _LevelDomain.UpdateLevel(Level);
-                if (check == 1)
+                if (ModelState.IsValid)
                 {
-                    ViewData["Successful"] = "تم التعديل بنجاح";
+                    if (await _LevelDomain.LevelNumExists(Level.LevelNum, Level.GUID))
+                    {
+                        ModelState.AddModelError("LevelNum", "رقم المستوى مستخدم من قبل");
+                        return View(Level);
+                    }
 
+                    int check = await _LevelDomain.UpdateLevel(Level);
+                    if (check == 1)
+                    {
+                        ViewData["Successful"] = "تم التعديل بنجاح";
+                    }
+                    else
+                    {
+                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                    }
                 }
-                else
-                {
-                    ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
-                }
-
 
             }
             catch
             {
                 ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
             }
 
-
-
-
-
             return View(Level);
-
         }
     }
 }

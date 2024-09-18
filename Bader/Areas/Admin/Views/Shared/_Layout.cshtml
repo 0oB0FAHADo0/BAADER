@@ -29,9 +29,6 @@
     <link rel="stylesheet" href="~/Assets/css/root.css">
 
 
-    
-
-
 
     <!--------- CSS Liberaries ---------->
     <!-- Data Table -->
@@ -265,12 +262,12 @@
                                 </a>
                             </li>
 
-                            <li>
+                            @* <li>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <i class="bi bi-translate me-2"></i>
                                     English Language
                                 </a>
-                            </li>
+                            </li> *@
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" asp-area="" asp-Controller="Access" asp-action="LogOut">
                                     <i class="bi bi-box-arrow-right me-2"></i>
@@ -308,13 +305,16 @@
             <script src="~/Assets/js/popper.min.js"></script>
             <script src="~/Assets/js/bootstrap.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            
+
 
             <!--------- JS Liberaries ---------->
             <script src="~/Assets/lib/DataTable/js/dataTables.min.js"></script>
-
+           
             <!-- customization -->
             <script src="~/Assets/js/app.js"></script>
-            <script src="~/assets/lib/chartjs/chart.js"></script>
+			<script src="~/Assets/lib/quicksearch/jquery.quicksearch.js"></script>
+            
             <script>
                 document.getElementById("currentYear").textContent = new Date().getFullYear();
             </script>

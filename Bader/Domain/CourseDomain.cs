@@ -44,7 +44,7 @@ namespace Bader.Domain
         {
             try
             {
-                return await _context.tblCourses.Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false && x.College.IsDeleted == false && x.Major.IsDeleted == false && x.Level.IsDeleted == false).Select(x => new CourseViewModel
+                var courses = await _context.tblCourses.Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false && x.College.IsDeleted == false && x.Major.IsDeleted == false && x.Level.IsDeleted == false).Select(x => new CourseViewModel
                 {
                     CourseNum = x.CourseNum,
                     CourseNameAr = x.CourseNameAr,
@@ -58,6 +58,11 @@ namespace Bader.Domain
                     GUID = x.GUID,
 
                 }).ToListAsync();
+
+                int coursecount = courses.Count;
+
+                Console.WriteLine($"You have {coursecount} courses in your database.");
+                return courses;
             }
             catch (Exception ex)
             {
@@ -70,7 +75,6 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<CourseViewModel>> GetSomeCourses(string collagecode)
         {
-           // int UserId = 1;
 
 
 
