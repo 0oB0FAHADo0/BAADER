@@ -10,7 +10,7 @@ namespace Bader.ViewModels
         [Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("معرف المادة")]
         public int CourseId { get; set; }
-        [Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("عنوان القسم")]
         public string TitleAr { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
