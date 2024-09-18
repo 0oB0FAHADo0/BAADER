@@ -56,6 +56,7 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<SessionsViewModel>> GetSessions()
         {
+       
             return await _context.tblSessions.Where(u => u.IsDeleted == false).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
                 .Select(x => new SessionsViewModel
             {
