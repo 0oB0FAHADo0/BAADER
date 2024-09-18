@@ -33,49 +33,24 @@
    
 </div>
 
-<div class="container">
+<div class="container row">
     
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">عدد المقررات</h5>
-                    <p class="card-text">@ViewBag.Coursecount</p>
-                </div>
-            </div>
+    <div class="d-flex gap-2">
+       
+        <div class="row col-md-3">
+ 
+                    @for (int i = 0; i < ViewBag.CourseList.Count; i++)
+                    {
+                        <div class="card ">
+                            <div class="card-body">
+                        <h5 class="card-title">@ViewBag.CollegeName[i]</h5>
+                        <p class="card-text">@ViewBag.CourseList[i]</p>
+                            </div>
+                        </div>
+                    }
+
         </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Students</h5>
-                    <p class="card-text">44</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Professors</h5>
-                    <p class="card-text">76</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Departments</h5>
-                    <p class="card-text">67</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mt-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Active Sessions</h5>
-                    <p class="card-text">76</p>
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>
 
