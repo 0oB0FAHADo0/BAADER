@@ -3,7 +3,6 @@
     var fullNameAr = User.FindFirst("FullNameAr")?.Value;
     var userrole = User.FindFirst("Role").Value;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-    var Coursecount = ViewBag.Coursecount;
 
 }
 
@@ -11,78 +10,91 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 </script>
 
-<div class="row justify-content-md-center mb-3">
-    <div class="col">
-        <!-- icons -->
-        <div class="row">
-
-
-            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
-
-        </div>
-
-    </div>
-    <div class="col">
-        <div class="row">
-
-
-            <canvas id="myChart1" style="width:100%;max-width:700px"></canvas>
-
+<div class="row">
+    <div class="col-md-6">
+        <div class="block mb-4">
+            <div class="block-header border-bottom mb-3 p-3">
+                <h6 class="m-0">احصائيات الجلسات</h6>
+            </div>
+            <div style="height: 350px;width: 100%;" class="p-3">
+                <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+            </div>
         </div>
     </div>
-   
+    <div class="col-md-6">
+        <div class="block mb-4">
+            <div class="block-header border-bottom mb-3 p-3">
+                <h6 class="m-0">احصائيات المقررات لكل كلية</h6>
+            </div>
+            <div style="height: 350px;width: 100%;" class="p-3">
+                <canvas id="myChart1" style="width:100%;max-width:700px"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="container row">
-    
-    <div class="d-flex gap-5">
-       
-        <div class="row col-md-3">
- 
-                        <div class="card ">
-                            <div class="card-body">
-                        <h5 class="card-title">عدد المستخدمين</h5>
-                    <p class="card-text">@ViewBag.UsersCount</p>
-                            </div>
-                        </div>
 
+<div class="container row">
+    <div class="d-flex flex-wrap gap-5">
+        <!-- Card 1 -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">عدد المستخدمين</h5>
+                    <p class="card-text">@ViewBag.UsersCount</p>
+                </div>
+            </div>
         </div>
 
-        <div class="row col-md-3">
-
-            <div class="card ">
+        <!-- Card 2 -->
+        <div class="col-md-3">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">عدد الكليات المستفادة من النظام</h5>
                     <p class="card-text">@ViewBag.AdminCount</p>
                 </div>
             </div>
-
         </div>
-        <div class="row col-md-3">
 
-            <div class="card ">
+        <!-- Card 3 -->
+        <div class="col-md-3">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">عدد المقررات</h5>
                     <p class="card-text">@ViewBag.CourseCount</p>
                 </div>
             </div>
-
         </div>
-        <div class="row col-md-3">
 
-            <div class="card ">
+        <!-- Card 4 -->
+        <div class="col-md-3">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">اجمالي الجلسات</h5>
                     <p class="card-text">@ViewBag.SessionCount</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
                     <h5 class="card-title">الجلسات المتاحة</h5>
                     <p class="card-text">@ViewBag.Open</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
                     <h5 class="card-title">الجلسات الغير متاحة</h5>
                     <p class="card-text">@ViewBag.Close</p>
                 </div>
             </div>
-
         </div>
-        
     </div>
 </div>
 
@@ -127,8 +139,10 @@
                     }
                 }
             });
-            const xValues1 = ["Italy", "France", "Spain", "USA", "Argentina"];
-            const yValues1 = [55, 49, 44, 24, 15];
+            // const xValues1 = @ViewBag.CollegeName;
+            // const yValues1 = @ViewBag.CourseList;
+            const xValues1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.CollegeName));
+            const yValues1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.CourseList));
             const barColors1 = [
                 "#b91d47",
                 "#00aba9",
@@ -149,9 +163,10 @@
                 options: {
                     title: {
                         display: true,
-                        text: "World Wide Wine Production 2018"
+                        text: "عدد المقررات لكل كلية"
                     }
                 }
             });
         </script>
+        
     }}

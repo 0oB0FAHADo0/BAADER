@@ -88,17 +88,17 @@ namespace Bader.Areas.Admin.Controllers
                 }
             }
 
-            //var colleges = await _collegeDomain.GetAllColleges();
+            var colleges = await _collegeDomain.GetAllColleges();
 
-            //ViewBag.CourseList = new List<int>();
-            //ViewBag.CollegeName = new List<string>();
+            ViewBag.CourseList = new List<int>();
+            ViewBag.CollegeName = new List<string>();
 
-            //foreach (var college in colleges)
-            //{
-            //    var coursebycollege = await _CourseDomain.GetCoursesCount(college.CollegeCode);
-            //    ViewBag.CourseList.Add(coursebycollege);
-            //    ViewBag.CollegeName.Add(college.CollegeNameAr);
-            //}
+            foreach (var college in colleges)
+            {
+                var coursebycollege = await _CourseDomain.GetSomeCourses(college.CollegeCode);
+                ViewBag.CourseList.Add(coursebycollege.Count());
+                ViewBag.CollegeName.Add(college.CollegeNameAr);
+            }
 
             return View();
         }
