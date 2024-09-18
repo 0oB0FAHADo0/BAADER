@@ -154,3 +154,78 @@
 
 </body>
 </html>
+@* <script>
+    $(document).ready(function () {
+        var userrole = '@userrole';  // Fetch user role from the Razor view
+        var collegeId = $('#CollegeId').val(); // Current selected CollegeId
+        var majorId = $('#MajorId').val(); // Current selected MajorId
+
+        // Function to populate the major dropdown based on the selected college
+        function populateMajors(collegeId, selectedMajorId) {
+            if (collegeId && collegeId !== "") {
+                // Make an AJAX call to fetch the majors for the selected college
+                $.ajax({
+                    url: '@Url.Action("GetMajorsByCollege", "Course")',
+                    type: 'GET',
+                    data: { collegeId: collegeId },
+                    success: function (data) {
+                        // Clear the previous options
+                        $('#MajorId').empty();
+
+                        // Populate the major dropdown with the received data
+                        $('#MajorId').append(new Option('اختر التخصص', '')); // Add default option
+                        $.each(data, function (index, major) {
+                            $('#MajorId').append(new Option(major.text, major.value));
+                        });
+
+                        // Re-select the previously selected major if any
+                        if (selectedMajorId) {
+                            $('#MajorId').val(selectedMajorId);
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: "error",
+                            title: "خطأ",
+                            text: "حدث خطأ أثناء جلب التخصصات"
+                        });
+                    }
+                });
+            } else {
+                // If no college is selected, disable and reset the major dropdown
+                $('#MajorId').prop('disabled', true);
+                $('#MajorId').empty();
+                $('#MajorId').append(new Option('اختر التخصص', '')); // Reset to default option
+            }
+        }
+
+        // Check if a college is already selected on page load (important for validation errors)
+        if (collegeId && collegeId !== "") {
+            $('#MajorId').prop('disabled', false);  // Ensure Major dropdown is enabled
+            populateMajors(collegeId, majorId); // Populate the majors based on selected college
+        } else {
+            $('#MajorId').prop('disabled', true);  // Disable if no college is selected
+        }
+
+        // Trigger when the college dropdown changes
+        $('#CollegeId').on('change', function () {
+            collegeId = $(this).val();
+            majorId = '';  // Reset major selection when college changes
+
+            // Enable the major dropdown when a college is selected
+            $('#MajorId').prop('disabled', false);
+            populateMajors(collegeId, null); // Fetch majors for the new college
+        });
+
+        // Logic for user roles (Admin and Editor)
+        if (userrole === "SuperAdmin") {
+            // For SuperAdmin, disable the major dropdown until a college is selected
+            if (!collegeId) {
+                $('#MajorId').prop('disabled', true);
+            }
+        } else {
+            // For Admin and Editor, always enable the major dropdown
+            $('#MajorId').prop('disabled', false);
+        }
+    });
+</script> *@
