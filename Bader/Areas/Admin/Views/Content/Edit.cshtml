@@ -18,12 +18,13 @@
                         <form asp-action="Edit" method="post">
                             <div class="row">
                                 <!-- START ITEM -->
-                                <div class="col-md-6">
+@*                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label asp-for="CourseId" class="mb-1">إختر المقرر</label>
                                         <select asp-for="CourseId" id="CoursesId" class="form-control text-start" asp-items="ViewBag.CoursesList"></select>
                                     </div>
-                                </div><!-- END ITEM -->
+                                </div><!-- END ITEM --> *@
+                                <input asp-for="CourseId" hidden />
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">

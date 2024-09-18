@@ -290,6 +290,30 @@ namespace Bader.Domain
 
             }).ToListAsync();
         }
+        public async Task<ContentViewModel> GetContentById(int id)
+        {
+            try
+            {
+                var content = await _context.tblContents.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+                ContentViewModel Content = new ContentViewModel();
+                Content.Id = content.Id;
+                Content.TitleEn = content.TitleEn;
+                Content.TitleAr = content.TitleAr;
+                Content.ContentsAr = content.ContentsAr;
+                Content.Links = content.Links;
+                Content.ContentsEn = content.ContentsEn;
+                Content.CourseId = content.CourseId;
+                Content.GUID = content.GUID;
+                return Content;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
+
+        }
     }
 
 }

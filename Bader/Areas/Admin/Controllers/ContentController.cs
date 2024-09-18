@@ -104,6 +104,26 @@ namespace Bader.Areas.Admin.Controllers
                     else
                     {
                         ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+                        {
+                            //var Courses = await _ContentDomain.GetCoursesByCollegeCode(User.FindFirst("CollegeCode").Value);
+                            //ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                            var Majors = await _ContentDomain.GetMajorsByCollegeCode(User.FindFirst("CollegeCode").Value);
+                            ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                            var Courses = await _ContentDomain.GetCoursesByMajorId(15);
+                            ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                        }
+                        else
+                        {
+                            //var Courses = await _ContentDomain.GetCourses();
+                            //ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                            var Collages = await _ContentDomain.GetColleges();
+                            ViewBag.CollagesList = new SelectList(Collages, "Id", "CollegeNameAr");
+                            var Majors = await _ContentDomain.GetMajorsByCollegeCode(User.FindFirst("CollegeCode").Value);
+                            ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
+                            var Courses = await _ContentDomain.GetCoursesByMajorId(15);
+                            ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                        }
                     }
                 }
                 else
@@ -148,13 +168,13 @@ namespace Bader.Areas.Admin.Controllers
             }
             if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
             {
-                var Courses = await _ContentDomain.GetCoursesByCollegeCode(User.FindFirst("CollegeCode").Value);
-                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                //var Courses = await _ContentDomain.GetCoursesByCollegeCode(User.FindFirst("CollegeCode").Value);
+                //ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
             }
             else
             {
-                var Courses = await _ContentDomain.GetCourses();
-                ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                //var Courses = await _ContentDomain.GetCourses();
+                //ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
             }
             return View(content);
         }
@@ -183,13 +203,13 @@ namespace Bader.Areas.Admin.Controllers
                     ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
                     if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
                     {
-                        var Courses = await _ContentDomain.GetCoursesByCollegeCode(User.FindFirst("CollegeCode").Value);
-                        ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                        //var Courses = await _ContentDomain.GetCoursesByCollegeCode(User.FindFirst("CollegeCode").Value);
+                        //ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
                     }
                     else
                     {
-                        var Courses = await _ContentDomain.GetCourses();
-                        ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
+                        //var Courses = await _ContentDomain.GetCourses();
+                        //ViewBag.CoursesList = new SelectList(Courses, "Id", "CourseNameAr");
                     }
                 }
 
@@ -247,6 +267,16 @@ namespace Bader.Areas.Admin.Controllers
             return Json(courseList);  // Return the list of majors in JSON format
 
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var content = await _ContentDomain.GetContentByGUID(id);
+            if (content == null)
+            {
+                return NotFound();
+            }
+            return View(content);
         }
 
     }
