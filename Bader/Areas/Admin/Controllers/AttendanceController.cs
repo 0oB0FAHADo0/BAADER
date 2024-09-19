@@ -111,12 +111,13 @@ namespace Bader.Areas.Admin.Controllers
                 var worksheet = package.Workbook.Worksheets.Add("الحضور");
                 worksheet.Cells["A1"].Value = "اسم الطالب";
                 worksheet.Cells["B1"].Value = "حالة الحضور";
-
+                worksheet.Cells["C1"].Value = "اسم الجلسة";
                 int row = 2;
                 foreach (var attendance in attendanceList)
                 {
-                    worksheet.Cells[$"A{row}"].Value = attendance.UserName;
+                    worksheet.Cells[$"A{row}"].Value = attendance.FullNameAr;
                     worksheet.Cells[$"B{row}"].Value = attendance.IsAttend ? "حاضر" : "غايب";
+                    worksheet.Cells[$"C{row}"].Value = attendance.SessionNameAr;
                     row++;
                 }
 
