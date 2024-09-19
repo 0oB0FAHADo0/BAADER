@@ -23,7 +23,7 @@ namespace Bader.ViewModels
         [DisplayName("Content")]
         public string ContentsEn { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [StringLength(1000, MinimumLength = 10)]
+        [StringLength(1000, MinimumLength = 10, ErrorMessage = "يجب ان يكون الروابط اكثر من 9 خانات")]
         [DisplayName("الروابط")]
         public string Links { get; set; }
         [DisplayName("معرف(GUID) ")]
