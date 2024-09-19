@@ -439,22 +439,40 @@ namespace Bader.Domain
             
         }
 
-        
+
 
         public void UpdateSessionStates()
         {
-            DateTime currentTime = DateTime.Now;
+            // Get the current date
+            var currentDate = DateTime.Now;
 
-            // Query sessions where SessionDate, RegEndDate, and RegStartDate are all in the past
+            // Query sessions where SessionDate plus one day has passed
             var sessionsToUpdate = _context.tblSessions
-                .Where(s => currentTime > s.SessionDate && currentTime > s.RegEndDate )
+                .Where(s => currentDate >= s.SessionDate.AddDays(1))
                 .ToList();
 
             // Update the SessionStateId and SessionState for each session
             foreach (var session in sessionsToUpdate)
             {
                 session.SessionStateId = 2;
-            }   
+            }
+
+            // Save changes to the database
+            _context.SaveChanges();
+        }
+
+
+        public void UpdateRegStates()
+        {
+            DateTime currentTime = DateTime.Now;
+
+                var regUpdate = _context.tblRegistrations.Include(r=>r.Session).Where(s=> s.Session.SessionStateId==2).ToList();
+
+
+            foreach (var reg in regUpdate)
+            {
+                reg.RegistrationStateId = 2;
+            }
 
             // Save changes to the database
             _context.SaveChanges();
