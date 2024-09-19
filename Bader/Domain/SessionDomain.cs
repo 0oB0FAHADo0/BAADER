@@ -103,10 +103,10 @@ namespace Bader.Domain
                 Sessionx.TitleAr = Session.TitleAr;
                 Sessionx.TitleEn = Session.TitleEn;
                 Sessionx.Links = Session.Links;
-                Sessionx.NumOfStudents = Session.NumOfStudents;
-                Sessionx.SessionDate = Session.SessionDate/* ?? default(DateTime)*/;
-                Sessionx.RegEndDate = Session.RegEndDate /*?? default(DateTime)*/;
-                Sessionx.RegStartDate = Session.RegStartDate;
+                Sessionx.NumOfStudents = Session.NumOfStudents ?? 0;
+                Sessionx.SessionDate = Session.SessionDate ?? default(DateTime);
+                Sessionx.RegEndDate = Session.RegEndDate ?? default(DateTime);
+                Sessionx.RegStartDate = Session.RegStartDate ?? default(DateTime);
                 Sessionx.GUID = Guid.NewGuid();
                 Sessionx.IsDeleted = Session.IsDeleted;
                 _context.tblSessions.Add(Sessionx);
@@ -152,10 +152,10 @@ namespace Bader.Domain
                 Sessionx.TitleAr = Session.TitleAr;
                 Sessionx.TitleEn = Session.TitleEn;
                 Sessionx.Links = Session.Links;
-                Sessionx.NumOfStudents = Session.NumOfStudents;
-                Sessionx.SessionDate = Session.SessionDate/*?? default(DateTime)*/;
-                Sessionx.RegEndDate = Session.RegEndDate/*?? default(DateTime)*/;
-                Sessionx.RegStartDate = Session.RegStartDate;
+                Sessionx.NumOfStudents = Session.NumOfStudents ?? 0;
+                Sessionx.SessionDate = Session.SessionDate ?? default(DateTime);
+                Sessionx.RegEndDate = Session.RegEndDate?? default(DateTime);
+                Sessionx.RegStartDate = Session.RegStartDate ?? default(DateTime);
                 Sessionx.GUID = Guid.NewGuid();
                 Sessionx.IsDeleted = Session.IsDeleted;
                 _context.tblSessions.Add(Sessionx);
@@ -201,10 +201,10 @@ namespace Bader.Domain
                 sessionsx.TitleAr = session.TitleAr;
                 sessionsx.TitleEn = session.TitleEn;
                 sessionsx.Links = session.Links;
-                sessionsx.NumOfStudents = session.NumOfStudents ;
-                sessionsx.SessionDate = session.SessionDate;
-                sessionsx.RegEndDate = session.RegEndDate;
-                sessionsx.RegStartDate = session.RegStartDate;
+                sessionsx.NumOfStudents = session.NumOfStudents ?? 0 ;
+                sessionsx.SessionDate = session.SessionDate ?? default(DateTime);
+                sessionsx.RegEndDate = session.RegEndDate ?? default(DateTime);
+                sessionsx.RegStartDate = session.RegStartDate ?? default(DateTime);
                 sessionsx.IsDeleted = session.IsDeleted;
 
                 _context.tblSessions.Update(sessionsx);

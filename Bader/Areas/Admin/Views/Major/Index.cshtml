@@ -75,7 +75,9 @@
                     Swal.fire({
                         title: "تمت العملية",
                         text: result,
-                        icon: "success"
+                        icon: "success",
+                        confirmButtonText: "تم"
+
                     });
 
                     </Text>
@@ -88,7 +90,9 @@
                     Swal.fire({
                         icon: "error",
                         title: "فشلت العملية",
-                        text: result
+                        text: result,
+                        confirmButtonText: "تم"
+
 
                     });
                     </Text>
@@ -101,7 +105,7 @@
             function DisplayAlert(event, element) {
                 event.preventDefault();
 
-                //   const url = element.getAttribute('href');
+               
                 const form = element.closest('form')
                 Swal.fire({
                     title: "حذف تخصص",

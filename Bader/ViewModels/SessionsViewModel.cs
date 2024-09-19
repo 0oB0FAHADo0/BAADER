@@ -67,9 +67,8 @@ namespace Bader.ViewModels
 
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [Range(1, int.MaxValue, ErrorMessage = "يجب أن يكون عدد الطلاب أكبر من 0")]
         [DisplayName("عدد الطلاب")]
-        public int NumOfStudents { get; set; }
+        public int? NumOfStudents { get; set; }
         //end
 
         //star
@@ -77,7 +76,7 @@ namespace Bader.ViewModels
         [DisplayName("تاريخ الجلسة")]
         [DataType(DataType.DateTime)]
 
-        public DateTime SessionDate { get; set; }
+        public DateTime? SessionDate { get; set; }
         //end
 
         //star
@@ -85,14 +84,14 @@ namespace Bader.ViewModels
         [DisplayName("تاريخ نهاية التسجيل")]
         [DataType(DataType.DateTime)]
 
-        public DateTime RegEndDate { get; set; }
+        public DateTime? RegEndDate { get; set; }
         //end
 
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("تاريخ بداية التسجيل")]
         [DataType(DataType.DateTime)]
-        public DateTime RegStartDate { get; set; }
+        public DateTime? RegStartDate { get; set; }
         //end
 
         //star

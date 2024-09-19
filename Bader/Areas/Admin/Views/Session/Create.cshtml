@@ -42,7 +42,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CourseId" class="mb-1">اسم المادة  </label>
+                                        <label asp-for="CourseId" class="mb-1"> المادة  </label>
                                         <select asp-for="CourseId" id="CourseId" class="form-control text-start" asp-items="ViewBag.CourseList"> </select>
                                     </div>
                                 </div><!-- END ITEM -->
@@ -92,8 +92,8 @@
                                         <label asp-for="Gender" class="mb-1">الجنس</label>
                                         <select asp-for="Gender" class="form-control">
                                             <option value=""> ذكور وإناث</option>
-                                            <option value="True">ذكر</option>
-                                            <option value="False">أنثى</option>
+                                            <option value="True">ذكور</option>
+                                            <option value="False">إناث</option>
                                         </select>
                                         <span asp-validation-for="Gender" class="text-danger"></span>
                                     </div>
@@ -164,7 +164,9 @@
                 Swal.fire({
                     title: "تمت العملية",
                     text: result,
-                    icon: "success"
+                    icon: "success",
+                    confirmButtonText: "تم"
+
                 }).then(function () {
                     window.location.href = '@Url.Action("Index", "Session")';
                 });
@@ -179,7 +181,9 @@
                 Swal.fire({
                     icon: "error",
                     title: "فشلت العملية",
-                    text: result
+                    text: result,
+                    confirmButtonText: "تم"
+
 
                 });
                 </Text>
