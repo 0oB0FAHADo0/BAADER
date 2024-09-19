@@ -181,7 +181,7 @@
         <script>
             const xValues = ["2022", "2024", "2026", "2028", "2030"];
             const yValues = [@ViewBag.Session2022, @ViewBag.Session2024, @ViewBag.Session2026, @ViewBag.Session2028, @ViewBag.Session2030];
-            const barColors = ["red", "green", "blue", "orange", "brown"];
+            const barColors = ["#004f1a", "#008c4b", "#00588a", "#f1c232", "#92a8d1"];
 
             new Chart("myChart", {
                 type: "bar",
@@ -196,7 +196,8 @@
                     legend: { display: false },
                     title: {
                         display: true,
-                        text: "عدد الجلسات على مر السنوات"
+                        text: "إحصائيات الجلسات السنوية",
+                        fontSize: 30
                     }
                 }
             });
@@ -205,11 +206,16 @@
             const xValues1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.CollegeName));
             const yValues1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.CourseList));
             const barColors1 = [
-                "#b91d47",
-                "#00aba9",
-                "#2b5797",
-                "#e8c3b9",
-                "#1e7145"
+                "#004f1a",  // Dark green
+                "#008c4b",  // Lighter green
+                "#00588a",  // Dark blue
+                "#f1c232",  // Gold/yellow
+                "#ffffff",  // White
+                "#00573e",  // Forest green
+                "#a3c1ad",  // Soft green
+                "#92a8d1",  // Light blue
+                "#e5e5e5",  // Light grey
+                "#1a237e"   // Navy blue
             ];
 
             new Chart("myChart1", {
@@ -224,7 +230,11 @@
                 options: {
                     title: {
                         display: true,
-                        text: "عدد المقررات لكل كلية"
+                        text: "توزيع المقررات حسب الكلية",
+                                    fontSize: 30
+                    },
+                    legend: {
+                        display: false // This will hide the college names in the legend
                     }
                 }
             });
