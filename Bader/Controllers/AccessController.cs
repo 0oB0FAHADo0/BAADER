@@ -75,6 +75,7 @@ namespace Bader.Controllers
                 new Claim("CollegeNameEn", user.CollegeNameEn),
                 new Claim("CollegeCode", user.CollegeCode),
                 new Claim("Role",  user.RoleNameEn),
+                new Claim("Gender",  user.Gender? "انثى" : "ذكر"),
                 new Claim(ClaimTypes.Role, user.RoleNameEn)
 
             };

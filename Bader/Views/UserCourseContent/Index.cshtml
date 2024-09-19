@@ -97,11 +97,11 @@
                         @foreach (var item in Model)
                         {
                             <div class="card" data-content-id="@item.GUID" onclick="viewContents('@item.GUID')">
-                                <div class="card-header">رقم المقرر : @item.CourseId</div>
+                                <div class="card-header"> اسم المقرر: @item.CourseNameAr</div>
                                 <div class="card-body">
                                     <div>@item.TitleAr</div>
                                     </div>
-                                <div class="card-footer">@Html.Raw(item.Links)</div>
+                                <div class="card-footer"> التخصص: @item.MajorNameAr</div>
                             </div>
                         }
                     </div>
@@ -123,7 +123,7 @@
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const paginationInfo = document.getElementById('paginationInfo');
-            const cardsPerPage = 6;
+            const cardsPerPage = 9;
             let currentPage = 1;
             let filteredCards = cards;
 

@@ -39,6 +39,7 @@ namespace Bader.Domain
             }
             
         }
+        
 
         public async Task<IEnumerable<CourseViewModel>> GetAllCourses()
         {
@@ -59,9 +60,7 @@ namespace Bader.Domain
 
                 }).ToListAsync();
 
-                int coursecount = courses.Count;
 
-                Console.WriteLine($"You have {coursecount} courses in your database.");
                 return courses;
             }
             catch (Exception ex)

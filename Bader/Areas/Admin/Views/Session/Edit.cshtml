@@ -94,8 +94,8 @@
                                         <label asp-for="Gender" class="mb-1">الجنس</label>
                                         <select asp-for="Gender" class="form-control">
                                             <option value=""> ذكور وإناث</option>
-                                            <option value="True">ذكر</option>
-                                            <option value="False">أنثى</option>
+                                            <option value="True">ذكور</option>
+                                            <option value="False">إناث</option>
                                         </select>
                                         <span asp-validation-for="Gender" class="text-danger"></span>
                                     </div>
@@ -133,7 +133,7 @@
                                 <!-- END ITEM -->
 
 
-                                <div class="d-flex justify-content-around bg-secondary mb-3" background-color: white>
+                                <div >
                                     <div><button type="submit" class="btn btn-primary px-5" title="save">تعديل</button></div>
                                     @* <div>   </div>
                                     <div><<a asp-action="Index" class="btn btn-primary px-5">الرجوع</a></div> *@
@@ -165,7 +165,9 @@
                 Swal.fire({
                     title: "تمت العملية",
                     text: result,
-                    icon: "success"
+                    icon: "success",
+                    confirmButtonText: "تم"
+
                 }).then(function () {
                     window.location.href = '@Url.Action("Index", "Session")';
                 });
@@ -180,7 +182,9 @@
                 Swal.fire({
                     icon: "error",
                     title: "فشلت العملية",
-                    text: result
+                    text: result,
+                    confirmButtonText: "تم"
+
 
                 });
                 </Text>

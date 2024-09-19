@@ -24,7 +24,7 @@
                                         <div class="mb-4">
                                             <label asp-for="CollageNameAr" class="mb-1"></label>
                                             <select asp-for="CollegeId" id="CollegeId" class="form-control text-start" asp-items="ViewBag.CollagesList">
-                                                <option value="">اختر الكلية</option>
+                                                <option value=0>اختر الكلية</option>
                                             </select>
                                             <span asp-validation-for="CollegeId" class="text-danger"></span>
                                         </div>
@@ -38,7 +38,7 @@
                                         <div class="mb-4">
                                             <label asp-for="MajorNameAr" class="mb-1"></label>
                                             <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList" disabled>
-                                                <option value="">اختر التخصص</option>
+                                                <option value=0>اختر التخصص</option>
                                             </select>
                                             <span asp-validation-for="MajorId" class="text-danger"></span>
                                         </div>
@@ -50,7 +50,7 @@
                                         <div class="mb-4">
                                             <label asp-for="MajorNameAr" class="mb-1"></label>
                                             <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
-                                                <option value="">اختر التخصص</option>
+                                                <option value=0>اختر التخصص</option>
                                             </select>
                                             <span asp-validation-for="MajorId" class="text-danger"></span>
                                         </div>
@@ -62,8 +62,9 @@
                                     <div class="mb-4">
                                         <label asp-for="CourseId" class="mb-1">إختر المقرر</label>
                                         <select asp-for="CourseId" id="CourseId" class="form-control text-start" asp-items="ViewBag.CoursesList">
-                                            <option value="">إختر المقرر</option>
+                                            <option value=0>إختر المقرر</option>
                                         </select>
+                                        <span asp-validation-for="CourseId" class="text-danger"></span>
                                     </div>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
@@ -117,7 +118,7 @@
                                 </div>
                                 <!-- END ITEM -->
                                 <div>
-                                    <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                                    <button type="submit" class="btn btn-primary px-4" title="save">حفظ</button>
                                 </div>
                             </div>
                         </form>
@@ -141,7 +142,8 @@
                             Swal.fire({
                                 title: "تمت العملية",
                                 text: result,
-                                icon: "success"
+                                icon: "success",
+                                confirmButtonText: "تم"
                             }).then(function () {
                                 window.location.href = '@Url.Action("Index", "Content")';
                             });
@@ -154,7 +156,8 @@
                             Swal.fire({
                                 icon: "error",
                                 title: "فشلت العملية",
-                                text: result
+                    text: result,
+                    confirmButtonText: "تم"
                             });
                             </Text>
             }
@@ -170,7 +173,7 @@
 
             // Function to populate the major dropdown based on the selected college
             function populateMajors(collegeId, selectedMajorId) {
-                if (collegeId && collegeId !== "") {
+                if (collegeId && collegeId !== 0) {
                     // Make an AJAX call to fetch the majors for the selected college
                     $.ajax({
                         url: '@Url.Action("GetMajorsByCollegeId", "Content")',
@@ -181,7 +184,7 @@
                             $('#MajorId').empty();
 
                             // Populate the major dropdown with the received data
-                            $('#MajorId').append(new Option('اختر التخصص', '')); // Add default option
+                            $('#MajorId').append(new Option('اختر التخصص', 0)); // Add default option
                             $.each(data, function (index, major) {
                                 $('#MajorId').append(new Option(major.text, major.value));
                             });
@@ -203,12 +206,12 @@
                     // If no college is selected, disable and reset the major dropdown
                     $('#MajorId').prop('disabled', true);
                     $('#MajorId').empty();
-                    $('#MajorId').append(new Option('اختر التخصص', '')); // Reset to default option
+                    $('#MajorId').append(new Option('اختر التخصص', 0)); // Reset to default option
                 }
             }
 
             // Check if a college is already selected on page load (important for validation errors)
-            if (collegeId && collegeId !== "") {
+            if (collegeId && collegeId !== 0) {
                 $('#MajorId').prop('disabled', false);  // Ensure Major dropdown is enabled
                 populateMajors(collegeId, majorId); // Populate the majors based on selected college
             } else {
@@ -218,7 +221,7 @@
             // Trigger when the college dropdown changes
             $('#CollegeId').on('change', function () {
                 collegeId = $(this).val();
-                majorId = '';  // Reset major selection when college changes
+                majorId = 0;  // Reset major selection when college changes
 
                 // Enable the major dropdown when a college is selected
                 $('#MajorId').prop('disabled', false);
@@ -249,13 +252,12 @@
                 var majorId = $('#MajorId').val(); // Current selected MajorId
                 $('#CourseId').empty();
 
-                console.log(majorId);
                 $.ajax({
                     url: '@Url.Action("GetCoursesByMajorId", "Content")',
                     type: 'GET',
                     data: { majorId: majorId },
                     success: function(courses) {
-                        $("#CourseId").append(new Option('اختر المقرر', ''));
+                        $("#CourseId").append(new Option('اختر المقرر', 0));
                         $.each(courses, function (index, course) {
                             $('#CourseId').append(new Option(course.text, course.value));
                         });
@@ -265,6 +267,11 @@
                     }
                 });
             });
+            // if (majorId && majorId !== 0) {
+            //     $('#CourseId').prop('disabled', false);  // Ensure Major dropdown is enabled
+            // } else {
+            //     $('#CourseId').prop('disabled', true);  // Disable if no college is selected
+            // }
         });
     </script>
     @* <script>

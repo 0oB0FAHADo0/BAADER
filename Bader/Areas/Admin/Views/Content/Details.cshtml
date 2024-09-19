@@ -1,5 +1,97 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ContentViewModel
 @{
+    ViewData["Title"] = "Details";
 }
+
+<div class="block mb-4">
+    <div class="block-header border-bottom px-4 py-4">
+        <h5 class="m-0">تفاصيل المحتوى</h5>
+    </div>
+    <div class="block-body py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="post">
+
+                 
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>معلومات المقرر:</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+@*                                     <div class="mb-4">
+                                        <label asp-for="CourseId" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="CourseId" readonly />
+                                    </div> *@
+                                    <div class="mb-4">
+                                        <label asp-for="CourseNameAr" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="CourseNameAr" readonly />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label asp-for="CollageNameAr" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="CollageNameAr" readonly />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label asp-for="MajorNameAr" class="mb-1"></label>
+                                        <input type="text" class="form-control" asp-for="MajorNameAr" readonly />
+                                    </div>
+                                </div><!-- END ITEM -->
+@*                                 <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="TitleAr" class="mb-1"></label>
+                                        <input asp-for="TitleAr" type="text" class="form-control" readonly />
+                                    </div>
+                                </div><!-- END ITEM --> *@
+                            </div>
+                        </div>
+                    </div>
+
+                  
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>معلومات المحتوى:</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- TitleAr in its own row -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-4">
+                                        <label asp-for="TitleAr" class="mb-1"></label>
+                                        <input asp-for="TitleAr" type="text" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ContentsAr in its own row -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-4">
+                                        <label asp-for="ContentsAr" class="mb-1"></label>
+                                        <div class="form-control" readonly>
+                                            @Html.Raw(Model.ContentsAr)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Links in its own row -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-4">
+                                        <label asp-for="Links" class="mb-1"></label>
+                                        <div class="form-control" readonly>
+                                            @Html.Raw(Model.Links)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

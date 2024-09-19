@@ -24,9 +24,10 @@
                     <table class="table table-hover js-dataTable">
                         <thead>
                             <tr>
-                                <th>@Html.DisplayNameFor(x => x.CourseId)</th>
+                                <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th>
                                 <th>@Html.DisplayNameFor(x => x.TitleAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.Links)</th>
+                                <th>@Html.DisplayNameFor(x => x.CollageNameAr)</th>
+                                <th>@Html.DisplayNameFor(x => x.MajorNameAr)</th>
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
@@ -34,12 +35,14 @@
                             @foreach (var item in Model)
                             {
                                 <tr class="cursor-pointer" goto="order_details.html">
-                                    <td>@Html.DisplayFor(modelItem => item.CourseId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TitleAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Links)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CollageNameAr)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MajorNameAr)</td>
                                     <td class="action_td text-end">
                                         <form method="post">
-                                        <a asp-controller="Content" asp-action=" " class="btn btn-sm btn-primary">عرض</a>
+                                            <input type="hidden" name="id" value="@item.GUID" />
+                                            <a asp-action="Details" asp-route-id="@item.GUID" class="btn btn-sm btn-primary">عرض</a>
                                         <a asp-action="Edit" asp-route-id="@item.GUID" class="btn btn-sm btn-success">تعديل</a>
                                         <input type="hidden" name="id" value="@item.GUID" />
                                         <a onclick="DisplayAlert(event, this)" class="btn btn-sm btn-danger">حذف</a>
@@ -66,7 +69,8 @@
                 Swal.fire({
                     title: "تمت العملية",
                     text: result,
-                    icon: "success"
+                    icon: "success",
+                    confirmButtonText: "تم"
                 });
 
                 </Text>
@@ -78,7 +82,8 @@
                 Swal.fire({
                     icon: "error",
                     title: "فشلت العملية",
-                    text: result
+                    text: result,
+                    confirmButtonText: "تم"
 
                 });
                 </Text>
@@ -98,7 +103,7 @@
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "نعم امسحها",
+                confirmButtonText: "نعم",
                 cancelButtonText: "إلغاء"
             }).then((result) => {
                 if (result.isConfirmed) {

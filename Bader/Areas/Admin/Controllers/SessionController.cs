@@ -218,18 +218,7 @@ namespace Bader.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("RegEndDate", ".يجب أن يكون تاريخ انتهاء التسجيل بعد تاريخ بداية التسجيل");
             }
-            //if (session.SessionDate >= DateTime.Today)
-            //{
-            //    ModelState.AddModelError("SessionDate", ".يجب أن يكون تاريخ انتهاء التسجيل بعد تاريخ بداية التسجيل");
-            //}
-            //if (session.RegStartDate >= DateTime.Today)
-            //{
-            //    ModelState.AddModelError("RegStartDate", ".يجب أن يكون تاريخ بداية التسجيل قبل تاريخ الجلسة");
-            //}
-            //if (session.RegEndDate >= DateTime.Today)
-            //{
-            //    ModelState.AddModelError("RegEndDate", ".يجب أن يكون تاريخ انتهاء التسجيل قبل  تاريخ الجلسة");
-            //}
+            
 
             if (!ModelState.IsValid)
             {

@@ -22,7 +22,9 @@
                 Swal.fire({
                     title: "تمت العملية",
                     text: result,
-                    icon: "success"
+                    icon: "success",
+                    confirmButtonText: "تم"
+
                 });
 
                 </Text>
@@ -35,7 +37,9 @@
                 Swal.fire({
                     icon: "error",
                     title: "فشلت العملية",
-                    text: result
+                    text: result,
+                    confirmButtonText: "تم"
+
 
                 });
                 </Text>
@@ -84,7 +88,7 @@
                         <input type="text" class="form-control table__quick_search"
                         placeholder="البحث السريع ...">
                         </div> 
-                        <a asp-action="Create" class="btn btn-primary"> إضافة جلسة </a>
+                       @*  <a asp-action="Create" class="btn btn-primary"> إضافة جلسة </a> *@
                     </div>
                 </div>
                 <div class="block-body">
@@ -92,8 +96,8 @@
                         <thead>
                             <tr>
                                 <th>@Html.DisplayNameFor(x => x.SessionNameAr)</th>
-                                <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th>
                                 <th>@Html.DisplayNameFor(x => x.StateAr)</th>
+                                <th>@Html.DisplayNameFor(x => x.CourseNameAr)</th>
                                 <th hidden>@Html.DisplayNameFor(x => x.TitleAr)</th>
                                 <th hidden>@Html.DisplayNameFor(x => x.Links)</th>
                                 <th>@Html.DisplayNameFor(x => x.NumOfStudents)</th>
@@ -110,8 +114,8 @@
                                 <tr class="cursor-pointer" goto="order_details.html">
 
                                     <td>@Html.DisplayFor(modelItem => item.SessionNameAr)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td>
                                     <td>@Html.DisplayFor(modelItem => item.StateAr)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CourseNameAr)</td>
                                     <td hidden>@Html.DisplayFor(modelItem => item.TitleAr)</td>
                                     <td hidden>@Html.DisplayFor(modelItem => item.Links)</td>
                                     <td>@Html.DisplayFor(modelItem => item.NumOfStudents)</td>

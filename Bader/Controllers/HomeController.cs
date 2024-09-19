@@ -4,6 +4,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Bader.Domain;
 
 namespace Bader.Controllers
 {
@@ -11,15 +13,17 @@ namespace Bader.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SessionDomain _sessionDomain;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger , SessionDomain sessionDomain)
         {
             _logger = logger;
+            _sessionDomain = sessionDomain;
         }
 
-        public IActionResult Index()
+        public async Task <IActionResult> Index()
         {
-                        return View();
+            return View();
         }
 
         public IActionResult Privacy()
@@ -28,6 +32,7 @@ namespace Bader.Controllers
         }
         public IActionResult Profile()
         {
+            ViewBag.UserName = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return View();
         }
 

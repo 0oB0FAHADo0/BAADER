@@ -3,6 +3,8 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Index";
+    var userrole = User.FindFirst("Role").Value;
+
 }
 
 <!DOCTYPE html>
@@ -16,11 +18,11 @@
                 <div class="block-header border-bottom px-4 py-3">
                     <h5 class="m-0">التخصصات</h5>
                     <div class="d-flex gap-2">
-                       @*  <div class="form-group">
+                        <div class="form-group">
                             <input type="text" class="form-control table__quick_search"
                                    placeholder="البحث السريع ...">
-                        </div> *@
-                        <a asp-action="Create" class="btn btn-primary">إضافة تخصص</a>
+                        </div>
+                       @*  <a asp-action="Create" class="btn btn-primary">إضافة تخصص</a> *@
                     </div>
                 </div>
                 <div class="block-body">
@@ -73,7 +75,9 @@
                     Swal.fire({
                         title: "تمت العملية",
                         text: result,
-                        icon: "success"
+                        icon: "success",
+                        confirmButtonText: "تم"
+
                     });
 
                     </Text>
@@ -86,7 +90,9 @@
                     Swal.fire({
                         icon: "error",
                         title: "فشلت العملية",
-                        text: result
+                        text: result,
+                        confirmButtonText: "تم"
+
 
                     });
                     </Text>
@@ -99,7 +105,7 @@
             function DisplayAlert(event, element) {
                 event.preventDefault();
 
-                //   const url = element.getAttribute('href');
+               
                 const form = element.closest('form')
                 Swal.fire({
                     title: "حذف تخصص",

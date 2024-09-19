@@ -2,6 +2,7 @@
 using Bader.Models;
 using Bader.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace Bader.Domain
 				var session = _context.tblSessions.AsNoTracking().FirstOrDefault(tblAttendance => tblAttendance.GUID == guid);
 				var Attend= await _context.tblAttendance.Where(t=> t.Session.IsDeleted==false )
                     .Include(a => a.Session).Where(a=> a.SessionId == session.Id).Include(e=> e.Registration)
-                    .Where(i => i.Registration.RegistrationStateId == 1)
+                    .Where(i => i.Registration.RegistrationStateId == 1 && i.Session.SessionStateId == 1)
                     .Select(a => new AttendanceViewModel
                     {
                         SessionId = a.SessionId,
@@ -56,7 +57,9 @@ namespace Bader.Domain
 
         public async Task<IEnumerable<SessionsViewModel>> GetSessions()
         {
-            return await _context.tblSessions.Where(u => u.IsDeleted == false).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+       
+            return await _context.tblSessions.Where(u => u.IsDeleted == false).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false && t.SessionStateId==1)
+                .Where(y=> DateTime.Now >= y.SessionDate)
                 .Select(x => new SessionsViewModel
             {
                 SessionStateId = x.SessionStateId,
@@ -80,7 +83,9 @@ namespace Bader.Domain
         }
         public async Task<IEnumerable<SessionsViewModel>> GetSessionsByCollegeCode(string CollegeCode)
         {
-            return await _context.tblSessions.Where(u => u.IsDeleted == false).Where(x=> x.Course.College.CollegeCode==CollegeCode).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+
+            return await _context.tblSessions.Where(u => u.IsDeleted == false).Where(x=> x.Course.College.CollegeCode==CollegeCode && x.SessionStateId==1).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+                .Where(y => DateTime.Now >= y.SessionDate)
                 .Select(x => new SessionsViewModel
             {
                 SessionStateId = x.SessionStateId,
@@ -216,7 +221,7 @@ namespace Bader.Domain
 
         }
 
-        public async Task<int> updateAttend(Guid guid,bool IsAttend)
+        public async Task<int> updateAttend(Guid guid,bool IsAttend, string usernameOfStudent, string usernameOfEditor)
         {
             
             try
@@ -242,7 +247,37 @@ namespace Bader.Domain
 
 
                 _context.tblAttendance.Update(attendx);
+                 await _context.SaveChangesAsync();
+
+
+
+
+
+                tblAttendanceLogs log = new tblAttendanceLogs();
+                log.AttendanceId = attendx.Id;
+                log.OperationDateTime = DateTime.Now;
+                log.OperationType = "Update";
+                log.CreatedBy = usernameOfEditor;
+                log.Createdto = usernameOfStudent;
+
+                if(IsAttend ==true)
+                {
+                    log.AdditionalInfo = $"تم تحديث حالة المستخدم إلى حاضر ";
+
+                }
+                else
+                {
+                    log.AdditionalInfo = $"تم تحديث حالة المستخدم إلى غائب ";
+
+                }
+
+                _context.tblAttendanceLogs.Add(log);
+
                 int check = await _context.SaveChangesAsync();
+
+
+
+
                 return check;
             }
             catch

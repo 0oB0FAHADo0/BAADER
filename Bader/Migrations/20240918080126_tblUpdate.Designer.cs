@@ -4,6 +4,7 @@ using Bader.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bader.Migrations
 {
     [DbContext(typeof(BaaderContext))]
-    partial class BaaderContextModelSnapshot : ModelSnapshot
+    [Migration("20240918080126_tblUpdate")]
+    partial class tblUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,37 +57,6 @@ namespace Bader.Migrations
                     b.HasIndex("SessionId");
 
                     b.ToTable("tblAttendance");
-                });
-
-            modelBuilder.Entity("Bader.Models.tblAttendanceLogs", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AdditionalInfo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("AttendanceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Createdto")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OperationDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OperationType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tblAttendanceLogs");
                 });
 
             modelBuilder.Entity("Bader.Models.tblColleges", b =>
@@ -332,10 +303,13 @@ namespace Bader.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MajorsId")
+                    b.Property<string>("OperationType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RegistrationId")
                         .HasColumnType("int");
 
-                    b.Property<string>("OperationType")
+                    b.Property<string>("RegistrationState")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -694,13 +668,13 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblRegistrations", "Registration")
                         .WithMany("Attendances")
                         .HasForeignKey("RegistrationId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblSessions", "Session")
                         .WithMany()
                         .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Registration");
@@ -713,7 +687,7 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblCourses", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -724,19 +698,19 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblColleges", "College")
                         .WithMany("Courses")
                         .HasForeignKey("CollegeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblLevels", "Level")
                         .WithMany("Courses")
                         .HasForeignKey("LevelId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblMajors", "Major")
                         .WithMany("Courses")
                         .HasForeignKey("MajorId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("College");
@@ -751,7 +725,7 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblColleges", "College")
                         .WithMany("Majors")
                         .HasForeignKey("CollegeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("College");
@@ -762,13 +736,13 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblColleges", "College")
                         .WithMany("Permissions")
                         .HasForeignKey("CollegeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblRoles", "Role")
                         .WithMany("Permissions")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("College");
@@ -781,13 +755,13 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblRegistrationsState", "RegistrationState")
                         .WithMany("Registrations")
                         .HasForeignKey("RegistrationStateId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblSessions", "Session")
                         .WithMany()
                         .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("RegistrationState");
@@ -800,13 +774,13 @@ namespace Bader.Migrations
                     b.HasOne("Bader.Models.tblCourses", "Course")
                         .WithMany("Sessions")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Bader.Models.tblSessionsState", "SessionState")
                         .WithMany("Sessions")
                         .HasForeignKey("SessionStateId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");

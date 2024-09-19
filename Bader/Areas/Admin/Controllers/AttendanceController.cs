@@ -65,7 +65,7 @@ namespace Bader.Areas.Admin.Controllers
         {
             int check = 0;
             foreach (var attend in attendx) {
-                int iscount = await _AttendanceDomain.updateAttend(attend.GUID, attend.IsAttend);
+                int iscount = await _AttendanceDomain.updateAttend(attend.GUID, attend.IsAttend,attend.UserName, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 check = check + iscount;
 
             }

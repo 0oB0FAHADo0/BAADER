@@ -24,6 +24,7 @@ namespace Bader.Controllers
         {
             try
             {
+                ViewBag.datecurrsnt = DateTime.Now;
 
                 var domainInfo = await _RegistrationDomain.GetAllRegistrationsByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 return View(domainInfo);
@@ -128,10 +129,10 @@ namespace Bader.Controllers
                 reg.SessionNameAr = session.SessionNameAr;
                 reg.CourseNameAr = session.CourseNameAr;
                 reg.TitleAr = session.TitleAr;
-                reg.NumOfStudents = session.NumOfStudents;
-                reg.SessionDate = session.SessionDate;
-                reg.RegStartDate = session.RegStartDate;
-                reg.RegEndDate = session.RegEndDate;
+                reg.NumOfStudents = session.NumOfStudents ?? 0;
+                reg.SessionDate = session.SessionDate ?? default(DateTime);
+                reg.RegStartDate = session.RegStartDate ?? default(DateTime);
+                reg.RegEndDate = session.RegEndDate?? default(DateTime);
                 reg.SessionId = _RegistrationDomain.GetSessionsIdByGUId(session.GUID);
 
 
@@ -206,10 +207,18 @@ namespace Bader.Controllers
 						Attend.SessionDate = reg.SessionDate;
                         Attend.RegistrationId = regId;
 
-
+                        
 						int check2 = await _AttendanceDomain.addStudentInAteend(Attend);
-						ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
 
+
+                        if (check2 == 1)
+                        {
+                            ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
+                        }
+                        else
+                        {
+                            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        }
 
                     }
                     else
@@ -266,10 +275,10 @@ namespace Bader.Controllers
                 reg.SessionNameAr = session.SessionNameAr;
                 reg.CourseNameAr = session.CourseNameAr;
                 reg.TitleAr = session.TitleAr;
-                reg.NumOfStudents = session.NumOfStudents;
-                reg.SessionDate = session.SessionDate;
-                reg.RegStartDate = session.RegStartDate;
-                reg.RegEndDate = session.RegEndDate;
+                reg.NumOfStudents = session.NumOfStudents ?? 0 ;
+                reg.SessionDate = session.SessionDate ?? default(DateTime);
+                reg.RegStartDate = session.RegStartDate ?? default(DateTime);
+                reg.RegEndDate = session.RegEndDate ?? default(DateTime);
 
                 
 
