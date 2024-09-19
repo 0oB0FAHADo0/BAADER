@@ -26,7 +26,7 @@ namespace Bader.Domain
 				var session = _context.tblSessions.AsNoTracking().FirstOrDefault(tblAttendance => tblAttendance.GUID == guid);
 				var Attend= await _context.tblAttendance.Where(t=> t.Session.IsDeleted==false )
                     .Include(a => a.Session).Where(a=> a.SessionId == session.Id).Include(e=> e.Registration)
-                    .Where(i => i.Registration.RegistrationStateId == 1)
+                    .Where(i => i.Registration.RegistrationStateId == 1 && i.Session.SessionStateId == 1)
                     .Select(a => new AttendanceViewModel
                     {
                         SessionId = a.SessionId,
@@ -58,7 +58,7 @@ namespace Bader.Domain
         public async Task<IEnumerable<SessionsViewModel>> GetSessions()
         {
        
-            return await _context.tblSessions.Where(u => u.IsDeleted == false).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+            return await _context.tblSessions.Where(u => u.IsDeleted == false).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false && t.SessionStateId==1)
                 .Select(x => new SessionsViewModel
             {
                 SessionStateId = x.SessionStateId,
@@ -82,7 +82,8 @@ namespace Bader.Domain
         }
         public async Task<IEnumerable<SessionsViewModel>> GetSessionsByCollegeCode(string CollegeCode)
         {
-            return await _context.tblSessions.Where(u => u.IsDeleted == false).Where(x=> x.Course.College.CollegeCode==CollegeCode).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+
+            return await _context.tblSessions.Where(u => u.IsDeleted == false).Where(x=> x.Course.College.CollegeCode==CollegeCode && x.SessionStateId==1).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
                 .Select(x => new SessionsViewModel
             {
                 SessionStateId = x.SessionStateId,
