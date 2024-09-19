@@ -28,6 +28,7 @@ namespace Bader.Controllers
         }
         public IActionResult Profile()
         {
+           
             return View();
         }
 
