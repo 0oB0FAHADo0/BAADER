@@ -113,6 +113,7 @@
                         title: "تمت العملية",
                         text: result,
                         icon: "success"
+                        confirmButtonText: "تم"
                     }).then(function () {
                         window.location.href = '@Url.Action("Index", "Course")';
                     });
@@ -128,6 +129,7 @@
                         icon: "error",
                         title: "فشلت العملية",
                         text: result
+                        confirmButtonText: "تم"
                     });
                     </Text>
                 }
