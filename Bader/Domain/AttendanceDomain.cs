@@ -59,6 +59,7 @@ namespace Bader.Domain
         {
        
             return await _context.tblSessions.Where(u => u.IsDeleted == false).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false && t.SessionStateId==1)
+                .Where(y=> DateTime.Now >= y.SessionDate)
                 .Select(x => new SessionsViewModel
             {
                 SessionStateId = x.SessionStateId,
@@ -84,6 +85,7 @@ namespace Bader.Domain
         {
 
             return await _context.tblSessions.Where(u => u.IsDeleted == false).Where(x=> x.Course.College.CollegeCode==CollegeCode && x.SessionStateId==1).Include(c => c.SessionState).Include(x => x.Course).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+                .Where(y => DateTime.Now >= y.SessionDate)
                 .Select(x => new SessionsViewModel
             {
                 SessionStateId = x.SessionStateId,

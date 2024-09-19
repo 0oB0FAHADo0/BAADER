@@ -187,6 +187,13 @@
                                 <input type="hidden" name="CheckWhichFunction" id="CheckWhichFunction" value="" />
                                 <input type="hidden" name="id" value="@item.GUID" />
 
+                                @if (ViewBag.datecurrsnt >= item.SessionDate)
+                                {
+                                    <a class="btn btn-sm btn-primary" href="@item.Links" style="background-color: #c69a47;">
+                                        الانتقال إلى الجلسة
+                                    </a>
+                                }
+                                
 
                                 <a asp-action="RegDetails" class="btn btn-sm btn-primary" asp-route-id="@item.GUID">عرض التفاصيل</a>
 
@@ -200,7 +207,7 @@
                             </a>
                             }
                             *@
-
+                                
 
 
                                 @if (item.RegistrationStateId != 2)
@@ -214,7 +221,7 @@
 
 
 
-
+                                
 
                             </form>
 

@@ -118,6 +118,8 @@ namespace Bader.Domain
                         CourseNameAr = x.Session.Course.CourseNameAr,
                         MajorNameAr = x.Session.Course.Major.MajorNameAr,
                         Email = x.Email,
+                        Links= x.Session.Links,
+                        SessionDate = x.Session.SessionDate,
 
                     })
                     .ToListAsync();
