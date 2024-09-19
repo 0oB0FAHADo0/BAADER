@@ -82,6 +82,9 @@ namespace Bader.ViewModels
         public string Links { get; set; }
 
 
+        public DateTime SessionDateAfterOneDay { get; set; }
+
+
     }
 
 }
