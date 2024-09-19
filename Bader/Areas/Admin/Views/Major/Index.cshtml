@@ -3,6 +3,8 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Index";
+    var userrole = User.FindFirst("Role").Value;
+
 }
 
 <!DOCTYPE html>

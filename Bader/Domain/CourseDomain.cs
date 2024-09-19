@@ -39,34 +39,7 @@ namespace Bader.Domain
             }
             
         }
-        public async Task<int> GetCoursesCount(String CollageCode)
-        {
-            try
-            {
-                var COR= await _context.tblCourses.Include(x => x.College).Include(x => x.Level).Include(x => x.Major).Where(x => x.IsDeleted == false && x.College.CollegeCode == CollageCode && x.College.IsDeleted == false && x.Major.IsDeleted == false && x.Level.IsDeleted == false).Select(x => new CourseViewModel
-                {
-                    CourseNum = x.CourseNum,
-                    CourseNameAr = x.CourseNameAr,
-                    CourseNameEn = x.CourseNameEn,
-                    CollegeId = x.CollegeId,
-                    LevelId = x.LevelId,
-                    CollageNameAr = x.College.CollegeNameAr,
-                    LevelNameAr = x.Level.LevelNameAr,
-                    MajorId = x.MajorId,
-                    MajorNameAr = x.Major.MajorNameAr,
-                    GUID = x.GUID,
-
-                }).ToListAsync();
-                return COR.Count();
-            }
-            catch (Exception ex)
-            {
-
-                return 0;
-
-            }
-
-        }
+        
 
         public async Task<IEnumerable<CourseViewModel>> GetAllCourses()
         {

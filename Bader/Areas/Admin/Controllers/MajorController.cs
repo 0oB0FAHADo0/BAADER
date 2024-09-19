@@ -38,7 +38,7 @@ namespace Bader.Areas.Admin.Controllers
 
             try
             {
-                int check = await _MajorDomain.DeleteMajors(id/*, User.FindFirst(ClaimTypes.NameIdentifier).Value*/);
+                int check = await _MajorDomain.DeleteMajors(id, User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                 if (check == 1)
                 {
@@ -83,7 +83,7 @@ namespace Bader.Areas.Admin.Controllers
 
                     
 
-                    int check = await _MajorDomain.addMajors(major);
+                    int check = await _MajorDomain.addMajors(major , User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     if (check == 1)
                     {
                         ViewData["Successful"] = "تمت الإضافة بنجاح";
@@ -176,7 +176,7 @@ namespace Bader.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                  { 
                
-                        int check = await _MajorDomain.UpdateMajors(major/*,*//* User.FindFirst(ClaimTypes.NameIdentifier).Value, User.FindFirst("CollegeCode").Value*/);
+                        int check = await _MajorDomain.UpdateMajors(major, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                         if (check == 1)
                         {
                             ViewData["Successful"] = "تمت الإضافة بنجاح";

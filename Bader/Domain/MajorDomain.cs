@@ -1,4 +1,5 @@
-﻿using Bader.Models;
+﻿using Bader.Migrations;
+using Bader.Models;
 using Bader.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -46,7 +47,7 @@ namespace Bader.Domain
             }
 
         }
-        public async Task<int> addMajors(MajorViewModel Major)
+        public async Task<int> addMajors(MajorViewModel Major, string username)
         {
             try
             {
@@ -67,15 +68,15 @@ namespace Bader.Domain
 
                 _context.tblMajors.Add(Majorx);
 
-                //_context.SaveChanges();
+                _context.SaveChanges();
 
-                //tblCoursesLogs log = new tblCoursesLogs();
-                //log.CourseId = course.Id;
-                //log.OperationType = "Add";
-                //log.DateTime = DateTime.Now;
-                //log.CreatedBy = username;
-                //log.AdditionalInfo = $"تم إضافة مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
-                //_context.tblCoursesLogs.Add(log);
+                tblMajorsLogs log = new tblMajorsLogs();
+                //log.Id = Majorx.Id;
+                log.OperationType = "Add";
+                log.DateTime = DateTime.Now;
+                log.CreatedBy = username;
+                log.AdditionalInfo = $"تم إضافة مقرر {Majorx.MajorNameAr} بواسطة هذا المستخدم";
+                _context.tblMajorsLogs.Add(log);
 
 
                 int check = await _context.SaveChangesAsync();
@@ -89,7 +90,7 @@ namespace Bader.Domain
             }
 
         }
-        public async Task<int> UpdateMajors(MajorViewModel major/*, String username*/)
+        public async Task<int> UpdateMajors(MajorViewModel major, String username)
         {
             try
             {
@@ -109,15 +110,14 @@ namespace Bader.Domain
 
                 _context.tblMajors.Update(majorx);
 
-                //_context.SaveChanges();
+                _context.SaveChanges();
 
-                //tblCoursesLogs log = new tblCoursesLogs();
-                //log.CourseId = course.Id;
-                //log.OperationType = "Update";
-                //log.DateTime = DateTime.Now;
-                //log.CreatedBy = username;
-                //log.AdditionalInfo = $"تم تحديث مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
-                //_context.tblCoursesLogs.Add(log);
+                tblMajorsLogs log = new tblMajorsLogs();
+                log.OperationType = "Update";
+                log.DateTime = DateTime.Now;
+                log.CreatedBy = username;
+                log.AdditionalInfo = $"تم إضافة مقرر {majorx.MajorNameAr} بواسطة هذا المستخدم";
+                _context.tblMajorsLogs.Add(log);
 
 
                 int check = await _context.SaveChangesAsync();
@@ -145,7 +145,7 @@ namespace Bader.Domain
 
             return majorx;
         }
-        public async Task<int> DeleteMajors(Guid id/*, String username*/)
+        public async Task<int> DeleteMajors(Guid id, String username)
         {
             try
             {
@@ -155,15 +155,14 @@ namespace Bader.Domain
                     major.IsDeleted = true;
                     _context.tblMajors.Update(major);
 
-                    //_context.SaveChanges();
+                    _context.SaveChanges();
 
-                    //tblCoursesLogs log = new tblCoursesLogs();
-                    //log.CourseId = course.Id;
-                    //log.OperationType = "Delete";
-                    //log.DateTime = DateTime.Now;
-                    //log.CreatedBy = username;
-                    //log.AdditionalInfo = $"تم حذف مقرر {course.CourseNameAr} بواسطة هذا المستخدم";
-                    //_context.tblCoursesLogs.Add(log);
+                    tblMajorsLogs log = new tblMajorsLogs();
+                    log.OperationType = "Delte";
+                    log.DateTime = DateTime.Now;
+                    log.CreatedBy = username;
+                    log.AdditionalInfo = $"تم إضافة مقرر {major.MajorNameAr} بواسطة هذا المستخدم";
+                    _context.tblMajorsLogs.Add(log);
 
 
                     int check = await _context.SaveChangesAsync();
