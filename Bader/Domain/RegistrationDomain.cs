@@ -25,7 +25,7 @@ namespace Bader.Domain
                 var registrations = await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
                     .Include(y => y.Session).Where(t=> t.Session.IsDeleted==false && t.RegistrationState.IsDeleted==false)
-                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId==1).Where(W=> W.Session.Course.CollegeId==collegeId)
+                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId==1).Where(W=> W.Session.Course.CollegeId==collegeId && W.Session.SessionStateId==1)
                     .Select(x => new RegistrationViewModel
                     {
                         RegistrationStateId = x.RegistrationStateId,
@@ -62,7 +62,7 @@ namespace Bader.Domain
                 var registrations = await _context.tblRegistrations
                     .Include(n => n.RegistrationState)
                     .Include(y => y.Session).Where(t => t.Session.IsDeleted == false && t.RegistrationState.IsDeleted == false)
-                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
+                    .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1 && x.Session.SessionStateId == 1)
                     .Select(x => new RegistrationViewModel
                     {
                         RegistrationStateId = x.RegistrationStateId,
@@ -101,7 +101,7 @@ namespace Bader.Domain
                     .Include(n => n.RegistrationState)
                     .Include(y => y.Session).Where(t => t.Session.IsDeleted == false && t.RegistrationState.IsDeleted == false)
                     .Where(x => x.Session.RegStartDate <= DateTime.Now && x.Session.RegEndDate >= DateTime.Now && x.RegistrationStateId == 1)
-                    .Where(u=> u.Username == username)
+                    .Where(u=> u.Username == username && u.Session.SessionStateId == 1)
                     .Select(x => new RegistrationViewModel
                     {
                         RegistrationStateId = x.RegistrationStateId,
@@ -160,7 +160,7 @@ namespace Bader.Domain
                 int collegeId = GetCollegeIdByCollegeCode(CollegeCode);
 
                 return await _context.tblSessions.Include(c => c.SessionState).Include(x => x.Course).Where(t=> t.SessionState.IsDeleted==false && t.Course.IsDeleted==false)
-                    .Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode== CollegeCode).Where(e=> e.Gender==gender || e.Gender==null).Select(x => new SessionsViewModel
+                    .Where(u => u.IsDeleted == false && u.RegStartDate <= DateTime.Now && u.RegEndDate >= DateTime.Now && u.Course.College.CollegeCode== CollegeCode && u.SessionState.Id==1).Where(e=> e.Gender==gender || e.Gender==null).Select(x => new SessionsViewModel
                 {
                     SessionStateId = x.SessionStateId,
                     SessionNameAr = x.SessionNameAr,
@@ -194,7 +194,7 @@ namespace Bader.Domain
         {
             try
             {
-                tblSessions session = _context.tblSessions.Where(u => u.IsDeleted == false).Include(e => e.Course).Include(c => c.SessionState).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false)
+                tblSessions session = _context.tblSessions.Where(u => u.IsDeleted == false).Include(e => e.Course).Include(c => c.SessionState).Where(t => t.SessionState.IsDeleted == false && t.Course.IsDeleted == false )
                     .AsNoTracking().FirstOrDefault(tblSessions => tblSessions.GUID == guid);
                 SessionsViewModel sessionsx = new SessionsViewModel();
                 sessionsx.GUID = session.GUID;
@@ -439,22 +439,40 @@ namespace Bader.Domain
             
         }
 
-        
+
 
         public void UpdateSessionStates()
         {
-            DateTime currentTime = DateTime.Now;
+            // Get the current date
+            var currentDate = DateTime.Now;
 
-            // Query sessions where SessionDate, RegEndDate, and RegStartDate are all in the past
+            // Query sessions where SessionDate plus one day has passed
             var sessionsToUpdate = _context.tblSessions
-                .Where(s => currentTime > s.SessionDate && currentTime > s.RegEndDate )
+                .Where(s => currentDate >= s.SessionDate.AddDays(1))
                 .ToList();
 
             // Update the SessionStateId and SessionState for each session
             foreach (var session in sessionsToUpdate)
             {
                 session.SessionStateId = 2;
-            }   
+            }
+
+            // Save changes to the database
+            _context.SaveChanges();
+        }
+
+
+        public void UpdateRegStates()
+        {
+            DateTime currentTime = DateTime.Now;
+
+                var regUpdate = _context.tblRegistrations.Include(r=>r.Session).Where(s=> s.Session.SessionStateId==2).ToList();
+
+
+            foreach (var reg in regUpdate)
+            {
+                reg.RegistrationStateId = 2;
+            }
 
             // Save changes to the database
             _context.SaveChanges();

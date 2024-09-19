@@ -33,14 +33,14 @@
     </div>
 </div>
 
-
+<br />
 <div class="container row">
-    <div class="d-flex flex-wrap gap-5">
+    <div class="d-flex flex-wrap gap-5" style="justify-content: center;">
         <!-- Card 1 -->
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">عدد المستخدمين</h5>
+                    <h5 class="card-title">المستخدمين</h5>
                     <p class="card-text">@ViewBag.UsersCount</p>
                 </div>
             </div>
@@ -50,7 +50,7 @@
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">عدد الكليات المستفادة من النظام</h5>
+                    <h5 class="card-title">الكليات المستفادة من النظام</h5>
                     <p class="card-text">@ViewBag.AdminCount</p>
                 </div>
             </div>
@@ -60,7 +60,7 @@
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">عدد المقررات</h5>
+                    <h5 class="card-title">اجمالي المقررات</h5>
                     <p class="card-text">@ViewBag.CourseCount</p>
                 </div>
             </div>
@@ -114,13 +114,74 @@
     }
 </style>
 
+@* <div class="col-xl-2 col-md-4 col-sm-6">
+                            <div class="card text-center">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="avatar bg-rgba-info p-50 m-0 mb-1">
+                                            <div class="avatar-content">
+                                                <i class="bi bi-person-circle icon-eye text-info font-large-10"></i>
+                                            </div>
+                                        </div>
+                                        <h2 class="text-bold-700">@ViewBag.UsersCount</h2>
+                                        <p class="mb-0 line-ellipsis">المستخدمين</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<style>
+        -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(34, 41, 47, 0);
+    letter-spacing: 0.01rem;
+    --blue: #00CFE8;
+    --indigo: #6610F2;
+    --purple: #6F42C1;
+    --pink: #E83E8C;
+    --red: #EA5455;
+    --orange: #FF9F43;
+    --yellow: #FFC107;
+    --green: #28C76F;
+    --teal: #20C997;
+    --cyan: #0072ff;
+    --white: #FFFFFF;
+    --gray: #B8C2CC;
+    --gray-dark: #1E1E1E;
+    --primary: #0072ff;
+    --secondary: #B8C2CC;
+    --success: #28C76F;
+    --info: #00CFE8;
+    --warning: #FF9F43;
+    --danger: #EA5455;
+    --light: #BABFC7;
+    --dark: #1E1E1E;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: 'Montserrat', Helvetica, Arial, serif;
+    --font-family-monospace: 'Montserrat', Helvetica, Arial, serif;
+    --vh: 8.02px;
+    font-family: 'Montserrat', Helvetica, Arial, serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: #10163A;
+    text-align: left;
+    direction: ltr;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    padding-right: 14px;
+    padding-left: 14px;
+</style> *@
 
 @section Scripts {
     @{
         <script>
             const xValues = ["2022", "2024", "2026", "2028", "2030"];
             const yValues = [@ViewBag.Session2022, @ViewBag.Session2024, @ViewBag.Session2026, @ViewBag.Session2028, @ViewBag.Session2030];
-            const barColors = ["red", "green", "blue", "orange", "brown"];
+            const barColors = ["#004f1a", "#008c4b", "#00588a", "#f1c232", "#92a8d1"];
 
             new Chart("myChart", {
                 type: "bar",
@@ -135,7 +196,8 @@
                     legend: { display: false },
                     title: {
                         display: true,
-                        text: "عدد الجلسات على مر السنوات"
+                        text: "إحصائيات الجلسات السنوية",
+                        fontSize: 30
                     }
                 }
             });
@@ -144,11 +206,16 @@
             const xValues1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.CollegeName));
             const yValues1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.CourseList));
             const barColors1 = [
-                "#b91d47",
-                "#00aba9",
-                "#2b5797",
-                "#e8c3b9",
-                "#1e7145"
+                "#004f1a",  // Dark green
+                "#008c4b",  // Lighter green
+                "#00588a",  // Dark blue
+                "#f1c232",  // Gold/yellow
+                "#ffffff",  // White
+                "#00573e",  // Forest green
+                "#a3c1ad",  // Soft green
+                "#92a8d1",  // Light blue
+                "#e5e5e5",  // Light grey
+                "#1a237e"   // Navy blue
             ];
 
             new Chart("myChart1", {
@@ -163,7 +230,11 @@
                 options: {
                     title: {
                         display: true,
-                        text: "عدد المقررات لكل كلية"
+                        text: "توزيع المقررات حسب الكلية",
+                                    fontSize: 30
+                    },
+                    legend: {
+                        display: false // This will hide the college names in the legend
                     }
                 }
             });

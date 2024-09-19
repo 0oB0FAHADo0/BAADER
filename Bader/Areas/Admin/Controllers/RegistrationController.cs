@@ -34,7 +34,7 @@ namespace Bader.Areas.Admin.Controllers
             try
             {
                 _RegistrationDomain.UpdateSessionStates();
-
+                _RegistrationDomain.UpdateRegStates();
                 var UserRole= User.FindFirst(ClaimTypes.Role).Value;
                 if (UserRole== "Admin" || UserRole == "Editor")
                 {
