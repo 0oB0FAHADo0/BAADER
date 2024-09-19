@@ -11,16 +11,16 @@ namespace Bader.ViewModels
         [DisplayName("معرف المادة")]
         public int CourseId { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [DisplayName("عنوان القسم")]
+        [DisplayName("العنوان")]
         public string TitleAr { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [DisplayName("Section title")]
+        [DisplayName("Title")]
         public string TitleEn { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [DisplayName("اسم المحتوى")]
+        [DisplayName("المحتوى")]
         public string ContentsAr { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [DisplayName("Content Name")]
+        [DisplayName("Content")]
         public string ContentsEn { get; set; }
         [Required(ErrorMessage = "هذا الحقل إجباري")]
         [StringLength(1000, MinimumLength = 10)]
@@ -40,5 +40,7 @@ namespace Bader.ViewModels
         [Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
         [DisplayName("معرف التخصص")]
         public int MajorId { get; set; }
+        [DisplayName("اسم المقرر")]
+        public string CourseNameAr { get; set; }
     }
 }
