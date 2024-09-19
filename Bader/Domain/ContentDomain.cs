@@ -17,7 +17,7 @@ namespace Bader.Domain
         {
             try
             {
-                return await _context.tblContents.Include(u =>u.Course).Where(u => u.IsDeleted == false).Where(u =>u.Course.IsDeleted == false).Select(x => new ContentViewModel
+                return await _context.tblContents.Include(u =>u.Course).Include(u =>u.Course.College).Include(u=>u.Course.Major).Where(u => u.IsDeleted == false).Where(u =>u.Course.IsDeleted == false).Select(x => new ContentViewModel
             {
                 Id = x.Id,
                 CourseId = x.CourseId,
@@ -27,6 +27,9 @@ namespace Bader.Domain
                 Links = x.Links,
                 TitleAr = x.TitleAr,
                 TitleEn = x.TitleEn,
+                CourseNameAr=x.Course.CourseNameAr,
+                MajorNameAr=x.Course.Major.MajorNameAr,
+                CollageNameAr=x.Course.College.CollegeNameAr,
             }).ToListAsync();
             }
             catch (Exception e)
@@ -87,7 +90,7 @@ namespace Bader.Domain
         {
             try
             {
-            var content = await _context.tblContents.Include(x=>x.Course).AsNoTracking().FirstOrDefaultAsync(x => x.GUID == id);
+            var content = await _context.tblContents.Include(x=>x.Course).Include(x => x.Course.College).Include(x=>x.Course.Major).AsNoTracking().FirstOrDefaultAsync(x => x.GUID == id);
             ContentViewModel Content = new ContentViewModel();
             Content.Id = content.Id;
             Content.TitleEn = content.TitleEn;
@@ -99,6 +102,9 @@ namespace Bader.Domain
             Content.GUID = content.GUID;
             Content.CollegeId= content.Course.CollegeId;
             Content.MajorId = content.Course.MajorId;
+            Content.CollageNameAr = content.Course.College.CollegeNameAr;
+            Content.CourseNameAr = content.Course.CourseNameAr;
+            Content.MajorNameAr = content.Course.Major.MajorNameAr;
             return Content;   
             }
             catch (Exception e)
@@ -281,7 +287,7 @@ namespace Bader.Domain
         public async Task<IEnumerable<ContentViewModel>> GetSomeContents(Guid id)
         {
             // int UserId = 1;
-            return await _context.tblContents.Include(x => x.Course).Where(x => x.IsDeleted == false).Where(x => x.Course.GUID == id).Select(x => new ContentViewModel
+            return await _context.tblContents.Include(x => x.Course).Include(x => x.Course.College).Include(x => x.Course.Major).Where(x => x.IsDeleted == false).Where(x => x.Course.GUID == id).Select(x => new ContentViewModel
             {
                 TitleAr = x.TitleAr,
                 TitleEn = x.TitleEn,
@@ -289,6 +295,9 @@ namespace Bader.Domain
                 ContentsEn = x.ContentsEn,
                 Links = x.Links,
                 GUID = x.GUID,
+                CourseNameAr = x.Course.CourseNameAr,
+                MajorNameAr = x.Course.Major.MajorNameAr,
+                CollageNameAr = x.Course.College.CollegeNameAr,
 
             }).ToListAsync();
         }
