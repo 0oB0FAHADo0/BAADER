@@ -54,26 +54,33 @@
                 <text>
                                     var result = '@Html.Raw(ViewData["Successful"])';
 
-                Swal.fire({
-                    title: "تمت العملية",
-                    text: result,
-                    icon: "success"
-                }).then(function () {
-                    window.location.href = '@Url.Action("Index", "Major")';
-                });
-                </text>
-            }
-            else if (ViewData["Falied"] != null)
-            {
-                <text>
-                                    var result = '@Html.Raw(ViewData["Falied"])';
+                    Swal.fire({
+                        title: "تمت العملية",
+                        text: result,
+                        icon: "success",
+                        confirmButtonText: "تم"
 
-                Swal.fire({
-                    icon: "error",
-                    title: "فشلت العملية",
-                    text: result
-                });
-                </text>
+                    }).then(function () {
+                        window.location.href = '@Url.Action("Index", "Major")';
+                    });
+                    </Text>
+
+                }
+                else if (@ViewData["Falied"] != null)
+                {
+                    <Text>
+                                                            var result = '@Html.Raw(ViewData["Falied"])';
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "فشلت العملية",
+                        text: result,
+                        confirmButtonText: "تم"
+
+
+                    });
+                    </Text>
+                }
             }
         </script>
 

@@ -129,10 +129,10 @@ namespace Bader.Controllers
                 reg.SessionNameAr = session.SessionNameAr;
                 reg.CourseNameAr = session.CourseNameAr;
                 reg.TitleAr = session.TitleAr;
-                reg.NumOfStudents = session.NumOfStudents;
-                reg.SessionDate = session.SessionDate /*?? default(DateTime)*/;
-                reg.RegStartDate = session.RegStartDate /*?? default(DateTime)*/;
-                reg.RegEndDate = session.RegEndDate/*?? default(DateTime)*/;
+                reg.NumOfStudents = session.NumOfStudents ?? 0;
+                reg.SessionDate = session.SessionDate;
+                reg.RegStartDate = session.RegStartDate;
+                reg.RegEndDate = session.RegEndDate;
                 reg.SessionId = _RegistrationDomain.GetSessionsIdByGUId(session.GUID);
 
 
@@ -275,9 +275,9 @@ namespace Bader.Controllers
                 reg.SessionNameAr = session.SessionNameAr;
                 reg.CourseNameAr = session.CourseNameAr;
                 reg.TitleAr = session.TitleAr;
-                reg.NumOfStudents = session.NumOfStudents ;
-                reg.SessionDate = session.SessionDate/* ?? default(DateTime)*/;
-                reg.RegStartDate = session.RegStartDate /*?? default(DateTime)*/;
+                reg.NumOfStudents = session.NumOfStudents ?? 0 ;
+                reg.SessionDate = session.SessionDate;
+                reg.RegStartDate = session.RegStartDate;
                 reg.RegEndDate = session.RegEndDate;
 
                 

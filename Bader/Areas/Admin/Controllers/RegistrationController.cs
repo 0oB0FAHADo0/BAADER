@@ -173,8 +173,8 @@ namespace Bader.Areas.Admin.Controllers
                 reg.SessionNameAr = session.SessionNameAr;
                 reg.CourseNameAr = session.CourseNameAr;
                 reg.TitleAr = session.TitleAr;
-                reg.NumOfStudents = session.NumOfStudents;
-                reg.SessionDate = session.SessionDate /*?? default(DateTime)*/;
+                reg.NumOfStudents = session.NumOfStudents??0;
+                reg.SessionDate = session.SessionDate ;
                 reg.RegStartDate = session.RegStartDate;
                 reg.RegEndDate = session.RegEndDate;
                 reg.SessionId = _RegistrationDomain.GetSessionsIdByGUId(session.GUID);
@@ -261,15 +261,15 @@ namespace Bader.Areas.Admin.Controllers
                     if (check == 1)
                     {
 
-                    AttendanceViewModel Attend = new AttendanceViewModel();
+                        AttendanceViewModel Attend = new AttendanceViewModel();
 
                         Attend.SessionId = reg.SessionId;
                         Attend.UserName = reg.Username;
                         Attend.SessionDate = reg.SessionDate;
 
 
-						int check2 =  await _AttendanceDomain.addStudentInAteend(Attend);
-						ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
+                        int check2 = await _AttendanceDomain.addStudentInAteend(Attend);
+                        ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
 
                     }
                     else
@@ -305,14 +305,14 @@ namespace Bader.Areas.Admin.Controllers
 
 
 
-                
+
                 var session = await _RegistrationDomain.GetSessionByIdNotGuid(reg.SessionId);
                 reg.SessionNameAr = session.SessionNameAr;
                 reg.CourseNameAr = session.CourseNameAr;
                 reg.TitleAr = session.TitleAr;
-                reg.NumOfStudents = session.NumOfStudents;
-                reg.SessionDate = session.SessionDate/* ?? default(DateTime)*/;
-                reg.RegStartDate = session.RegStartDate /*?? default(DateTime)*/;
+                reg.NumOfStudents = session.NumOfStudents??0;
+                reg.SessionDate = session.SessionDate;
+                reg.RegStartDate = session.RegStartDate;
                 reg.RegEndDate = session.RegEndDate;
 
 

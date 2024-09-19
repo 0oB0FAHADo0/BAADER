@@ -67,9 +67,8 @@ namespace Bader.ViewModels
 
         //star
         [Required(ErrorMessage = "هذا الحقل إجباري")]
-        [Range(1, int.MaxValue, ErrorMessage = "يجب أن يكون عدد الطلاب أكبر من 0")]
         [DisplayName("عدد الطلاب")]
-        public int NumOfStudents { get; set; }
+        public int? NumOfStudents { get; set; }
         //end
 
         //star

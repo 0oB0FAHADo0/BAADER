@@ -71,7 +71,9 @@
                     Swal.fire({
                         title: "تمت العملية",
                         text: result,
-                        icon: "success"
+                        icon: "success",
+                        confirmButtonText: "تم"
+
                     }).then(function () {
                         window.location.href = '@Url.Action("Index", "Major")';
                     });
@@ -86,7 +88,9 @@
                     Swal.fire({
                         icon: "error",
                         title: "فشلت العملية",
-                        text: result
+                        text: result,
+                        confirmButtonText: "تم"
+
 
                     });
                     </Text>
