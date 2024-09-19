@@ -10,16 +10,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: "Poppins", sans-serif;
         }
+
         body {
-            font-family: Arial, sans-serif;
             background-color: #adb5bd;
-            /* background-color: #f5f8fa; */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,104 +29,112 @@
         .wrapper {
             background-color: white;
             text-align: center;
-            padding: 3rem 6rem;
-            border-radius: 50px;
+            padding: 2rem;
+            border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            height: 50vh;
-            width: 40%;
+            max-width: 90%;
+            width: 400px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            position: relative;
         }
 
-        .wrapper h1{
-            font-size: 36px;
-            text-align: center;
-         }
+        .wrapper h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
-        .wrapper .input-box{
+        .input-box {
             width: 100%;
-            height: 50px; 
-            margin: 30px 0; 
-
-         }
+            height: 50px;
+            margin: 15px 0;
+        }
 
         .input-box input {
-                width: 100%;
-                height: 100%;
-                background: #F5F5F5;
-                outline: none;
-                border: 2px solid rgba(255, 255, 255, .2);
-                border-radius: 40px;
-                box-sizing: border-box;
-                font-size: 16px;
-                color: black;
-                padding: 20px 45px 20px 20px;
-                text-align: right;
-            }
+            width: 100%;
+            height: 100%;
+            background: #F5F5F5;
+            outline: none;
+            border: 2px solid rgba(255, 255, 255, .2);
+            border-radius: 25px;
+            font-size: 16px;
+            color: black;
+            padding: 10px 15px;
+            text-align: right;
+        }
 
         .btn {
             background-color: seagreen;
-                color: white;
-                padding: 14px 20px;
-                margin: 8px 0;
-                border: none;
-                border-radius: 50px;
-                cursor: pointer;
-                width: 100%;
-            }
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
 
         .btn:hover {
-                background-color: seagreen;
-                }
+            background-color: darkgreen;
+        }
 
-        .alert  {
+        .alert {
             color: red;
             margin-bottom: 15px;
+        }
+
+        /* Responsive adjustments */
+          (max-width: 480px) {
+            .wrapper {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+
+            .wrapper h1 {
+                font-size: 20px;
+            }
+
+            .input-box input {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .btn {
+                padding: 12px;
+            }
         }
     </style>
 </head>
 
-<div class="wrapper">
-<div class="block mb-4">
-    <div class="block-header border-bottom px-4 py-4">
-        <h1 class="m-0"> تسجيل الدخول</h1>
-    </div>
-    <div class="block-body py-5">
-            
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+<body>
+    <div class="wrapper">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h1 class="m-0">تسجيل الدخول</h1>
+            </div>
+            <div class="block-body py-5">
                 <form method="post">
-                        @if (ViewData["ErrorMessage"] != null)
-                        {
-                            <div class="alert">
-                                @ViewData["ErrorMessage"]
-                            </div>
-                        }
+                    @if (ViewData["ErrorMessage"] != null)
+                    {
+                        <div class="alert">
+                            @ViewData["ErrorMessage"]
+                        </div>
+                    }
                     <div class="input-box">
-                        <!-- Username Field -->
-                            <input type="text" asp-for="Username" class="form-control" placeholder="اسم المستخدم" />
+                        <input type="text" asp-for="Username" class="form-control" placeholder="اسم المستخدم" />
                         <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
 
                     <div class="input-box">
-                        <!-- Password Field -->
                         <input type="password" asp-for="Password" class="form-control text-start" placeholder="كلمة المرور" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
-                     
-                    
-                   <button type="submit" class="btn" title="save">تسجيل الدخول</button>
 
-                        
-                      
-                   
+                    <button type="submit" class="btn" title="save">تسجيل الدخول</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
-</div>
+</body>
+
 </html>

@@ -24,6 +24,7 @@ namespace Bader.Controllers
         {
             try
             {
+                ViewBag.datecurrsnt = DateTime.Now;
 
                 var domainInfo = await _RegistrationDomain.GetAllRegistrationsByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 return View(domainInfo);
@@ -206,10 +207,18 @@ namespace Bader.Controllers
 						Attend.SessionDate = reg.SessionDate;
                         Attend.RegistrationId = regId;
 
-
+                        
 						int check2 = await _AttendanceDomain.addStudentInAteend(Attend);
-						ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
 
+
+                        if (check2 == 1)
+                        {
+                            ViewData["Successful"] = "تم التسجيل بالجلسة بنجاح.";
+                        }
+                        else
+                        {
+                            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        }
 
                     }
                     else

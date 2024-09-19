@@ -251,6 +251,16 @@ namespace Bader.Domain
             sessionsx.RegStartDate = session.RegStartDate;
             return sessionsx;
         }
-      
+
+        public async Task<IEnumerable<SessionsViewModel>> GetSessionsdate()
+        {
+            return await _context.tblSessions.Select(x => new SessionsViewModel
+            {
+                
+                SessionDate = x.SessionDate,
+                
+            }).ToListAsync();
+        }
+
     }
 }

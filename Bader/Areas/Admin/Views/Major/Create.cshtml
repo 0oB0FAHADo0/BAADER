@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Create";
     var userrole = User.FindFirst("Role").Value;
-
 }
 
 <section class="page_wrap">
@@ -14,37 +13,29 @@
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
-                    <div class="col-md-8">
+                    <div class="col-12 col-md-8">
                         <form asp-action="Create">
                             <div class="row">
                                 <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="MajorNameAr" class="mb-1"></label>
-                                        <input asp-for="MajorNameAr" type="text" placeholder="علوم حاسب" class="form-control">
-                                        <span asp-validation-for="MajorNameAr" class="text-danger"></span>
-                                    </div>
+                                <div class="col-12 col-md-6 mb-4">
+                                    <label asp-for="MajorNameAr" class="mb-1"></label>
+                                    <input asp-for="MajorNameAr" type="text" placeholder="علوم حاسب" class="form-control">
+                                    <span asp-validation-for="MajorNameAr" class="text-danger"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="MajorNameEn" class="mb-1"></label>
-                                        <input asp-for="MajorNameEn" type="text" placeholder="CS" class="form-control text-start">
-                                        <span asp-validation-for="MajorNameEn" class="text-danger"></span>
-                                    </div>
+                                <div class="col-12 col-md-6 mb-4">
+                                    <label asp-for="MajorNameEn" class="mb-1"></label>
+                                    <input asp-for="MajorNameEn" type="text" placeholder="CS" class="form-control text-start">
+                                    <span asp-validation-for="MajorNameEn" class="text-danger"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="CollageNameAr" class="mb-1"> </label>
-                                        <select asp-for="CollageId" id="CollageNameAr" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
-                                    </div>
+                                <div class="col-12 mb-4">
+                                    <label asp-for="CollageNameAr" class="mb-1"> </label>
+                                    <select asp-for="CollageId" id="CollageNameAr" class="form-control text-start" asp-items="ViewBag.CollagesList"></select>
                                 </div><!-- END ITEM -->
 
-                                <div>
-                                    <div><button type="submit" class="btn btn-primary px-5" title="save">حفظ</button></div>
-
-
+                                <div class="col-12 col-md-6 mb-4">
+                                    <button type="submit" class="btn btn-primary px-4" title="save">حفظ</button>
                                 </div>
                             </div>
                         </form>
@@ -55,17 +46,13 @@
     </div>
 </section>
 
-
 @section Scripts {
     @{
-
         <script>
-            @{
-                if (@ViewData["Successful"] != null)
-                {
-
-                    <Text>
-                                                            var result = '@Html.Raw(ViewData["Successful"])';
+            @if (ViewData["Successful"] != null)
+            {
+                <text>
+                                    var result = '@Html.Raw(ViewData["Successful"])';
 
                     Swal.fire({
                         title: "تمت العملية",

@@ -14,7 +14,8 @@
                 Swal.fire({
                     title: "تمت العملية",
                     text: result,
-                    icon: "success"
+                    icon: "success",
+                    confirmButtonText: "تم"
                 }).then(function () {
                     window.location.href = '@Url.Action("Details", "College")';
                 });
@@ -29,7 +30,8 @@
                 Swal.fire({
                     icon: "error",
                     title: "فشلت العملية",
-                    text: result
+                    text: result,
+                    confirmButtonText: "تم"
 
                 });
                 </Text>
@@ -82,7 +84,7 @@
                         </div><!-- END ITEM -->
             
                         <div  >
-                            <div><button type="submit" class="btn btn-primary px-5" title="save" >حفظ</button></div>
+                            <div><button type="submit" class="btn btn-primary px-4" title="save" >حفظ</button></div>
                             
                         </div>
                     </div>
