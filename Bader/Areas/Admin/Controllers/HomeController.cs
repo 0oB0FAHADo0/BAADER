@@ -65,32 +65,27 @@ namespace Bader.Areas.Admin.Controllers
             ViewBag.Session2026 = 0;
             ViewBag.Session2028 = 0;
             ViewBag.Session2030 = 0;
-            foreach ( var sessiondate in SessionDate)
+            foreach (var sessiondate in SessionDate)
             {
-                if (sessiondate.SessionDate.HasValue)
+                if (sessiondate.SessionDate.Year == 2022 || sessiondate.SessionDate.Year == 2023)
                 {
-                    int year = sessiondate.SessionDate.Value.Year;
-
-                    if (year == 2022 || year == 2023)
-                    {
-                        ViewBag.Session2022 += 1;
-                    }
-                    else if (year == 2024 || year == 2025)
-                    {
-                        ViewBag.Session2024 += 1;
-                    }
-                    else if (year == 2026 || year == 2027)
-                    {
-                        ViewBag.Session2026 += 1;
-                    }
-                    else if (year == 2028 || year == 2029)
-                    {
-                        ViewBag.Session2028 += 1;
-                    }
-                    else
-                    {
-                        ViewBag.Session2030 += 1;
-                    }
+                    ViewBag.Session2022 += 1;
+                }
+                else if (sessiondate.SessionDate.Year == 2024 || sessiondate.SessionDate.Year == 2025)
+                {
+                    ViewBag.Session2024 += 1;
+                }
+                else if (sessiondate.SessionDate.Year == 2026 || sessiondate.SessionDate.Year == 2027)
+                {
+                    ViewBag.Session2026 += 1;
+                }
+                else if (sessiondate.SessionDate.Year == 2028 || sessiondate.SessionDate.Year == 2029)
+                {
+                    ViewBag.Session2028 += 1;
+                }
+                else
+                {
+                    ViewBag.Session2030 += 1;
                 }
             }
 
