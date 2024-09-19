@@ -1,6 +1,7 @@
 ﻿using Bader.Domain;
 using Bader.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Bader.Areas.Admin.Controllers
 {
@@ -104,6 +105,7 @@ namespace Bader.Areas.Admin.Controllers
         }
         public IActionResult Profile()
         {
+            ViewBag.UserName = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return View();
         }
     }

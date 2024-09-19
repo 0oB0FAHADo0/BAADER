@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Bader.Controllers
 {
@@ -28,7 +29,7 @@ namespace Bader.Controllers
         }
         public IActionResult Profile()
         {
-           
+            ViewBag.UserName = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return View();
         }
 
