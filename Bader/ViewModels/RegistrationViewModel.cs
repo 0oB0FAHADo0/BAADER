@@ -78,6 +78,10 @@ namespace Bader.ViewModels
         public string CollegeNameAr { get; set; }
 
 
+        [DisplayName("الروابط")]
+        public string Links { get; set; }
+
+
     }
 
 }

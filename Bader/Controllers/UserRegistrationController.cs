@@ -24,6 +24,7 @@ namespace Bader.Controllers
         {
             try
             {
+                ViewBag.datecurrsnt = DateTime.Now;
 
                 var domainInfo = await _RegistrationDomain.GetAllRegistrationsByUsername(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 return View(domainInfo);
