@@ -137,10 +137,10 @@
                         @Html.DisplayNameFor(n => n.MajorNameAr)
                     </th>
 
-                    <th>
+                   @*  <th>
                         @Html.DisplayNameFor(n => n.FullNameAr)
 
-                    </th>
+                    </th> *@
                     <th>
                         @Html.DisplayNameFor(n => n.Email)
 
@@ -148,7 +148,7 @@
                     
                     
 
-                    <th class=""></th>
+                    <th > الإجراءات</th>
                 </tr>
             </thead>
             <tbody>
@@ -170,10 +170,10 @@
                         <td>
                             @item.MajorNameAr
                         </td>
-                        <td>
+                       @*  <td>
                             @item.FullNameAr
                         </td>
-
+ *@
                         <td>
                             @item.Email
                         </td>
@@ -187,7 +187,7 @@
                                 <input type="hidden" name="CheckWhichFunction" id="CheckWhichFunction" value="" />
                                 <input type="hidden" name="id" value="@item.GUID" />
 
-                                @if (ViewBag.datecurrsnt >= item.SessionDate)
+                                @if (ViewBag.datecurrsnt >= item.SessionDate && ViewBag.datecurrsnt<= item.SessionDateAfterOneDay)
                                 {
                                     <a class="btn btn-sm btn-primary" href="@item.Links" style="background-color: #c69a47;">
                                         الانتقال إلى الجلسة

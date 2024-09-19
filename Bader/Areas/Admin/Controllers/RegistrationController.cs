@@ -33,6 +33,8 @@ namespace Bader.Areas.Admin.Controllers
         {
             try
             {
+                ViewBag.datecurrsnt = DateTime.Now;
+
                 _RegistrationDomain.UpdateSessionStates();
                 _RegistrationDomain.UpdateRegStates();
                 var UserRole= User.FindFirst(ClaimTypes.Role).Value;

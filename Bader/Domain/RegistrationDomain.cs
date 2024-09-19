@@ -41,7 +41,10 @@ namespace Bader.Domain
                         NumOfStudents = x.Session.NumOfStudents,
                         CourseNameAr = x.Session.Course.CourseNameAr,
                         MajorNameAr = x.Session.Course.Major.MajorNameAr,
-                        Email = x.Email,    
+                        Email = x.Email,
+                        Links = x.Session.Links,
+                        SessionDate = x.Session.SessionDate,
+                        SessionDateAfterOneDay = x.Session.SessionDate.AddDays(1)
                     })
                     .ToListAsync();
 
@@ -80,6 +83,9 @@ namespace Bader.Domain
                         MajorNameAr = x.Session.Course.Major.MajorNameAr,
                         Email = x.Email,
                         CollegeNameAr = x.Session.Course.College.CollegeNameAr,
+                        Links = x.Session.Links,
+                        SessionDate = x.Session.SessionDate,
+                        SessionDateAfterOneDay = x.Session.SessionDate.AddDays(1)
                     })
                     .ToListAsync();
 
@@ -120,6 +126,7 @@ namespace Bader.Domain
                         Email = x.Email,
                         Links= x.Session.Links,
                         SessionDate = x.Session.SessionDate,
+                        SessionDateAfterOneDay= x.Session.SessionDate.AddDays(1)
 
                     })
                     .ToListAsync();
