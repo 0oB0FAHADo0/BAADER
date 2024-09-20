@@ -1,6 +1,7 @@
 ﻿using Bader.Domain;
 using Bader.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using System.Security.Claims;
 
 namespace Bader.Areas.Admin.Controllers
@@ -60,32 +61,38 @@ namespace Bader.Areas.Admin.Controllers
             var SessionDate = await _sessionDomain.GetSessionsdate();
             ViewBag.SessionDate = SessionDate.Count();
 
-            ViewBag.Session2022 = 0;
-            ViewBag.Session2024 = 0;
-            ViewBag.Session2026 = 0;
-            ViewBag.Session2028 = 0;
-            ViewBag.Session2030 = 0;
+            ViewBag.lastTwoYear = DateTime.Now.Year - 2;
+            ViewBag.Now = DateTime.Now.Year;
+            ViewBag.AfterTwoYear = DateTime.Now.Year + 2;
+            ViewBag.AfterFourYear = DateTime.Now.Year + 4;
+            ViewBag.AfterSixYear = DateTime.Now.Year + 6;
+            ViewBag.LastTwo = 0;
+            ViewBag.AfterTwo = 0;
+            ViewBag.AfterFour = 0;
+            ViewBag.AfterSix = 0;
+            ViewBag.Noww = 0;
+
             foreach (var sessiondate in SessionDate)
             {
-                if (sessiondate.SessionDate.Year == 2022 || sessiondate.SessionDate.Year == 2023)
+                if (sessiondate.SessionDate.Year == ViewBag.lastTwoYear || sessiondate.SessionDate.Year == ViewBag.lastTwoYear + 1)
                 {
-                    ViewBag.Session2022 += 1;
+                    ViewBag.lastTwo += 1;
                 }
-                else if (sessiondate.SessionDate.Year == 2024 || sessiondate.SessionDate.Year == 2025)
+                else if (sessiondate.SessionDate.Year == ViewBag.Now || sessiondate.SessionDate.Year == ViewBag.Now + 1)
                 {
-                    ViewBag.Session2024 += 1;
+                    ViewBag.Noww += 1;
                 }
-                else if (sessiondate.SessionDate.Year == 2026 || sessiondate.SessionDate.Year == 2027)
+                else if (sessiondate.SessionDate.Year == ViewBag.AfterTwoYear || sessiondate.SessionDate.Year == ViewBag.AfterTwoYear + 1)
                 {
-                    ViewBag.Session2026 += 1;
+                    ViewBag.AfterTwo += 1;
                 }
-                else if (sessiondate.SessionDate.Year == 2028 || sessiondate.SessionDate.Year == 2029)
+                else if (sessiondate.SessionDate.Year == ViewBag.AfterFourYear || sessiondate.SessionDate.Year == ViewBag.AfterFourYear + 1)
                 {
-                    ViewBag.Session2028 += 1;
+                    ViewBag.AfterFour += 1;
                 }
                 else
                 {
-                    ViewBag.Session2030 += 1;
+                    ViewBag.AfterSix += 1;
                 }
             }
 
