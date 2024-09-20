@@ -34,14 +34,18 @@
                                         <span asp-validation-for="MajorNameEn" class="text-danger"></span>
                                     </div>
                                 </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="CollageNameAr" class="mb-1"> </label>
-                                        <select asp-for="CollageId" id="CollageNameAr" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
+                                @if( userrole == "SuperAdmin")
+                                {
+                                    <!-- START ITEM -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="CollageNameAr" class="mb-1"> </label>
+                                            <select asp-for="CollageId" id="CollageNameAr" class="form-control text-start" asp-items="ViewBag.CollagesList"> </select>
+                                        </div>
                                     </div>
-                                </div><!-- END ITEM -->
 
+                                    <!-- END ITEM -->
+                                }
                                 <div>
                                     <div><button type="submit" class="btn btn-primary px-4" title="save">حفظ</button></div>
 

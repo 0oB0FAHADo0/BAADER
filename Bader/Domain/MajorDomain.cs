@@ -35,6 +35,24 @@ namespace Bader.Domain
             }
 
         }
+
+        public async Task<IEnumerable<MajorViewModel>> GetSomeMajors(string collagecode)
+        {
+            try
+            {
+                  return await _context.tblMajors.Include(x => x.College).Where(x => x.IsDeleted == false && x.College.CollegeCode == collagecode).Select(x => new MajorViewModel { 
+                  MajorNameAr = x.MajorNameAr,
+                  MajorNameEn = x.MajorNameEn,
+                  CollageId = x.CollegeId,
+                  CollageNameAr = x.College.CollegeNameAr,
+                  GUID=x.GUID,
+                  }).ToListAsync() ;
+            }
+            catch (Exception ex)
+            {
+                return new List<MajorViewModel>();
+            }
+        }
         public async Task<IEnumerable<tblColleges>> GetCollages()
         {
             try
@@ -90,6 +108,50 @@ namespace Bader.Domain
             }
 
         }
+
+        public async Task<int> addMajor(MajorViewModel Major, string username , string collagecode)
+        {
+            try
+            {
+                var college = await _context.tblColleges.Where(c => c.IsDeleted == false && c.CollegeCode == collagecode).FirstOrDefaultAsync();
+
+                if (college == null)
+                {
+
+                    return 0;
+                }
+
+                tblMajors Majorx = new tblMajors();
+                Majorx.MajorNameAr = Major.MajorNameAr;
+                Majorx.MajorNameEn = Major.MajorNameEn;
+                Majorx.CollegeId = college.Id;
+                Majorx.GUID = Guid.NewGuid();
+
+
+                _context.tblMajors.Add(Majorx);
+
+                _context.SaveChanges();
+
+                tblMajorsLogs log = new tblMajorsLogs();
+                //log.Id = Majorx.Id;
+                log.OperationType = "Add";
+                log.DateTime = DateTime.Now;
+                log.CreatedBy = username;
+                log.AdditionalInfo = $"تم إضافة مقرر {Majorx.MajorNameAr} بواسطة هذا المستخدم";
+                _context.tblMajorsLogs.Add(log);
+
+
+                int check = await _context.SaveChangesAsync();
+
+                return check;
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+        }
         public async Task<int> UpdateMajors(MajorViewModel major, String username)
         {
             try
@@ -104,6 +166,48 @@ namespace Bader.Domain
                 majorx.MajorNameAr = major.MajorNameAr;
                 majorx.MajorNameEn = major.MajorNameEn;
                 majorx.CollegeId = major.CollageId;
+                majorx.GUID = major.GUID;
+                majorx.IsDeleted = major.IsDeleted;
+
+
+                _context.tblMajors.Update(majorx);
+
+                _context.SaveChanges();
+
+                tblMajorsLogs log = new tblMajorsLogs();
+                log.OperationType = "Update";
+                log.DateTime = DateTime.Now;
+                log.CreatedBy = username;
+                log.AdditionalInfo = $"تم إضافة مقرر {majorx.MajorNameAr} بواسطة هذا المستخدم";
+                _context.tblMajorsLogs.Add(log);
+
+
+                int check = await _context.SaveChangesAsync();
+
+                return check;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+
+        }
+
+        public async Task<int> UpdateMajor(MajorViewModel major, String username, string collagecode)
+        {
+            try
+            {
+                var collage = await _context.tblColleges.Where( x => x.IsDeleted == false && x.CollegeCode == collagecode ).FirstOrDefaultAsync(); 
+
+                var maj = await _context.tblMajors.AsNoTracking().FirstOrDefaultAsync(x => x.GUID == major.GUID);
+                tblMajors majorx = new tblMajors();
+
+                majorx.Id = maj.Id;
+
+
+                majorx.MajorNameAr = major.MajorNameAr;
+                majorx.MajorNameEn = major.MajorNameEn;
+                majorx.CollegeId = collage.Id;
                 majorx.GUID = major.GUID;
                 majorx.IsDeleted = major.IsDeleted;
 

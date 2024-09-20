@@ -28,12 +28,16 @@
                                     <input asp-for="MajorNameEn" type="text" placeholder="CS" class="form-control text-start">
                                     <span asp-validation-for="MajorNameEn" class="text-danger"></span>
                                 </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-12 mb-4">
-                                    <label asp-for="CollageNameAr" class="mb-1"> </label>
-                                    <select asp-for="CollageId" id="CollageNameAr" class="form-control text-start" asp-items="ViewBag.CollagesList"></select>
-                                </div><!-- END ITEM -->
+                                @if (userrole == "SuperAdmin")
+                                {
+                                    <!-- START ITEM -->
+                                    <div class="col-12 mb-4">
+                                        <label asp-for="CollageNameAr" class="mb-1"> </label>
+                                        <select asp-for="CollageId" id="CollageNameAr" class="form-control text-start" asp-items="ViewBag.CollagesList"></select>
+                                    </div>
 
+                                    <!-- END ITEM -->
+                                }
                                 <div class="col-12 col-md-6 mb-4">
                                     <button type="submit" class="btn btn-primary px-4" title="save">حفظ</button>
                                 </div>

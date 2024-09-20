@@ -29,7 +29,14 @@ namespace Bader.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _MajorDomain.GetMajors());
+            if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+            {
+                return View(await _MajorDomain.GetSomeMajors(User.FindFirst("CollegeCode").Value));
+            }
+            else
+            {
+                return View(await _MajorDomain.GetMajors());
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -81,24 +88,33 @@ namespace Bader.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    
-
-                    int check = await _MajorDomain.addMajors(major , User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                    if (check == 1)
+                    if (User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
                     {
-                        ViewData["Successful"] = "تمت الإضافة بنجاح";
-
+                        int check = await _MajorDomain.addMajor(major, User.FindFirst(ClaimTypes.NameIdentifier).Value, User.FindFirst("CollegeCode").Value);
+                        if (check == 1)
+                        {
+                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                        }
+                        else
+                        {
+                            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        }
                     }
                     else
                     {
-                        ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
-
+                        int check = await _MajorDomain.addMajors(major, User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                        if (check == 1)
+                        {
+                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                        }
+                        else
+                        {
+                            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        }
                     }
-
-
-                    // return RedirectToAction("Details");
-
                 }
+
+                        
             }
             catch
             {
@@ -175,7 +191,20 @@ namespace Bader.Areas.Admin.Controllers
                 
                 if (ModelState.IsValid)
                  { 
-               
+                    if(User.FindFirst("Role").Value == "Admin" || User.FindFirst("Role").Value == "Editor")
+                    {
+                        int check = await _MajorDomain.UpdateMajor(major, User.FindFirst(ClaimTypes.NameIdentifier).Value , User.FindFirst("CollegeCode").Value);
+                        if (check == 1)
+                        {
+                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                        }
+                        else
+                        {
+                            ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
+                        }
+                    }
+                    else
+                    {
                         int check = await _MajorDomain.UpdateMajors(major, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                         if (check == 1)
                         {
@@ -185,6 +214,9 @@ namespace Bader.Areas.Admin.Controllers
                         {
                             ViewData["Falied"] = "حدث خطأ أثناء معالجتك طلبك الرجاء المحاولة في وقت لاحق";
                         }
+                    }
+               
+                       
                 }    
                 else
                 {
