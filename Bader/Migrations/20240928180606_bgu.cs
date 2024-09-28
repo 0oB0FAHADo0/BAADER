@@ -5,10 +5,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bader.Migrations
 {
-    public partial class NewDb : Migration
+    public partial class bgu : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "tblAttendanceLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AttendanceId = table.Column<int>(type: "int", nullable: false),
+                    OperationDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OperationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Createdto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdditionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblAttendanceLogs", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "tblColleges",
                 columns: table => new
@@ -18,10 +36,9 @@ namespace Bader.Migrations
                     CollegeNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CollegeNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CollegeCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BuildingNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Gender = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,19 +97,20 @@ namespace Bader.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tblMajors",
+                name: "tblMajorsLogs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MajorNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MajorNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    MajorsId = table.Column<int>(type: "int", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OperationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdditionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tblMajors", x => x.Id);
+                    table.PrimaryKey("PK_tblMajorsLogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,11 +230,63 @@ namespace Bader.Migrations
                     CollegeNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CollegeNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CollegeCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Gender = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblMajors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MajorNameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MajorNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CollegeId = table.Column<int>(type: "int", nullable: false),
+                    GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblMajors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tblMajors_tblColleges_CollegeId",
+                        column: x => x.CollegeId,
+                        principalTable: "tblColleges",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblPermissions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    CollegeId = table.Column<int>(type: "int", nullable: false),
+                    GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblPermissions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tblPermissions_tblColleges_CollegeId",
+                        column: x => x.CollegeId,
+                        principalTable: "tblColleges",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_tblPermissions_tblRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "tblRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,35 +328,6 @@ namespace Bader.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tblPermissions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    CollegeId = table.Column<int>(type: "int", nullable: false),
-                    GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tblPermissions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_tblPermissions_tblColleges_CollegeId",
-                        column: x => x.CollegeId,
-                        principalTable: "tblColleges",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_tblPermissions_tblRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "tblRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "tblContents",
                 columns: table => new
                 {
@@ -308,7 +349,7 @@ namespace Bader.Migrations
                         name: "FK_tblContents_tblCourses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "tblCourses",
-                        principalColumn: "Id",
+                        principalColumn: "Id",  
                         onDelete: ReferentialAction.NoAction);
                 });
 
@@ -331,7 +372,7 @@ namespace Bader.Migrations
                     RegStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Gender = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -363,7 +404,8 @@ namespace Bader.Migrations
                     FullNameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RegDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -381,6 +423,46 @@ namespace Bader.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "tblAttendance",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SessionId = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SessionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsAttend = table.Column<bool>(type: "bit", nullable: false),
+                    RegistrationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblAttendance", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tblAttendance_tblRegistrations_RegistrationId",
+                        column: x => x.RegistrationId,
+                        principalTable: "tblRegistrations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_tblAttendance_tblSessions_SessionId",
+                        column: x => x.SessionId,
+                        principalTable: "tblSessions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblAttendance_RegistrationId",
+                table: "tblAttendance",
+                column: "RegistrationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblAttendance_SessionId",
+                table: "tblAttendance",
+                column: "SessionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblContents_CourseId",
@@ -401,6 +483,11 @@ namespace Bader.Migrations
                 name: "IX_tblCourses_MajorId",
                 table: "tblCourses",
                 column: "MajorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblMajors_CollegeId",
+                table: "tblMajors",
+                column: "CollegeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblPermissions_CollegeId",
@@ -436,6 +523,12 @@ namespace Bader.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "tblAttendance");
+
+            migrationBuilder.DropTable(
+                name: "tblAttendanceLogs");
+
+            migrationBuilder.DropTable(
                 name: "tblContents");
 
             migrationBuilder.DropTable(
@@ -445,13 +538,13 @@ namespace Bader.Migrations
                 name: "tblCoursesLogs");
 
             migrationBuilder.DropTable(
+                name: "tblMajorsLogs");
+
+            migrationBuilder.DropTable(
                 name: "tblPermissions");
 
             migrationBuilder.DropTable(
                 name: "tblPermissionsLogs");
-
-            migrationBuilder.DropTable(
-                name: "tblRegistrations");
 
             migrationBuilder.DropTable(
                 name: "tblRegistrationsLogs");
@@ -461,6 +554,9 @@ namespace Bader.Migrations
 
             migrationBuilder.DropTable(
                 name: "tblUsers");
+
+            migrationBuilder.DropTable(
+                name: "tblRegistrations");
 
             migrationBuilder.DropTable(
                 name: "tblRoles");
@@ -478,13 +574,13 @@ namespace Bader.Migrations
                 name: "tblSessionsState");
 
             migrationBuilder.DropTable(
-                name: "tblColleges");
-
-            migrationBuilder.DropTable(
                 name: "tblLevels");
 
             migrationBuilder.DropTable(
                 name: "tblMajors");
+
+            migrationBuilder.DropTable(
+                name: "tblColleges");
         }
     }
 }

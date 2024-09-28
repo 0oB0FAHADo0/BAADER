@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using Bader.Migrations;
+//using Bader.Migrations;
 
 namespace Bader.Areas.Admin.Controllers
 {

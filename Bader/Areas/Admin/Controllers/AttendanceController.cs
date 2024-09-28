@@ -1,5 +1,5 @@
 ﻿using Bader.Domain;
-using Bader.Migrations;
+//using Bader.Migrations;
 using Bader.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

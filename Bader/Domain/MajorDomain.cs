@@ -1,4 +1,4 @@
-﻿using Bader.Migrations;
+﻿//using Bader.Migrations;
 using Bader.Models;
 using Bader.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;

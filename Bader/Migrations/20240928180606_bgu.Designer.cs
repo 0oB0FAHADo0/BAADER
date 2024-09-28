@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bader.Migrations
 {
     [DbContext(typeof(BaaderContext))]
-    [Migration("20240914094228_emailReg")]
-    partial class emailReg
+    [Migration("20240928180606_bgu")]
+    partial class bgu
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,9 @@ namespace Bader.Migrations
                     b.Property<bool>("IsAttend")
                         .HasColumnType("bit");
 
+                    b.Property<int>("RegistrationId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("SessionDate")
                         .HasColumnType("datetime2");
 
@@ -49,9 +52,42 @@ namespace Bader.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RegistrationId");
+
                     b.HasIndex("SessionId");
 
                     b.ToTable("tblAttendance");
+                });
+
+            modelBuilder.Entity("Bader.Models.tblAttendanceLogs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AdditionalInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AttendanceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Createdto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OperationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OperationType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblAttendanceLogs");
                 });
 
             modelBuilder.Entity("Bader.Models.tblColleges", b =>
@@ -279,6 +315,34 @@ namespace Bader.Migrations
                     b.HasIndex("CollegeId");
 
                     b.ToTable("tblMajors");
+                });
+
+            modelBuilder.Entity("Bader.Models.tblMajorsLogs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AdditionalInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MajorsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OperationType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblMajorsLogs");
                 });
 
             modelBuilder.Entity("Bader.Models.tblPermissions", b =>
@@ -629,11 +693,19 @@ namespace Bader.Migrations
 
             modelBuilder.Entity("Bader.Models.tblAttendance", b =>
                 {
+                    b.HasOne("Bader.Models.tblRegistrations", "Registration")
+                        .WithMany("Attendances")
+                        .HasForeignKey("RegistrationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Bader.Models.tblSessions", "Session")
                         .WithMany()
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Registration");
 
                     b.Navigation("Session");
                 });
@@ -766,6 +838,11 @@ namespace Bader.Migrations
             modelBuilder.Entity("Bader.Models.tblMajors", b =>
                 {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("Bader.Models.tblRegistrations", b =>
+                {
+                    b.Navigation("Attendances");
                 });
 
             modelBuilder.Entity("Bader.Models.tblRegistrationsState", b =>
