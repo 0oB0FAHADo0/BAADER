@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Bader.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Roles = "SuperAdmin , Admin")]
     public class PermissionController : Controller
     {
         private readonly PermissionDomain _PermissionDomain;

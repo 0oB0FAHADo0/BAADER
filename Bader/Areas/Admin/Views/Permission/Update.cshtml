@@ -67,20 +67,27 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="RoleId" class="mb-1">رقم (الدور) الصلاحية</label>
-                                        <input asp-for="RoleId" type="text" placeholder="1 و 2 و 3" class="form-control text-start">
+                                        <label asp-for="RoleId" class="mb-1"> الصلاحية</label>
+                                        <select asp-for="RoleId"
+                                                class="form-control"
+                                                asp-items="@ViewBag.RolesList">
+                                        </select>
                                         <span asp-validation-for="RoleId" class="text-danger"></span>
+
                                     </div>
-                                </div>
-                                <!-- END ITEM -->
+                                </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label asp-for="CollegeId" class="mb-1">رمز الكلية</label>
-                                        <input asp-for="CollegeId" type="text" placeholder="15 for ccsit" class="form-control text-start">
-                                        <span asp-validation-for="CollegeId" class="text-danger"></span>
+                                        <label asp-for="CollegeId" class="mb-1">الكلية</label>
+                                        <select asp-for="CollegeId"
+                                                class="form-control"
+                                                asp-items="@ViewBag.CollegesList">
+                                        </select>
+                                        <span asp-validation-for="RoleId" class="text-danger"></span>
+
                                     </div>
-                                </div>
+                                </div><!-- END ITEM -->
                                 <div class="col-md-8">
                                     <div><button type="submit" class="btn btn-primary px-4" title="save">حفظ</button></div>
                                     </div>
