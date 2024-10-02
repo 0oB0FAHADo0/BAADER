@@ -105,7 +105,7 @@ namespace Bader.Areas.Admin.Controllers
                         int check = await _MajorDomain.addMajors(major, User.FindFirst(ClaimTypes.NameIdentifier).Value);
                         if (check == 1)
                         {
-                            ViewData["Successful"] = "تمت الإضافة بنجاح";
+                            ViewData["Successful"] = "تم التعديل بنجاح";
                         }
                         else
                         {

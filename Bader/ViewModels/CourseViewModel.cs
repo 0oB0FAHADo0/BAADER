@@ -8,11 +8,12 @@ namespace Bader.ViewModels
 {
     public class CourseViewModel
     {
-       
+
         //public int? Id { get; set; }
 
         [DisplayName("معرف المقرر")]
-        [Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
+        //[Range(1, int.MaxValue, ErrorMessage = "هذا الحقل إجباري")]
+        [Required(ErrorMessage = "هذا الحقل إجباري")]
         public int CollegeId { get; set; }
 
         [Required(ErrorMessage = "هذا الحقل إجباري")]

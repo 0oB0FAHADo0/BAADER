@@ -35,6 +35,27 @@ namespace Bader.Domain
 
             }).ToListAsync();
         }
+        public async Task<IEnumerable<PermissionViewModel>> GetSomePermissions(String CollageCode)
+        {
+            return await _context.tblPermissions.Include(x => x.Role).Include(x => x.College).Where(x => x.IsDeleted == false && x.College.CollegeCode == CollageCode).Select(x => new PermissionViewModel
+            {
+                //Id = x.Id,
+
+                Username = x.Username,
+
+                RoleId = x.RoleId,
+                RoleName = x.Role.RoleNameAr,
+
+                CollegeId = x.CollegeId,
+
+                CollegeName = x.College.CollegeNameAr,
+
+                GUID = x.GUID,
+
+                IsDeleted = x.IsDeleted,
+
+            }).ToListAsync();
+        }
 
         public async Task<IEnumerable<tblColleges>> GetColleges()
         {
@@ -57,6 +78,33 @@ namespace Bader.Domain
             permissionx.IsDeleted = permission.IsDeleted;
             _context.tblPermissions.Add(permissionx);
             await _context.SaveChangesAsync();
+        }
+        public async Task<int> AddEditor(PermissionViewModel permisiion, String CollageCode)
+        {
+            try
+            {
+                var Collage = await _context.tblColleges.Where(x => x.IsDeleted == false && x.CollegeCode == CollageCode).FirstOrDefaultAsync();
+                var Role = await _context.tblRoles.Where(x => x.IsDeleted == false && x.RoleNameEn == "Editor").FirstOrDefaultAsync();
+                if (Collage == null)
+                {
+
+                    return 0;
+                }
+                tblPermissions permissionx = new tblPermissions();
+                //permissionx.Id = permission.Id;
+                permissionx.Username = permisiion.Username;
+                permissionx.RoleId = Role.Id;
+                permissionx.CollegeId = Collage.Id;
+                permissionx.GUID = Guid.NewGuid();
+                permissionx.IsDeleted = permisiion.IsDeleted;
+                _context.tblPermissions.Add(permissionx);
+                await _context.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex) {
+                return 0;
+            }
+
         }
 
 

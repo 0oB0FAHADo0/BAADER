@@ -131,7 +131,6 @@ namespace Bader.Areas.Admin.Controllers
                     var Majors = await _CourseDomain.GetAllMajors();
                     ViewBag.MajorsList = new SelectList(Majors, "Id", "MajorNameAr");
                 }
-
                 if (ModelState.IsValid)
                 {
                     if (await _CourseDomain.CourseNumEx(model.GUID, model.CourseNum))

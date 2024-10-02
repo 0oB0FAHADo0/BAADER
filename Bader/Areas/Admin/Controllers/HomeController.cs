@@ -31,7 +31,7 @@ namespace Bader.Areas.Admin.Controllers
 
             foreach (var role in PerCount)
             {
-                if (role.RoleId == 1) {
+                if (role.RoleId == 2) {
                     ViewBag.AdminCount = ViewBag.AdminCount + 1;
                 }
             }

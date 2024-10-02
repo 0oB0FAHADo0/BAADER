@@ -33,7 +33,15 @@ namespace Bader.Areas.Admin.Controllers
                 ViewData["success"] = successful;
             else if (failed != " ")
                 ViewData["Failed"] = failed;
-            return View(await _PermissionDomain.GetPermissions());
+            if (User.FindFirst("Role").Value == "Admin")
+            {
+                return View(await _PermissionDomain.GetSomePermissions(User.FindFirst("CollegeCode").Value));
+            }
+            else
+            {
+                return View(await _PermissionDomain.GetPermissions());
+            }
+                
         }
 
         [HttpPost]
@@ -62,10 +70,14 @@ namespace Bader.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var roles = await _PermissionDomain.GetRoles();
-            var colleges = await _PermissionDomain.GetColleges();
-            ViewBag.CollegesList = new SelectList(colleges, "Id", "CollegeNameAr");
-            ViewBag.RolesList = new SelectList(roles, "Id", "RoleNameAr");
+            if (User.FindFirst("Role").Value == "SuperAdmin")
+            {
+                var roles = await _PermissionDomain.GetRoles();
+                var colleges = await _PermissionDomain.GetColleges();
+                ViewBag.CollegesList = new SelectList(colleges, "Id", "CollegeNameAr");
+                ViewBag.RolesList = new SelectList(roles, "Id", "RoleNameAr");
+            }
+           
             return View();
         }
 
@@ -77,14 +89,26 @@ namespace Bader.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _PermissionDomain.AddPermission(permission);
-                return RedirectToAction(nameof(Index));
+                if (User.FindFirst("Role").Value == "SuperAdmin")
+                {
+                    await _PermissionDomain.AddPermission(permission);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    await _PermissionDomain.AddEditor(permission , User.FindFirst("CollegeCode").Value);
+                    return RedirectToAction(nameof(Index));
+                }
+                    
             }
-            var roles = await _PermissionDomain.GetRoles();
-            var colleges = await _PermissionDomain.GetColleges();
-            
-            ViewBag.CollegesList = new SelectList(colleges, "Id", "CollegeNameAr");
-            ViewBag.RolesList = new SelectList(roles, "Id", "RoleNameAr");
+            if (User.FindFirst("Role").Value == "SuperAdmin")
+            {
+                var roles = await _PermissionDomain.GetRoles();
+                var colleges = await _PermissionDomain.GetColleges();
+                ViewBag.CollegesList = new SelectList(colleges, "Id", "CollegeNameAr");
+                ViewBag.RolesList = new SelectList(roles, "Id", "RoleNameAr");
+            }
+
             return View(permission);
         }
         [HttpGet]

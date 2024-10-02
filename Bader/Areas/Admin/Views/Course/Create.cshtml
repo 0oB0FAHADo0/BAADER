@@ -85,7 +85,7 @@
                                         <div class="mb-4">
                                             <label asp-for="MajorNameAr" class="mb-1"></label>
                                             <select asp-for="MajorId" id="MajorId" class="form-control text-start" asp-items="ViewBag.MajorsList">
-                                                <option value="">اختر التخصص</option>
+                                                <option value="0">اختر التخصص</option>
                                             </select>
                                             <span asp-validation-for="MajorId" class="text-danger"></span>
                                         </div>
@@ -160,7 +160,7 @@
                                 $('#MajorId').empty();
 
                                 // Populate the major dropdown with the received data
-                                $('#MajorId').append(new Option('اختر التخصص', '')); // Add default option
+                                $('#MajorId').append(new Option('اختر التخصص', '0')); // Add default option
                                 $.each(data, function (index, major) {
                                     $('#MajorId').append(new Option(major.text, major.value));
                                 });
@@ -182,7 +182,7 @@
                         // If no college is selected, disable and reset the major dropdown
                         $('#MajorId').prop('disabled', true);
                         $('#MajorId').empty();
-                        $('#MajorId').append(new Option('اختر التخصص', '')); // Reset to default option
+                        $('#MajorId').append(new Option('اختر التخصص', '0')); // Reset to default option
                     }
                 }
 
@@ -219,6 +219,6 @@
         </script>
 
 
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+       // await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }

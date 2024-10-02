@@ -87,11 +87,11 @@ namespace Bader.Domain
                 return null;
 
             // Fetch the user's role information
-            var userPermission = await _context.tblPermissions.FirstOrDefaultAsync(p => p.Username == username);
+            var userPermission = await _context.tblPermissions.FirstOrDefaultAsync(p => p.Username == username && p.IsDeleted == false);
             tblRoles userRole = null;
             if (userPermission != null)
             {
-                userRole = await _context.tblRoles.FirstOrDefaultAsync(r => r.Id == userPermission.RoleId);
+                userRole = await _context.tblRoles.FirstOrDefaultAsync(r => r.Id == userPermission.RoleId && r.IsDeleted == false);
             }
 
             return new UserViewModel

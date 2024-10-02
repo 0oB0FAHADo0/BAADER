@@ -18,7 +18,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <label id="lblError" d style="color:red; display:none">هذا المستخدم غير موجود في قاعدة البيانات</label>
-                        <form asp-action="Create" method="post">
+                        <form asp-action="Add" method="post">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -45,30 +45,41 @@
                                         <span asp-validation-for="FullNameEn" class="text-danger"></span>
                                     </div>
                                 </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="RoleId" class="mb-1"> الصلاحية</label>
-                                        <select asp-for="RoleId"
-                                                class="form-control"
-                                                asp-items="@ViewBag.RolesList">
-                                        </select>
-                                        <span asp-validation-for="RoleId" class="text-danger"></span>
+                                @if(userrole == "SuperAdmin")
+                                {
+                                    <!-- START ITEM -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="RoleId" class="mb-1"> الصلاحية</label>
+                                            <select asp-for="RoleId"
+                                                    class="form-control"
+                                                    asp-items="@ViewBag.RolesList">
+                                            </select>
+                                            <span asp-validation-for="RoleId" class="text-danger"></span>
 
+                                        </div>
                                     </div>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label asp-for="CollegeId" class="mb-1">الكلية</label>
-                                        <select asp-for="CollegeId"
-                                                class="form-control"
-                                                asp-items="@ViewBag.CollegesList">
-                                        </select>
-                                        <span asp-validation-for="RoleId" class="text-danger"></span>
 
+                                    <!-- END ITEM -->
+                                }
+                                @if(userrole == "SuperAdmin")
+                                {
+                                    <!-- START ITEM -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label asp-for="CollegeId" class="mb-1">الكلية</label>
+                                            <select asp-for="CollegeId"
+                                                    class="form-control"
+                                                    asp-items="@ViewBag.CollegesList">
+                                            </select>
+                                            <span asp-validation-for="RoleId" class="text-danger"></span>
+
+                                        </div>
                                     </div>
-                                </div><!-- END ITEM -->
+
+                                    <!-- END ITEM -->
+                                }
+                               
 
                             </div>
                             <div class="col-md-6">
