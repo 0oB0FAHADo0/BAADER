@@ -86,6 +86,8 @@ namespace Bader.Domain
             }
 
         }
+
+ 
         public async Task<ContentViewModel> GetContentByGUID(Guid id)
         {
             try
